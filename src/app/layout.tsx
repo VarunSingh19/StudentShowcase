@@ -722,7 +722,6 @@
 "use client";
 
 import React from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Inter } from 'next/font/google';
 import { Menu, X, Layers, LogOut, ChevronDown } from 'lucide-react';
@@ -776,7 +775,6 @@ export default function RootLayout({
     },
   ];
 
-  const allNavItems = menuCategories.flatMap(category => category.items);
 
   const handleNavigation = (href: string) => {
     router.push(href);

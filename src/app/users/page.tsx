@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { UserCard } from '@/components/UserCard'
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Loader2 } from 'lucide-react'
 

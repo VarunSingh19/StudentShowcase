@@ -5,7 +5,7 @@ import TaskListPage from './TaskListPage';
 
 
 export default function TaskList() {
-    const { user, loading } = useAuth();
+    const { user, loading } = useAuth(); // eslint-disable-line @typescript-eslint/no-unused-vars
 
     if (loading) {
         return <div>Loading...</div>;

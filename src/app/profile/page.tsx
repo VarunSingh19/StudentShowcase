@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
-import { doc, getDoc, setDoc, collection, query, where, getDocs, updateDoc, deleteDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc, collection, query, where, getDocs, deleteDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -78,6 +78,8 @@ export default function ProfilePage() {
     const [skillInput, setSkillInput] = useState('')
     const { user, authChecked } = useAuth()
     const router = useRouter()
+
+
 
     useEffect(() => {
         if (authChecked && !user) {
@@ -640,7 +642,7 @@ function LikedProjectsContent({ likedProjects }) {
             <CardHeader>
                 <CardTitle>Liked Projects</CardTitle>
                 <CardDescription>
-                    Projects you've liked
+                    Projects you have liked
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -665,7 +667,7 @@ function LikedProjectsContent({ likedProjects }) {
                     ))}
                     {likedProjects.length === 0 && (
                         <p className="text-muted-foreground text-center py-4">
-                            You haven't liked any projects yet
+                            You have not liked any projects yet
                         </p>
                     )}
                 </div>

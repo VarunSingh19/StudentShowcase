@@ -369,7 +369,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { collection, query, where, orderBy, onSnapshot } from 'firebase/firestore'
+import { collection, query, where, orderBy, onSnapshot, Timestamp } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -390,7 +390,7 @@ interface Project {
     imageUrl: string;
     likes: number;
     approved: boolean;
-    createdAt: any;
+    createdAt: Date | Timestamp;
 }
 
 export default function ProjectsPage() {

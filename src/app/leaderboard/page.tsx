@@ -2,14 +2,11 @@
 import { db } from '@/lib/firebase'
 import { collection, query, orderBy, limit, getDocs, where } from 'firebase/firestore'
 import Link from 'next/link'
-import Image from 'next/image'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Trophy, Medal, Heart } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { useAuth } from '@/hooks/useAuth'
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
+
 
 async function getLeaderboardData() {
     const q = query(collection(db, 'projects'), orderBy('likes', 'desc'), limit(50))

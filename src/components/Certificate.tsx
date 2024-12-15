@@ -48,7 +48,7 @@ export interface CertificateProps {
 
 
 export function Certificate({ project, profile }: CertificateProps) {
-    const [isGenerating, setIsGenerating] = useState(false)
+    const [isGenerating, setIsGenerating] = useState(false)  // eslint-disable-line @typescript-eslint/no-unused-vars
 
     const generateCertificate = async () => {
         const pdf = new jsPDF({

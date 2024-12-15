@@ -189,7 +189,7 @@ export default function TeamsPage() {
                                                 <DialogHeader>
                                                     <DialogTitle>Join Request</DialogTitle>
                                                     <DialogDescription>
-                                                        Send a message to the team leader explaining why you'd like to join
+                                                        Send a message to the team leader explaining why you would like to join
                                                     </DialogDescription>
                                                 </DialogHeader>
                                                 <div className="space-y-4 pt-4">
@@ -260,7 +260,7 @@ export default function TeamsPage() {
                         ))}
                         {joinedTeams.length === 0 && (
                             <p className="text-center text-muted-foreground py-8">
-                                You haven't joined any teams yet
+                                You have not joined any teams yet
                             </p>
                         )}
                     </div>

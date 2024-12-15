@@ -613,7 +613,7 @@ export default function ResumeBuilderPage() {
     const [resumeFormat, setResumeFormat] = useState('professional')
     const [loading, setLoading] = useState(true)
     const [generating, setGenerating] = useState(false)
-    const [error, setError] = useState('')
+    const [error, setError] = useState('') // eslint-disable-line @typescript-eslint/no-unused-vars
     const [generatedResume, setGeneratedResume] = useState('')
     const { user, authChecked } = useAuth()
     const router = useRouter()

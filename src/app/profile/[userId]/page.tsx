@@ -6,8 +6,11 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Heart, Github, Linkedin, Twitter, Globe, ExternalLink } from 'lucide-react'
 import { ImageModal } from '@/components/ImageModal'
+import { Project } from '@/types/profile'
 
 async function getUserProfile(userId: string) {
+
+
     const userDoc = await getDoc(doc(db, 'profiles', userId))
     if (!userDoc.exists()) {
         return null
@@ -15,13 +18,29 @@ async function getUserProfile(userId: string) {
     return userDoc.data()
 }
 
-async function getUserProjects(userId: string) {
-    const q = query(collection(db, 'projects'), where('userId', '==', userId))
-    const querySnapshot = await getDocs(q)
-    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+
+async function getUserProjects(userId: string): Promise<Project[]> {
+    const q = query(collection(db, 'projects'), where('userId', '==', userId));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...(doc.data() as Omit<Project, 'id'>), // Explicit cast to the Project type
+    }));
 }
 
+
+
 export default async function UserProfilePage({ params }: { params: { userId: string } }) {
+
+
+    interface Project {
+        id: string;
+        projectName: string;
+        techStack: string;
+        likes?: number;
+        repoUrl?: string;
+    }
+
     const profile = await getUserProfile(params.userId)
     if (!profile) {
         notFound()
@@ -103,11 +122,11 @@ export default async function UserProfilePage({ params }: { params: { userId: st
 
             <Card>
                 <CardHeader>
-                    <CardTitle>{profile.displayName}'s Projects</CardTitle>
+                    <CardTitle>{profile.displayName} s Projects</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        {projects.map((project: any) => (
+                        {projects.map((project: Project) => (
                             <Card key={project.id} className="overflow-hidden">
                                 <div className="relative h-40 bg-gradient-to-br from-purple-400 to-indigo-600">
                                     <div className="absolute inset-0 flex items-center justify-center">
@@ -131,6 +150,7 @@ export default async function UserProfilePage({ params }: { params: { userId: st
                                 </CardContent>
                             </Card>
                         ))}
+
                         {projects.length === 0 && (
                             <p className="text-center text-muted-foreground col-span-full">No projects found.</p>
                         )}

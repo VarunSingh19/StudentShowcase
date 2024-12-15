@@ -834,7 +834,6 @@
 
 import React, { useRef } from 'react';
 import { Briefcase, MapPin, Mail, Phone, Star, Code, Award, BookOpen, Smile, Download, Eye } from 'lucide-react';
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { UserProfile } from '@/types/profile';
 import { CertificateProps } from "./Certificate";
@@ -844,6 +843,7 @@ import { CertificatePreview } from './CertificatePreview';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { Github, Linkedin, Twitter, Globe } from 'lucide-react'
+import Image from 'next/image';
 
 interface Project {
     id: string;
@@ -867,8 +867,8 @@ export function ResumePreview({
     profile,
     projects,
     certificates,
-    companyName,
-    experience,
+    companyName,  // eslint-disable-line @typescript-eslint/no-unused-vars
+    experience,  // eslint-disable-line @typescript-eslint/no-unused-vars
     format
 }: ResumePreviewProps) {
     const resumeRef = useRef<HTMLDivElement>(null);
@@ -937,7 +937,7 @@ export function ResumePreview({
             <div ref={resumeRef} className={`max-w-4xl mx-auto rounded-2xl shadow-2xl overflow-hidden ${getBackgroundClass()}`}>
                 <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6 flex items-center space-x-6">
                     <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg">
-                        <img
+                        <Image
                             src={profile.avatarUrl || "/placeholder.svg"}
                             alt={profile.displayName || "User Profile"}
                             className="w-full h-full object-cover"
@@ -1057,7 +1057,7 @@ export function ResumePreview({
                                 <Award className="mr-2 text-yellow-600" /> Certifications
                             </h2>
                             {Array.isArray(certificates) && certificates.length > 0 ? (
-                                certificates.map(({ project, profile }, index) => (
+                                certificates.map(({ project, profile }) => (
                                     <div
                                         key={project.id}
                                         className="bg-white rounded-lg border border-blue-100 p-5 mb-4 hover:shadow-lg transition-all duration-300 ease-in-out"

@@ -164,7 +164,7 @@ export function AIEnhancer({ profile, projects, certificates, companyName, exper
                         ))
                     ) : (
                         <div>
-                            <p>No enhanced projects available. Click 'Enhance Projects' to generate.</p>
+                            <p>No enhanced projects available. Click Enhance Projects to generate.</p>
                             <Button onClick={handleEnhanceProjects} disabled={loading}>
                                 {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                                 Enhance Projects
