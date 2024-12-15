@@ -5,10 +5,12 @@ import { auth } from "@/lib/firebase";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
-import { Icons } from './ui/icons';
+import { Icons } from "@/components/ui/icons"
 import { motion } from "framer-motion"
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 export function AuthForm() {
     const [email, setEmail] = useState('');
@@ -26,10 +28,27 @@ export function AuthForm() {
             if (isLogin) {
                 await signInWithEmailAndPassword(auth, email, password);
             } else {
-                await createUserWithEmailAndPassword(auth, email, password);
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                // Create initial profile for new users
+
+                await setDoc(doc(db, 'profiles', userCredential.user.uid), {
+                    userId: userCredential.user.uid,
+                    displayName: '',
+                    bio: '',
+                    location: '',
+                    skills: [],
+                    socialLinks: {
+                        github: '',
+                        linkedin: '',
+                        twitter: '',
+                        portfolio: ''
+                    },
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                });
             }
-        } catch {
-            setError('Authentication failed. Please try again.');
+        } catch (err) {
+            setError('Authentication failed. Please try again.' + err);
         } finally {
             setIsLoading(false);
         }
@@ -38,6 +57,7 @@ export function AuthForm() {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-100 to-purple-100 p-4">
             <motion.div
+
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
