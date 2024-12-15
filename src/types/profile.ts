@@ -3,7 +3,7 @@ import { Timestamp } from "firebase/firestore";
 export interface UserProfile {
   id: string;
   userId: string;
-  avatarUrl: string;
+  avatarUrl?: string;
   displayName: string;
   bio: string;
   location: string;
@@ -14,11 +14,11 @@ export interface UserProfile {
     twitter?: string;
     portfolio?: string;
   };
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
+  createdAt: Date | Timestamp;
+  updatedAt: Date | Timestamp;
   hobbiesAndInterests: string[];
   languages: string[];
-  emailAddress: string;
+  emailAddress?: string;
   phoneNumber: string;
 }
 
@@ -28,13 +28,13 @@ export interface Project {
   projectName: string;
   techStack: string;
   repoUrl: string;
-  imageUrl: string;
+  imageUrl?: string;
   approved: boolean;
   description: string;
   features: string[];
   stars: number;
   starredBy: string[];
-  userId: string;
+  userId?: string;
 }
 
 export interface Team {

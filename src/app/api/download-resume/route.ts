@@ -7,7 +7,7 @@ import {
   HeadingLevel,
   AlignmentType,
 } from "docx";
-import { PDFDocument, StandardFonts, rgb, PageSizes, drawText } from "pdf-lib";
+import { PDFDocument, StandardFonts, rgb, PageSizes } from "pdf-lib";
 
 // Helper function to create sections for DOCX
 function createDocxSections(resumeContent: string) {
@@ -65,9 +65,9 @@ function createDocxSections(resumeContent: string) {
 
 // Helper function to create PDF sections
 async function createPdfSections(
-  page: any,
+  page: string,
   resumeContent: string,
-  font: any,
+  font: string,
   width: number,
   height: number
 ) {
