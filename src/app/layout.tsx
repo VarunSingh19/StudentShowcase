@@ -1262,7 +1262,6 @@ import { Button } from '@/components/ui/button';
 import { auth, db } from '../lib/firebase';
 import { MegaMenu } from '@/components/MegaMenu';
 import { LoadingBar } from '@/components/LoadingBar';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { doc, getDoc } from 'firebase/firestore';
 import { HeaderImageModal } from '@/components/HeaderImageModal';
 import Link from 'next/link';

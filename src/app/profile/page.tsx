@@ -536,7 +536,7 @@ function ProfileContent({ profile, setProfile, skillInput, setSkillInput, handle
     )
 }
 
-function ProjectsContent({ projects, totalLikes, handleEditProject, handleDeleteProject, router }) {
+function ProjectsContent({ projects, handleEditProject, handleDeleteProject, router }) {
     return (
         <Card>
             <CardHeader>
@@ -622,7 +622,7 @@ function ProjectsContent({ projects, totalLikes, handleEditProject, handleDelete
                         ))}
                         {projects.length === 0 && (
                             <div className="text-center py-8">
-                                <p className="text-muted-foreground mb-4">You haven't submitted any projects yet.</p>
+                                <p className="text-muted-foreground mb-4">You have not submitted any projects yet.</p>
                                 <Button onClick={() => router.push('/upload-project')}>Upload Your First Project</Button>
                             </div>
                         )}
