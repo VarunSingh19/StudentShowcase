@@ -194,6 +194,7 @@ import {
   QueryDocumentSnapshot,
   DocumentData,
   Timestamp,
+  FieldValue,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "./useAuth";
@@ -203,7 +204,8 @@ export interface Task {
   title: string;
   description: string;
   userId: string;
-  createdAt: Timestamp;
+  createdAt: Timestamp | FieldValue; // Accept both FieldValue and Timestamp
+  updatedAt?: Timestamp | FieldValue; // Optional
   projectPlan?: {
     technicalRequirements: string[];
     developmentPhases: string[];
