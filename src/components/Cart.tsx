@@ -46,6 +46,108 @@ export function Cart() {
         setAddressForm({ ...addressForm, [e.target.name]: e.target.value });
     };
 
+    // const handleCheckout = async () => {
+    //     if (!user) {
+    //         toast({
+    //             title: "Error",
+    //             description: "You must be logged in to checkout.",
+    //             variant: "destructive",
+    //         });
+    //         return;
+    //     }
+
+    //     if (!showAddressForm) {
+    //         setShowAddressForm(true);
+    //         return;
+    //     }
+
+    //     // Validate address form
+    //     if (Object.values(addressForm).some(value => !value)) {
+    //         toast({
+    //             title: "Error",
+    //             description: "Please fill in all address fields.",
+    //             variant: "destructive",
+    //         });
+    //         return;
+    //     }
+
+    //     setIsCheckingOut(true);
+    //     try {
+    //         const razorpay = await loadRazorpay();
+
+    //         if (!razorpay) {
+    //             throw new Error('Razorpay SDK failed to load');
+    //         }
+
+    //         const response = await fetch('/api/create-order', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({ amount: total * 100 }), // Razorpay expects amount in paise
+    //         });
+
+    //         if (!response.ok) {
+    //             throw new Error('Failed to create order');
+    //         }
+
+    //         const order = await response.json();
+
+    //         const options = {
+    //             key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+    //             amount: order.amount,
+    //             currency: "INR",
+    //             name: "BuyOurMerch",
+    //             description: "Purchase from BuyOurMerch",
+    //             order_id: order.id,
+    //             handler: async function (response: any) {
+    //                 const orderData = {
+    //                     userId: user.uid,
+    //                     products: cart.map(item => ({
+    //                         productId: item.product.id,
+    //                         quantity: item.quantity,
+    //                         price: item.product.price
+    //                     })),
+    //                     totalAmount: total,
+    //                     paymentId: response.razorpay_payment_id,
+    //                     orderId: response.razorpay_order_id,
+    //                     status: 'paid',
+    //                     createdAt: new Date(),
+    //                     shippingAddress: addressForm,
+    //                 };
+
+    //                 await setDoc(doc(db, 'orders', response.razorpay_order_id), orderData);
+
+    //                 clearCart();
+    //                 toast({
+    //                     title: "Success",
+    //                     description: "Your order has been placed successfully!",
+    //                 });
+    //             },
+    //             prefill: {
+    //                 name: user.displayName,
+    //                 email: user.email,
+    //             },
+    //             theme: {
+    //                 color: "#3399cc",
+    //             },
+    //         };
+
+    //         const paymentObject = new razorpay(options);
+    //         paymentObject.open();
+    //     } catch (error) {
+    //         console.error('Error during checkout:', error);
+    //         toast({
+    //             title: "Error",
+    //             description: "There was an error processing your payment. Please try again.",
+    //             variant: "destructive",
+    //         });
+    //     } finally {
+    //         setIsCheckingOut(false);
+    //     }
+    // };
+
+
     const handleCheckout = async () => {
         if (!user) {
             toast({
@@ -61,7 +163,6 @@ export function Cart() {
             return;
         }
 
-        // Validate address form
         if (Object.values(addressForm).some(value => !value)) {
             toast({
                 title: "Error",
@@ -84,7 +185,7 @@ export function Cart() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ amount: total * 100 }), // Razorpay expects amount in paise
+                body: JSON.stringify({ amount: total * 100 }),
             });
 
             if (!response.ok) {
@@ -93,8 +194,13 @@ export function Cart() {
 
             const order = await response.json();
 
+            const razorpayKey = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID as string; // Type assertion
+            if (!razorpayKey) {
+                throw new Error('Razorpay key is missing in environment variables');
+            }
+
             const options = {
-                key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+                key: razorpayKey,
                 amount: order.amount,
                 currency: "INR",
                 name: "BuyOurMerch",
@@ -146,6 +252,7 @@ export function Cart() {
             setIsCheckingOut(false);
         }
     };
+
 
     if (cart.length === 0) {
         return <p>Your cart is empty.</p>;

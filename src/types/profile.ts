@@ -1,6 +1,28 @@
 import { Timestamp } from "firebase/firestore";
 
 export interface UserProfile {
+  // id: string;
+  // userId: string;
+  // avatarUrl?: string;
+  // displayName: string;
+  // bio: string;
+  // location: string;
+  // skills: string[];
+  // socialLinks: {
+  //   github?: string;
+  //   linkedin?: string;
+  //   twitter?: string;
+  //   portfolio?: string;
+  // };
+  // createdAt: Date | Timestamp;
+  // updatedAt: Date | Timestamp;
+  // hobbiesAndInterests: string[];
+  // languages: string[];
+  // emailAddress?: string;
+  // phoneNumber: string;
+  // points: number;
+  // orderHistory: string[]; // Array of order IDs
+  // likedProducts: string[]; // Array of product IDs
   id: string;
   userId: string;
   avatarUrl?: string;
@@ -9,20 +31,20 @@ export interface UserProfile {
   location: string;
   skills: string[];
   socialLinks: {
-    github?: string;
-    linkedin?: string;
-    twitter?: string;
-    portfolio?: string;
+    github: string;
+    linkedin: string;
+    twitter: string;
+    portfolio: string;
   };
-  createdAt: Date | Timestamp;
-  updatedAt: Date | Timestamp;
   hobbiesAndInterests: string[];
   languages: string[];
-  emailAddress?: string;
+  emailAddress: string;
   phoneNumber: string;
   points: number;
-  orderHistory: string[]; // Array of order IDs
-  likedProducts: string[]; // Array of product IDs
+  orderHistory: any[];
+  likedProducts: string[];
+  createdAt: Date | Timestamp;
+  updatedAt: Date | Timestamp;
 }
 
 export interface Project {
@@ -61,4 +83,24 @@ export interface TeamRequest {
   message: string;
   status: "pending" | "approved" | "rejected";
   createdAt: Timestamp;
+}
+
+export interface LikedProject {
+  id: string;
+  projectName: string;
+  techStack: string;
+  likes: number;
+}
+
+export interface CertificateProps {
+  project: Project;
+  profile: UserProfile;
+}
+
+export interface Certificate {
+  id: string;
+  projectName: string;
+  issuedBy: string;
+  issueDate: Date;
+  verificationUrl: string;
 }

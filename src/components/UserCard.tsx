@@ -3,22 +3,26 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import Link from 'next/link'
 import { Mail, MapPin, Phone } from "lucide-react"
-import { ImageModal } from "./ImageModal"
 import { HeaderImageModal } from "./HeaderImageModal"
 
-export function UserCard({ user }) {
+import { UserProfile } from "@/types/profile"
+
+interface UserCardProps {
+    user: UserProfile;
+}
+export function UserCard({ user }: UserCardProps) {
     return (
         <Card className="h-full flex flex-col">
             <CardHeader>
                 <div className="flex items-center space-x-4">
                     <HeaderImageModal
-                        src={user.avatarUrl || `/studentshowcase.jpg?text=${user.name?.charAt(0) || 'U'}`}
+                        src={user.avatarUrl || `/studentshowcase.jpg?text=${user.displayName?.charAt(0) || 'U'}`}
                         alt={user.displayName?.charAt(0) || 'U'}
 
                     />
                     <div>
                         <CardTitle className="text-xl font-bold">{user.displayName || 'Unknown User'}</CardTitle>
-                        <p className="text-sm text-muted-foreground">{user.role || 'Student'}</p>
+                        <p className="text-sm text-muted-foreground">Student</p>
                     </div>
                 </div>
             </CardHeader>

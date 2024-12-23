@@ -1002,7 +1002,7 @@
 
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from "@/components/ui/button"
@@ -1080,7 +1080,10 @@ const projectTypes = {
         { value: "manufacturing", label: "Manufacturing Systems" },
     ],
 }
-
+// Define a custom event type that combines both possibilities
+type FormChangeEvent =
+    | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    | { name: string; value: string };
 export default function UploadProjectPage() {
     const [formData, setFormData] = useState<FormData>({
         name: '',
@@ -1145,13 +1148,25 @@ export default function UploadProjectPage() {
         }
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | { name: string; value: string }) => {
-        const { name, value, files } = e.target as HTMLInputElement
-        setFormData(prevData => ({
-            ...prevData,
-            [name]: files ? files[0] : value
-        }))
-    }
+
+    const handleChange = (e: FormChangeEvent) => {
+        // Check if it's a standard React change event
+        if ('target' in e) {
+            const target = e.target as HTMLInputElement;
+            const { name, value, files } = target;
+            setFormData(prevData => ({
+                ...prevData,
+                [name]: files ? files[0] : value
+            }));
+        } else {
+            // Handle custom event object
+            const { name, value } = e;
+            setFormData(prevData => ({
+                ...prevData,
+                [name]: value
+            }));
+        }
+    };
 
     const handleSelectChange = (name: string, value: string) => {
         setFormData(prevData => ({

@@ -42,7 +42,7 @@ export default function LikedProductsPage() {
                 }
 
                 // Fetch each product individually using doc() instead of query()
-                const productsPromises = likedProductIds.map(async (id) => {
+                const productsPromises = likedProductIds.map(async (id: string) => {
                     try {
                         const productDocRef = doc(db, 'products', id);
                         const productSnapshot = await getDoc(productDocRef);

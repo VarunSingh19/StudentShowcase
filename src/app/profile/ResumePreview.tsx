@@ -4,13 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { UserProfile } from '@/types/profile';
 import { CertificateProps } from '@/components/Certificate';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from '@/components/ui/dialog';
 import { CertificatePreview } from '@/components/CertificatePreview';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { Github, Linkedin, Twitter, Globe } from 'lucide-react'
 import Image from 'next/image';
-import { DialogTitle } from '@radix-ui/react-dialog';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 interface Project {
     id: string;
@@ -287,7 +287,6 @@ export function ResumePreview({
                                                 </Button>
 
                                                 <Dialog>
-                                                    <DialogTitle ></DialogTitle>
                                                     <DialogTrigger asChild>
                                                         <Button
                                                             size="sm"
@@ -299,6 +298,10 @@ export function ResumePreview({
                                                         </Button>
                                                     </DialogTrigger>
                                                     <DialogContent className="max-w-3xl">
+                                                        {/* Ensure that a DialogTitle is present */}
+                                                        <DialogTitle>
+                                                            <VisuallyHidden>Resume Preview</VisuallyHidden>
+                                                        </DialogTitle>
                                                         <CertificatePreview
                                                             projectName={project.projectName}
                                                             recipientName={profile.displayName}
@@ -307,6 +310,7 @@ export function ResumePreview({
                                                         />
                                                     </DialogContent>
                                                 </Dialog>
+
                                             </div>
                                         </div>
                                     </div>

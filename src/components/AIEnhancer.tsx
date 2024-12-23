@@ -28,6 +28,7 @@ interface AIEnhancerProps {
     certificates: Certificate[]
     companyName: string
     experience: string
+    onUpdate: (field: string, value: any) => void
 }
 
 export function AIEnhancer({ profile, projects, certificates, companyName, experience }: AIEnhancerProps) {

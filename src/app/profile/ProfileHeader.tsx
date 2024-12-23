@@ -191,9 +191,10 @@ import { doc, updateDoc } from "firebase/firestore"
 import { db } from "@/lib/firebase"
 import type { UserProfile } from "@/types/profile"
 
+
 interface ProfileHeaderProps {
     profile: Partial<UserProfile>
-    onUpdate: (updatedProfile: Partial<UserProfile>) => void
+    onUpdate: (updatedProfile: UserProfile) => void  // Changed from Partial<UserProfile>
 }
 
 export function ProfileHeader({ profile, onUpdate }: ProfileHeaderProps) {
@@ -238,6 +239,30 @@ export function ProfileHeader({ profile, onUpdate }: ProfileHeaderProps) {
         }
     }
 
+    // const updateProfileImage = async (imageUrl: string) => {
+    //     try {
+    //         if (!profile.userId) {
+    //             throw new Error("User ID is missing")
+    //         }
+    //         await updateDoc(doc(db, "profiles", profile.userId), {
+    //             avatarUrl: imageUrl,
+    //         })
+    //         const updatedProfile = { ...profile, avatarUrl: imageUrl }
+    //         onUpdate(updatedProfile)
+    //         toast({
+    //             title: "Profile image updated",
+    //             description: "Your profile image has been successfully updated.",
+    //         })
+    //     } catch (error) {
+    //         console.error("Error updating profile image:", error)
+    //         toast({
+    //             title: "Error",
+    //             description: "Failed to update profile image. Please try again.",
+    //             variant: "destructive",
+    //         })
+    //     }
+    // }
+
     const updateProfileImage = async (imageUrl: string) => {
         try {
             if (!profile.userId) {
@@ -246,7 +271,13 @@ export function ProfileHeader({ profile, onUpdate }: ProfileHeaderProps) {
             await updateDoc(doc(db, "profiles", profile.userId), {
                 avatarUrl: imageUrl,
             })
-            const updatedProfile = { ...profile, avatarUrl: imageUrl }
+
+            // Cast the merged profile to UserProfile
+            const updatedProfile = {
+                ...profile,
+                avatarUrl: imageUrl
+            } as UserProfile
+
             onUpdate(updatedProfile)
             toast({
                 title: "Profile image updated",

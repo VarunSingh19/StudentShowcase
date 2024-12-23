@@ -584,6 +584,16 @@ import { ResumePreview } from '@/components/ResumePreview'
 import { AIEnhancer } from '@/components/AIEnhancer'
 import { toast } from '@/hooks/use-toast'
 import { motion } from 'framer-motion'
+import { Certificate } from '@/components/Certificate'
+
+
+interface Certificate {
+    id: string;
+    projectName: string;
+    issuedBy: string;
+    issueDate: Date;
+    verificationUrl: string;
+}
 
 
 interface Project {
@@ -594,15 +604,17 @@ interface Project {
     features: string[]
     repoUrl: string
     approved: boolean;
+    completionDate: ''
+
 }
 
-interface Certificate {
-    id: string
-    projectName: string
-    issuedBy: string
-    issueDate: Date
-    verificationUrl: string
+
+
+interface CertificatesContentProps {
+    projects: Project[]
+    profile: UserProfile
 }
+
 
 export default function ResumeBuilderPage() {
     const [profile, setProfile] = useState<UserProfile | null>(null)
@@ -777,7 +789,7 @@ export default function ResumeBuilderPage() {
         )
     }
 
-    function CertificatesContent({ projects, profile }) {
+    function CertificatesContent({ projects, profile }: CertificatesContentProps) {
         return (
             <Card>
                 <CardHeader>
@@ -796,10 +808,7 @@ export default function ResumeBuilderPage() {
                                 transition={{ duration: 0.3 }}
                             >
                                 <Certificate
-                                    project={{
-                                        ...project,
-                                        completionDate: project.completionDate || "Not Specified",
-                                    }}
+                                    project={project}
                                     profile={profile}
                                 />
                             </motion.div>

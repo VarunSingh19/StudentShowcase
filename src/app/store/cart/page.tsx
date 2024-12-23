@@ -1,3 +1,131 @@
+// 'use client'
+
+// import React, { useState } from 'react';
+// import { useCart } from '@/context/CartContext';
+// import { Button } from "@/components/ui/button";
+// import { Input } from "@/components/ui/input";
+// import toast from 'react-hot-toast';
+// import { loadRazorpay } from '@/lib/razorpay';
+// import { useAuth } from '@/hooks/useAuth';
+// import { doc, setDoc } from 'firebase/firestore';
+// import { db } from '@/lib/firebase';
+// import { Label } from "@/components/ui/label";
+// import { Textarea } from "@/components/ui/textarea";
+// import { ShoppingCart, Minus, Plus, Trash2, Box, CreditCard } from 'lucide-react';
+// import { Card } from "@/components/ui/card";
+// import Image from 'next/image';
+
+
+// interface RazorpayResponse {
+//     razorpay_payment_id: string;
+//     razorpay_order_id: string;
+//     razorpay_signature?: string;
+// }
+
+// export default function Cart() {
+//     const { cart, removeFromCart, updateQuantity, clearCart, total } = useCart();
+//     const [isCheckingOut, setIsCheckingOut] = useState(false);
+//     const [showAddressForm, setShowAddressForm] = useState(false);
+//     const [addressForm, setAddressForm] = useState({
+//         name: '',
+//         address: '',
+//         city: '',
+//         state: '',
+//         zipCode: '',
+//         country: '',
+//     });
+//     const { user } = useAuth();
+
+//     const handleQuantityChange = (productId: string, newQuantity: number) => {
+//         if (newQuantity > 0) {
+//             updateQuantity(productId, newQuantity);
+//         } else {
+//             removeFromCart(productId);
+//         }
+//     };
+
+//     const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+//         setAddressForm({ ...addressForm, [e.target.name]: e.target.value });
+//     };
+
+//     const handleCheckout = async () => {
+//         if (!user) {
+//             toast.error("You must be logged in to checkout.");
+//             return;
+//         }
+
+//         if (!showAddressForm) {
+//             setShowAddressForm(true);
+//             return;
+//         }
+
+//         if (Object.values(addressForm).some(value => !value)) {
+//             toast.error("Please fill in all address fields.");
+//             return;
+//         }
+
+//         setIsCheckingOut(true);
+//         try {
+//             const razorpay = await loadRazorpay();
+//             if (!razorpay) throw new Error('Razorpay SDK failed to load');
+
+//             const response = await fetch('/api/create-order', {
+//                 method: 'POST',
+//                 headers: { 'Content-Type': 'application/json' },
+//                 body: JSON.stringify({ amount: total * 100 }),
+//             });
+
+//             if (!response.ok) throw new Error('Failed to create order');
+
+//             const order = await response.json();
+
+//             const options = {
+//                 key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+//                 amount: order.amount,
+//                 currency: "INR",
+//                 name: "StudentShowcase",
+//                 description: "Purchase from StudentShowcase",
+//                 order_id: order.id,
+//                 handler: async function (response: RazorpayResponse) {
+//                     const orderData = {
+//                         userId: user.uid,
+//                         products: cart.map(item => ({
+//                             productId: item.product.id,
+//                             quantity: item.quantity,
+//                             imageURL: item.product.imageUrl,
+//                             price: item.product.price
+//                         })),
+//                         totalAmount: total,
+//                         paymentId: response.razorpay_payment_id,
+//                         orderId: response.razorpay_order_id,
+//                         status: 'paid',
+//                         createdAt: new Date(),
+//                         shippingAddress: addressForm,
+//                     };
+
+//                     await setDoc(doc(db, 'orders', response.razorpay_order_id), orderData);
+//                     clearCart();
+//                     toast.success("Your order has been placed successfully!");
+//                 },
+//                 prefill: {
+//                     name: user.displayName,
+//                     email: user.email,
+//                 },
+//                 theme: {
+//                     color: "#a855f7",
+//                 },
+//             };
+
+//             const paymentObject = new razorpay(options);
+//             paymentObject.open();
+//         } catch (error) {
+//             console.error('Error during checkout:', error);
+//             toast.error("There was an error processing your payment. Please try again.");
+//         } finally {
+//             setIsCheckingOut(false);
+//         }
+//     };
+
 'use client'
 
 import React, { useState } from 'react';
@@ -15,11 +143,28 @@ import { ShoppingCart, Minus, Plus, Trash2, Box, CreditCard } from 'lucide-react
 import { Card } from "@/components/ui/card";
 import Image from 'next/image';
 
-
 interface RazorpayResponse {
     razorpay_payment_id: string;
     razorpay_order_id: string;
     razorpay_signature?: string;
+}
+
+// Updated RazorpayOptions interface to match Razorpay's expected types
+interface RazorpayOptions {
+    key: string;
+    amount: number;
+    currency: string;
+    name: string;
+    description: string;
+    order_id: string;
+    handler: (response: RazorpayResponse) => void;
+    prefill: {
+        name?: string | undefined;
+        email?: string | undefined;
+    };
+    theme: {
+        color: string;
+    };
 }
 
 export default function Cart() {
@@ -64,6 +209,12 @@ export default function Cart() {
             return;
         }
 
+        const razorpayKeyId = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
+        if (!razorpayKeyId) {
+            toast.error("Payment configuration error");
+            return;
+        }
+
         setIsCheckingOut(true);
         try {
             const razorpay = await loadRazorpay();
@@ -79,8 +230,8 @@ export default function Cart() {
 
             const order = await response.json();
 
-            const options = {
-                key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+            const options: RazorpayOptions = {
+                key: razorpayKeyId,
                 amount: order.amount,
                 currency: "INR",
                 name: "StudentShowcase",
@@ -108,8 +259,8 @@ export default function Cart() {
                     toast.success("Your order has been placed successfully!");
                 },
                 prefill: {
-                    name: user.displayName,
-                    email: user.email,
+                    name: user.displayName || undefined,
+                    email: user.email || undefined,
                 },
                 theme: {
                     color: "#a855f7",

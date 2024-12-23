@@ -199,7 +199,7 @@ export default function AdminStorePage() {
         totalRevenue: 0,
         totalOrders: 0,
         averageOrderValue: 0,
-        topSellingProducts: [],
+        // topSellingProducts: [],
     })
 
     useEffect(() => {
@@ -213,32 +213,32 @@ export default function AdminStorePage() {
         const totalOrders = orders.length
         const averageOrderValue = totalOrders > 0 ? totalRevenue / totalOrders : 0
 
-        const productSales = {}
-        orders.forEach(order => {
-            order.products.forEach(product => {
-                if (productSales[product.productId]) {
-                    productSales[product.productId] += product.quantity
-                } else {
-                    productSales[product.productId] = product.quantity
-                }
-            })
-        })
+        // const productSales = {}
+        // orders.forEach(order => {
+        //     order.products.forEach(product => {
+        //         if (productSales[product.productId]) {
+        //             productSales[product.productId] += product.quantity
+        //         } else {
+        //             productSales[product.productId] = product.quantity
+        //         }
+        //     })
+        // })
 
 
 
-        const topSellingProducts = Object.entries(productSales)
-            .sort(([, a], [, b]) => b - a)
-            .slice(0, 5)
-            .map(([productId, quantity]) => {
-                const product = products.find(p => p.id === productId)
-                return { name: product ? product.name : 'Unknown', quantity }
-            })
+        // const topSellingProducts = Object.entries(productSales)
+        //     .sort(([, a], [, b]) => b - a)
+        //     .slice(0, 5)
+        //     .map(([productId, quantity]) => {
+        //         const product = products.find(p => p.id === productId)
+        //         return { name: product ? product.name : 'Unknown', quantity }
+        //     })
 
         setAnalyticsData({
             totalRevenue,
             totalOrders,
             averageOrderValue,
-            topSellingProducts,
+            // topSellingProducts,
         })
     }
 
@@ -293,7 +293,7 @@ export default function AdminStorePage() {
                         </Card>
                     </div>
 
-                    <Card className="mt-4">
+                    {/* <Card className="mt-4">
                         <CardHeader>
                             <CardTitle>Top Selling Products</CardTitle>
                         </CardHeader>
@@ -309,7 +309,7 @@ export default function AdminStorePage() {
                                 </BarChart>
                             </ResponsiveContainer>
                         </CardContent>
-                    </Card>
+                    </Card> */}
                 </TabsContent>
 
                 <TabsContent value="products">
