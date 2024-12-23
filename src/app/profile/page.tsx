@@ -207,6 +207,8 @@ export default function ProfilePage() {
         }
     }
 
+
+
     const handleAddSkill = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter' && skillInput.trim()) {
             e.preventDefault()

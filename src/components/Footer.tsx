@@ -4,7 +4,7 @@ import { Github, Linkedin, Twitter, Mail, Layers } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const Footer = () => {
-    const currentYear = new Date().getFullYear();
+
 
     const socialLinks = [
         {
@@ -115,7 +115,7 @@ export const Footer = () => {
                 {/* Copyright */}
                 <div className="border-t border-gray-800 mt-8 pt-6 text-center">
                     <p className="text-gray-400">
-                        © {currentYear} Student Showcase. All Rights Reserved.
+                        © 2024 Student Showcase. All Rights Reserved.
                     </p>
                 </div>
             </div>

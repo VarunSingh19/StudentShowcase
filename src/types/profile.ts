@@ -20,6 +20,9 @@ export interface UserProfile {
   languages: string[];
   emailAddress?: string;
   phoneNumber: string;
+  points: number;
+  orderHistory: string[]; // Array of order IDs
+  likedProducts: string[]; // Array of product IDs
 }
 
 export interface Project {
@@ -35,6 +38,7 @@ export interface Project {
   stars: number;
   starredBy: string[];
   userId?: string;
+  completionDate: Timestamp;
 }
 
 export interface Team {

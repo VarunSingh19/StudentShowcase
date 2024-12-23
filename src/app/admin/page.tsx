@@ -1,278 +1,448 @@
 // 'use client'
 
-// import { useState, useEffect } from 'react'
-// import { useAuth } from '@/hooks/useAuth'
-// import { collection, query, getDocs, doc, updateDoc } from 'firebase/firestore'
-// import { db } from '@/lib/firebase'
-// import { Button } from "@/components/ui/button"
-// import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-// import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-// import { AlertCircle } from 'lucide-react'
+// import React, { useState, useEffect } from 'react';
+// import { collection, query, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+// import { db } from '@/lib/firebase';
+// import { Product, Order } from '@/types/store';
+// import { Button } from "@/components/ui/button";
+// import { Input } from "@/components/ui/input";
+// import { Textarea } from "@/components/ui/textarea";
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// import { useToast } from '@/hooks/use-toast';
+// import { useRouter } from 'next/navigation';
+// import { auth } from '@/lib/firebase';
+// import { getDoc } from 'firebase/firestore';
 
-// interface Project {
-//     id: string;
-//     name: string;
-//     projectName: string;
-//     techStack: string;
-//     repoUrl: string;
-//     approved: boolean;
-// }
-
-// export default function AdminPanel() {
-//     const [projects, setProjects] = useState<Project[]>([])
-//     const [loading, setLoading] = useState(true)
-//     const [error, setError] = useState('')
-//     const { user } = useAuth()
+// export default function AdminStorePage() {
+//     const [products, setProducts] = useState<Product[]>([]);
+//     const [orders, setOrders] = useState<Order[]>([]);
+//     const [newProduct, setNewProduct] = useState<Partial<Product>>({
+//         name: '',
+//         description: '',
+//         price: 0,
+//         imageUrl: '',
+//         category: '',
+//         stock: 0,
+//     });
+//     const [loading, setLoading] = useState(true);
+//     const { toast } = useToast();
+//     const router = useRouter();
 
 //     useEffect(() => {
-//         fetchProjects()
-//     }, [])
+//         const checkAdminStatus = async () => {
+//             const user = auth.currentUser;
+//             if (!user) {
+//                 router.push('/admin/auth');
+//                 return;
+//             }
 
-//     const fetchProjects = async () => {
+//             const adminDoc = await getDoc(doc(db, 'adminUsers', user.uid));
+//             if (!adminDoc.exists() || !adminDoc.data().isAdmin) {
+//                 router.push('/admin/auth');
+//             }
+//         };
+
+//         checkAdminStatus();
+//     }, []);
+
+//     useEffect(() => {
+//         fetchProducts();
+//         fetchOrders();
+//     }, []);
+
+//     const fetchProducts = async () => {
 //         try {
-//             const q = query(collection(db, 'projects'))
-//             const querySnapshot = await getDocs(q)
-//             const fetchedProjects: Project[] = []
+//             const q = query(collection(db, 'products'));
+//             const querySnapshot = await getDocs(q);
+//             const productsData: Product[] = [];
 //             querySnapshot.forEach((doc) => {
-//                 fetchedProjects.push({ id: doc.id, ...doc.data() } as Project)
-//             })
-//             setProjects(fetchedProjects)
-//         } catch (err) {
-//             console.error('Error fetching projects:', err)
-//             setError('Failed to fetch projects')
+//                 productsData.push({ id: doc.id, ...doc.data() } as Product);
+//             });
+//             setProducts(productsData);
+//         } catch (error) {
+//             console.error('Error fetching products:', error);
+//             toast({
+//                 title: "Error",
+//                 description: "Failed to load products. Please try again.",
+//                 variant: "destructive",
+//             });
 //         } finally {
-//             setLoading(false)
+//             setLoading(false);
 //         }
-//     }
+//     };
 
-//     const handleApprove = async (projectId: string) => {
+//     const fetchOrders = async () => {
 //         try {
-//             await updateDoc(doc(db, 'projects', projectId), {
-//                 approved: true
-//             })
-//             setProjects(projects.map(project =>
-//                 project.id === projectId ? { ...project, approved: true } : project
-//             ))
-//         } catch (err) {
-//             console.error('Error approving project:', err)
-//             setError('Failed to approve project')
+//             const q = query(collection(db, 'orders'));
+//             const querySnapshot = await getDocs(q);
+//             const ordersData: Order[] = [];
+//             querySnapshot.forEach((doc) => {
+//                 ordersData.push({ id: doc.id, ...doc.data() } as Order);
+//             });
+//             setOrders(ordersData);
+//         } catch (error) {
+//             console.error('Error fetching orders:', error);
+//             toast({
+//                 title: "Error",
+//                 description: "Failed to load orders. Please try again.",
+//                 variant: "destructive",
+//             });
 //         }
-//     }
+//     };
 
-//     const handleReject = async (projectId: string) => {
+//     const handleAddProduct = async () => {
 //         try {
-//             await updateDoc(doc(db, 'projects', projectId), {
-//                 approved: false
-//             })
-//             setProjects(projects.map(project =>
-//                 project.id === projectId ? { ...project, approved: false } : project
-//             ))
-//         } catch (err) {
-//             console.error('Error rejecting project:', err)
-//             setError('Failed to reject project')
+//             await addDoc(collection(db, 'products'), newProduct);
+//             toast({
+//                 title: "Success",
+//                 description: "Product added successfully.",
+//             });
+//             setNewProduct({
+//                 name: '',
+//                 description: '',
+//                 price: 0,
+//                 imageUrl: '',
+//                 category: '',
+//                 stock: 0,
+//             });
+//             fetchProducts();
+//         } catch (error) {
+//             console.error('Error adding product:', error);
+//             toast({
+//                 title: "Error",
+//                 description: "Failed to add product. Please try again.",
+//                 variant: "destructive",
+//             });
 //         }
-//     }
+//     };
 
-//     if (!user) {
-//         return (
-//             <div className="container mx-auto px-4 py-8">
-//                 <Alert variant="destructive">
-//                     <AlertCircle className="h-4 w-4" />
-//                     <AlertTitle>Access Denied</AlertTitle>
-//                     <AlertDescription>
-//                         You must be logged in as an admin to access this page.
-//                     </AlertDescription>
-//                 </Alert>
-//             </div>
-//         )
-//     }
+//     const handleUpdateProduct = async (productId: string, updatedData: Partial<Product>) => {
+//         try {
+//             await updateDoc(doc(db, 'products', productId), updatedData);
+//             toast({
+//                 title: "Success",
+//                 description: "Product updated successfully.",
+//             });
+//             fetchProducts();
+//         } catch (error) {
+//             console.error('Error updating product:', error);
+//             toast({
+//                 title: "Error",
+//                 description: "Failed to update product. Please try again.",
+//                 variant: "destructive",
+//             });
+//         }
+//     };
+
+//     const handleDeleteProduct = async (productId: string) => {
+//         try {
+//             await deleteDoc(doc(db, 'products', productId));
+//             toast({
+//                 title: "Success",
+//                 description: "Product deleted successfully.",
+//             });
+//             fetchProducts();
+//         } catch (error) {
+//             console.error('Error deleting product:', error);
+//             toast({
+//                 title: "Error",
+//                 description: "Failed to delete product. Please try again.",
+//                 variant: "destructive",
+//             });
+//         }
+//     };
+
+//     const handleUpdateOrderStatus = async (orderId: string, status: Order['status']) => {
+//         try {
+//             await updateDoc(doc(db, 'orders', orderId), { status });
+//             toast({
+//                 title: "Success",
+//                 description: "Order status updated successfully.",
+//             });
+//             fetchOrders();
+//         } catch (error) {
+//             console.error('Error updating order status:', error);
+//             toast({
+//                 title: "Error",
+//                 description: "Failed to update order status. Please try again.",
+//                 variant: "destructive",
+//             });
+//         }
+//     };
 
 //     if (loading) {
-//         return <div>Loading...</div>
+//         return <div>Loading...</div>;
 //     }
-
-//     return (
-//         <div className="container mx-auto px-4 py-8">
-//             <h1 className="text-3xl font-bold mb-6">Admin Panel</h1>
-//             {error && (
-//                 <Alert variant="destructive" className="mb-4">
-//                     <AlertCircle className="h-4 w-4" />
-//                     <AlertTitle>Error</AlertTitle>
-//                     <AlertDescription>{error}</AlertDescription>
-//                 </Alert>
-//             )}
-//             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-//                 {projects.map((project) => (
-//                     <Card key={project.id}>
-//                         <CardHeader>
-//                             <CardTitle>{project.projectName}</CardTitle>
-//                             <CardDescription>By {project.name}</CardDescription>
-//                         </CardHeader>
-//                         <CardContent>
-//                             <p><strong>Tech Stack:</strong> {project.techStack}</p>
-//                             <p><strong>Repository:</strong> <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">{project.repoUrl}</a></p>
-//                         </CardContent>
-//                         <CardFooter className="flex justify-between">
-//                             {project.approved ? (
-//                                 <Button onClick={() => handleReject(project.id)} variant="destructive">Reject</Button>
-//                             ) : (
-//                                 <Button onClick={() => handleApprove(project.id)}>Approve</Button>
-//                             )}
-//                             <span className={`px-2 py-1 rounded ${project.approved ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'}`}>
-//                                 {project.approved ? 'Approved' : 'Pending'}
-//                             </span>
-//                         </CardFooter>
-//                     </Card>
-//                 ))}
-//             </div>
-//         </div>
-//     )
-// }
 
 'use client'
 
-import { useState, useEffect } from 'react'
-import Image from 'next/image'
-import { useAuth } from '@/hooks/useAuth'
-import { collection, query, getDocs, doc, updateDoc } from 'firebase/firestore'
-import { db } from '@/lib/firebase'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle } from 'lucide-react'
+import React, { useState, useEffect, useCallback } from 'react';
+import { collection, query, getDocs, addDoc, updateDoc, deleteDoc, doc, getDoc } from 'firebase/firestore';
+import { db, auth } from '@/lib/firebase';
+import { Product, Order } from '@/types/store';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useToast } from '@/hooks/use-toast';
+import { useRouter } from 'next/navigation';
 
-interface Project {
-    id: string;
-    name: string;
-    projectName: string;
-    techStack: string;
-    repoUrl: string;
-    approved: boolean;
-    imageUrl: string;
-}
+export default function AdminStorePage() {
+    const [products, setProducts] = useState<Product[]>([]);
+    const [orders, setOrders] = useState<Order[]>([]);
+    const [newProduct, setNewProduct] = useState<Partial<Product>>({
+        name: '',
+        description: '',
+        price: 0,
+        imageUrl: '',
+        category: '',
+        stock: 0,
+    });
+    const [loading, setLoading] = useState(true);
+    const { toast } = useToast();
+    const router = useRouter();
 
-export default function AdminPanel() {
-    const [projects, setProjects] = useState<Project[]>([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState('')
-    const { user } = useAuth()
+    const fetchProducts = useCallback(async () => {
+        try {
+            const q = query(collection(db, 'products'));
+            const querySnapshot = await getDocs(q);
+            const productsData: Product[] = [];
+            querySnapshot.forEach((doc) => {
+                productsData.push({ id: doc.id, ...doc.data() } as Product);
+            });
+            setProducts(productsData);
+        } catch (error) {
+            console.error('Error fetching products:', error);
+            toast({
+                title: "Error",
+                description: "Failed to load products. Please try again.",
+                variant: "destructive",
+            });
+        } finally {
+            setLoading(false);
+        }
+    }, [toast]);
+
+    const fetchOrders = useCallback(async () => {
+        try {
+            const q = query(collection(db, 'orders'));
+            const querySnapshot = await getDocs(q);
+            const ordersData: Order[] = [];
+            querySnapshot.forEach((doc) => {
+                ordersData.push({ id: doc.id, ...doc.data() } as Order);
+            });
+            setOrders(ordersData);
+        } catch (error) {
+            console.error('Error fetching orders:', error);
+            toast({
+                title: "Error",
+                description: "Failed to load orders. Please try again.",
+                variant: "destructive",
+            });
+        }
+    }, [toast]);
+
+    const checkAdminStatus = useCallback(async () => {
+        const user = auth.currentUser;
+        if (!user) {
+            router.push('/admin/auth');
+            return;
+        }
+
+        const adminDoc = await getDoc(doc(db, 'adminUsers', user.uid));
+        if (!adminDoc.exists() || !adminDoc.data().isAdmin) {
+            router.push('/admin/auth');
+        }
+    }, [router]);
 
     useEffect(() => {
-        fetchProjects()
-    }, [])
+        checkAdminStatus();
+    }, [checkAdminStatus]);
 
-    const fetchProjects = async () => {
+    useEffect(() => {
+        fetchProducts();
+        fetchOrders();
+    }, [fetchProducts, fetchOrders]);
+
+    const handleAddProduct = async () => {
         try {
-            const q = query(collection(db, 'projects'))
-            const querySnapshot = await getDocs(q)
-            const fetchedProjects: Project[] = []
-            querySnapshot.forEach((doc) => {
-                const data = doc.data()
-                fetchedProjects.push({
-                    id: doc.id,
-                    ...data,
-                    imageUrl: data.imageUrl || '/placeholder.svg'
-                } as Project)
-            })
-            setProjects(fetchedProjects)
-        } catch (err) {
-            console.error('Error fetching projects:', err)
-            setError('Failed to fetch projects')
-        } finally {
-            setLoading(false)
+            await addDoc(collection(db, 'products'), newProduct);
+            toast({
+                title: "Success",
+                description: "Product added successfully.",
+            });
+            setNewProduct({
+                name: '',
+                description: '',
+                price: 0,
+                imageUrl: '',
+                category: '',
+                stock: 0,
+            });
+            fetchProducts();
+        } catch (error) {
+            console.error('Error adding product:', error);
+            toast({
+                title: "Error",
+                description: "Failed to add product. Please try again.",
+                variant: "destructive",
+            });
         }
-    }
+    };
 
-    const handleApprove = async (projectId: string) => {
+    const handleUpdateProduct = async (productId: string, updatedData: Partial<Product>) => {
         try {
-            await updateDoc(doc(db, 'projects', projectId), {
-                approved: true
-            })
-            setProjects(projects.map(project =>
-                project.id === projectId ? { ...project, approved: true } : project
-            ))
-        } catch (err) {
-            console.error('Error approving project:', err)
-            setError('Failed to approve project')
+            await updateDoc(doc(db, 'products', productId), updatedData);
+            toast({
+                title: "Success",
+                description: "Product updated successfully.",
+            });
+            fetchProducts();
+        } catch (error) {
+            console.error('Error updating product:', error);
+            toast({
+                title: "Error",
+                description: "Failed to update product. Please try again.",
+                variant: "destructive",
+            });
         }
-    }
+    };
 
-    const handleReject = async (projectId: string) => {
+    const handleDeleteProduct = async (productId: string) => {
         try {
-            await updateDoc(doc(db, 'projects', projectId), {
-                approved: false
-            })
-            setProjects(projects.map(project =>
-                project.id === projectId ? { ...project, approved: false } : project
-            ))
-        } catch (err) {
-            console.error('Error rejecting project:', err)
-            setError('Failed to reject project')
+            await deleteDoc(doc(db, 'products', productId));
+            toast({
+                title: "Success",
+                description: "Product deleted successfully.",
+            });
+            fetchProducts();
+        } catch (error) {
+            console.error('Error deleting product:', error);
+            toast({
+                title: "Error",
+                description: "Failed to delete product. Please try again.",
+                variant: "destructive",
+            });
         }
-    }
+    };
 
-    if (!user) {
-        return (
-            <div className="container mx-auto px-4 py-8">
-                <Alert variant="destructive">
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertTitle>Access Denied</AlertTitle>
-                    <AlertDescription>
-                        You must be logged in as an admin to access this page.
-                    </AlertDescription>
-                </Alert>
-            </div>
-        )
-    }
+    const handleUpdateOrderStatus = async (orderId: string, status: Order['status']) => {
+        try {
+            await updateDoc(doc(db, 'orders', orderId), { status });
+            toast({
+                title: "Success",
+                description: "Order status updated successfully.",
+            });
+            fetchOrders();
+        } catch (error) {
+            console.error('Error updating order status:', error);
+            toast({
+                title: "Error",
+                description: "Failed to update order status. Please try again.",
+                variant: "destructive",
+            });
+        }
+    };
 
     if (loading) {
-        return <div>Loading...</div>
+        return <div>Loading...</div>;
     }
+
 
     return (
         <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-6">Admin Panel</h1>
-            {error && (
-                <Alert variant="destructive" className="mb-4">
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertTitle>Error</AlertTitle>
-                    <AlertDescription>{error}</AlertDescription>
-                </Alert>
-            )}
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {projects.map((project) => (
-                    <Card key={project.id} className="flex flex-col">
-                        <CardHeader>
-                            <CardTitle>{project.projectName}</CardTitle>
-                            <CardDescription>By {project.name}</CardDescription>
-                        </CardHeader>
-                        <CardContent className="flex-grow flex flex-col">
-                            <div className="relative w-full h-48 mb-4">
-                                <Image
-                                    src={project.imageUrl}
-                                    alt={project.projectName}
-                                    fill
-                                    style={{ objectFit: 'cover' }}
-                                    className="rounded-md"
-                                />
+
+            <Card className="mb-8">
+                <CardHeader>
+                    <CardTitle>Add New Product</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div className="grid gap-4">
+                        <Input
+                            placeholder="Product Name"
+                            value={newProduct.name}
+                            onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+                        />
+                        <Textarea
+                            placeholder="Product Description"
+                            value={newProduct.description}
+                            onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
+                        />
+                        <Input
+                            type="number"
+                            placeholder="Price"
+                            value={newProduct.price}
+                            onChange={(e) => setNewProduct({ ...newProduct, price: parseFloat(e.target.value) })}
+                        />
+                        <Input
+                            placeholder="Image URL"
+                            value={newProduct.imageUrl}
+                            onChange={(e) => setNewProduct({ ...newProduct, imageUrl: e.target.value })}
+                        />
+                        <Input
+                            placeholder="Category"
+                            value={newProduct.category}
+                            onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
+                        />
+                        <Input
+                            type="number"
+                            placeholder="Stock"
+                            value={newProduct.stock}
+                            onChange={(e) => setNewProduct({ ...newProduct, stock: parseInt(e.target.value) })}
+                        />
+                        <Button onClick={handleAddProduct}>Add Product</Button>
+                    </div>
+                </CardContent>
+            </Card>
+
+            <Card className="mb-8">
+                <CardHeader>
+                    <CardTitle>Manage Products</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    {products.map((product) => (
+                        <div key={product.id} className="mb-4 p-4 border rounded">
+                            <h3 className="font-bold">{product.name}</h3>
+                            <p>{product.description}</p>
+                            <p>Price: ${product.price}</p>
+                            <p>Stock: {product.stock}</p>
+                            <div className="mt-2">
+                                <Button onClick={() => handleUpdateProduct(product.id, { stock: product.stock + 1 })}>
+                                    Increase Stock
+                                </Button>
+                                <Button onClick={() => handleUpdateProduct(product.id, { stock: Math.max(0, product.stock - 1) })} className="ml-2">
+                                    Decrease Stock
+                                </Button>
+                                <Button onClick={() => handleDeleteProduct(product.id)} variant="destructive" className="ml-2">
+                                    Delete Product
+                                </Button>
                             </div>
-                            <p><strong>Tech Stack:</strong> {project.techStack}</p>
-                            <p><strong>Repository:</strong> <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">{project.repoUrl}</a></p>
-                        </CardContent>
-                        <CardFooter className="flex justify-between items-center">
-                            {project.approved ? (
-                                <Button onClick={() => handleReject(project.id)} variant="destructive">Reject</Button>
-                            ) : (
-                                <Button onClick={() => handleApprove(project.id)}>Approve</Button>
-                            )}
-                            <span className={`px-2 py-1 rounded ${project.approved ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'}`}>
-                                {project.approved ? 'Approved' : 'Pending'}
-                            </span>
-                        </CardFooter>
-                    </Card>
-                ))}
-            </div>
+                        </div>
+                    ))}
+                </CardContent>
+            </Card>
+
+            <Card>
+                <CardHeader>
+                    <CardTitle>Manage Orders</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    {orders.map((order) => (
+                        <div key={order.id} className="mb-4 p-4 border rounded">
+                            <h3 className="font-bold">Order #{order.id}</h3>
+                            <p>User ID: {order.userId}</p>
+                            <p>Total Amount: ${order.totalAmount}</p>
+                            <p>Status: {order.status}</p>
+                            <div className="mt-2">
+                                <Button onClick={() => handleUpdateOrderStatus(order.id, 'processing')}>Mark as Processing</Button>
+                                <Button onClick={() => handleUpdateOrderStatus(order.id, 'shipped')} className="ml-2">Mark as Shipped</Button>
+                                <Button onClick={() => handleUpdateOrderStatus(order.id, 'delivered')} className="ml-2">Mark as Delivered</Button>
+                            </div>
+                        </div>
+                    ))}
+                </CardContent>
+            </Card>
         </div>
-    )
+    );
 }
 

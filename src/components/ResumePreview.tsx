@@ -843,7 +843,7 @@ import { CertificatePreview } from './CertificatePreview';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { Github, Linkedin, Twitter, Globe } from 'lucide-react'
-import Image from 'next/image';
+import { ImageModal } from './ImageModal';
 
 interface Project {
     id: string;
@@ -918,15 +918,15 @@ export function ResumePreview({
             addClickableLink(imgX + 150, linkY, 50, 10, project.repoUrl);
         });
 
-        pdf.save('resume.pdf');
+        pdf.save(`${profile.displayName}'s Resume.pdf`);
     };
 
     return (
         <>
             <div className="flex flex-col">
-                <div className="flex justify-center items-center p-4">
+                {/* <div className="flex justify-center items-center p-4">
                     <h1 className="text-3xl font-bold text-gray-800">Resume Preview</h1>
-                </div>
+                </div> */}
                 <div className="flex justify-end p-4">
                     <Button onClick={handleDownload} className="bg-blue-600 hover:bg-blue-700 text-white">
                         <Download className="mr-2 h-4 w-4" />
@@ -937,11 +937,10 @@ export function ResumePreview({
             <div ref={resumeRef} className={`max-w-4xl mx-auto rounded-2xl shadow-2xl overflow-hidden ${getBackgroundClass()}`}>
                 <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6 flex items-center space-x-6">
                     <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg">
-                        <Image
-                            src={profile.avatarUrl || "/placeholder.svg"}
-                            alt={profile.displayName || "User Profile"}
-                            className="w-full h-full object-cover"
-                            crossOrigin="anonymous"
+                        <ImageModal
+                            src={profile.avatarUrl || `/placeholder.svg?text=${profile.displayName?.charAt(0) || 'U'}`}
+                            alt={profile.displayName?.charAt(0) || 'U'}
+
                         />
                     </div>
                     <div>
@@ -1068,7 +1067,7 @@ export function ResumePreview({
                                                     {project.projectName}
                                                 </h3>
                                                 <p className="text-sm text-gray-500">
-                                                    Issued by {profile.displayName} on {new Date(project.completionDate).toLocaleDateString()}
+                                                    Issued by {profile.displayName} on {new Date(project.id).toLocaleDateString()}
                                                 </p>
                                             </div>
                                             <span
@@ -1135,7 +1134,7 @@ export function ResumePreview({
                                                             projectName={project.projectName}
                                                             recipientName={profile.displayName}
                                                             techStack={project.techStack}
-                                                            completionDate={project.completionDate}
+                                                            completionDate={project.id}
                                                         />
                                                     </DialogContent>
                                                 </Dialog>

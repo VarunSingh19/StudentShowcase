@@ -6,7 +6,7 @@ import { db } from '@/lib/firebase'
 import { Certificate } from '@/components/Certificate'
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Loader2 } from 'lucide-react'
-
+import { UserProfile } from '@/types/profile'
 interface Project {
     id: string
     projectName: string
@@ -17,10 +17,7 @@ interface Project {
     userId: string
 }
 
-interface UserProfile {
-    displayName: string
-    // Add other profile fields as needed
-}
+
 
 export default function CertificatesPage() {
     const [certificates, setCertificates] = useState<{ project: Project; profile: UserProfile }[]>([])

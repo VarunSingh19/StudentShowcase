@@ -868,7 +868,16 @@ export default function ResumeBuilderPage() {
                     <TabsTrigger value="enhance">AI Enhance</TabsTrigger>
                     {generatedResume && <TabsTrigger value="generated">Generated Resume</TabsTrigger>}
                 </TabsList>
-
+                <Button onClick={handleGenerateResume} disabled={generating}>
+                    {generating ? (
+                        <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Generating...
+                        </>
+                    ) : (
+                        'Generate Resume'
+                    )}
+                </Button>
                 <TabsContent value="enhance">
                     <AIEnhancer
                         profile={profile}
@@ -903,6 +912,24 @@ export default function ResumeBuilderPage() {
                     <CertificatesContent projects={projects.filter(p => p.approved)} profile={profile as UserProfile} />
                 </TabsContent>
                 <TabsContent value="generated">
+                    <div className="mt-6 flex justify-center space-x-4 mb-3">
+                        <Button onClick={handleGenerateResume} disabled={generating}>
+                            {generating ? (
+                                <>
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    Generating...
+                                </>
+                            ) : (
+                                'Generate Resume'
+                            )}
+                        </Button>
+                        <Button onClick={() => handleDownload('pdf')} disabled={!generatedResume}>
+                            Download PDF
+                        </Button>
+                        <Button onClick={() => handleDownload('docx')} disabled={!generatedResume}>
+                            Download Word
+                        </Button>
+                    </div>
                     <Card>
                         <CardHeader>
                             <CardTitle>Generated Resume</CardTitle>
@@ -915,24 +942,9 @@ export default function ResumeBuilderPage() {
 
             </Tabs>
 
-            <div className="mt-6 flex justify-end space-x-4">
-                <Button onClick={handleGenerateResume} disabled={generating}>
-                    {generating ? (
-                        <>
-                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            Generating...
-                        </>
-                    ) : (
-                        'Generate Resume'
-                    )}
-                </Button>
-                <Button onClick={() => handleDownload('pdf')} disabled={!generatedResume}>
-                    Download PDF
-                </Button>
-                <Button onClick={() => handleDownload('docx')} disabled={!generatedResume}>
-                    Download Word
-                </Button>
-            </div>
+
+
+
             <Card className="mt-6">
                 <CardHeader>
                     <CardTitle>About AI Enhancement</CardTitle>

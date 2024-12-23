@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
-import { auth } from "../lib/firebase";
+import { auth, db } from "../lib/firebase";
 import {
   onAuthStateChanged,
   User,
   setPersistence,
   browserLocalPersistence,
 } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const [authChecked, setAuthChecked] = useState(false);
 
@@ -19,8 +21,14 @@ export function useAuth() {
     // Set up auth state listener
     const unsubscribe = onAuthStateChanged(
       auth,
-      (user) => {
+      async (user) => {
         setUser(user);
+        if (user) {
+          const adminDoc = await getDoc(doc(db, "adminUsers", user.uid));
+          setIsAdmin(adminDoc.exists() && adminDoc.data()?.isAdmin);
+        } else {
+          setIsAdmin(false);
+        }
         setLoading(false);
         setAuthChecked(true);
       },
@@ -38,5 +46,5 @@ export function useAuth() {
     return () => unsubscribe();
   }, []);
 
-  return { user, loading, authChecked };
+  return { user, isAdmin, loading, authChecked };
 }

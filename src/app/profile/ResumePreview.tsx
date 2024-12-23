@@ -235,7 +235,7 @@ export function ResumePreview({
                                                     {project.projectName}
                                                 </h3>
                                                 <p className="text-sm text-gray-500">
-                                                    Issued by StudentShowcase Inc. on {new Date(project.completionDate).toLocaleDateString()}
+                                                    Issued by StudentShowcase Inc. on {new Date(project.id).toLocaleDateString()}
                                                 </p>
                                             </div>
                                             <span
@@ -287,7 +287,7 @@ export function ResumePreview({
                                                 </Button>
 
                                                 <Dialog>
-                                                    <DialogTitle></DialogTitle>
+                                                    <DialogTitle ></DialogTitle>
                                                     <DialogTrigger asChild>
                                                         <Button
                                                             size="sm"
@@ -303,7 +303,7 @@ export function ResumePreview({
                                                             projectName={project.projectName}
                                                             recipientName={profile.displayName}
                                                             techStack={project.techStack}
-                                                            completionDate={project.completionDate}
+                                                            completionDate={project.id}
                                                         />
                                                     </DialogContent>
                                                 </Dialog>

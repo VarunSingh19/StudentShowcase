@@ -6,6 +6,9 @@ const MessageSchema = new mongoose.Schema({
   userName: String,
   content: String,
   createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date },
+  isDeleted: { type: Boolean, default: false },
+  readBy: { type: [String], default: [] },
 });
 
 export default mongoose.models.Message ||

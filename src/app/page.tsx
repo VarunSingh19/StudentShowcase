@@ -5,12 +5,9 @@ import { motion } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Briefcase, Star, Award, Users, Code, Zap, CheckCircle, ArrowRight, Loader2 } from 'lucide-react'
+import { Briefcase, Star, Award, Users, Code, Zap, CheckCircle, ArrowRight, Loader2, Brain, Sparkles, Bot, Network, Cpu } from 'lucide-react'
 import { AITaskManager } from '@/components/AITaskManager'
 import { fetchUserProfiles } from '@/lib/userUtils'
-
-
-
 import Image from 'next/image'
 import { collection, query, where, orderBy, onSnapshot, getDocs, Timestamp } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
@@ -19,17 +16,17 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from 'lucide-react'
 import { LikeButton } from '@/components/LikeButton'
 import { UserCard } from '@/components/UserCard'
+import Link from 'next/link'
+import { HeaderImageModal } from '@/components/HeaderImageModal'
 
 
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState('projects')
-
   return (
-
-
     <main>
       <HeroSection />
       <FeaturesSection />
+      <AICapabilitiesSection />
       <AITaskManagerSection />
       <ShowcaseSection activeTab={activeTab} setActiveTab={setActiveTab} />
       <TestimonialsSection />
@@ -39,64 +36,141 @@ export default function HomePage() {
 }
 
 function HeroSection() {
+  const features = [
+    { icon: <CheckCircle className="w-4 h-4 text-primary" />, text: "AI-Powered Learning" },
+    { icon: <CheckCircle className="w-4 h-4 text-primary" />, text: "Personalized Feedback" },
+    { icon: <CheckCircle className="w-4 h-4 text-primary" />, text: "Project Showcase" },
+  ]
   return (
-    <section className="py-20 overflow-hidden">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row items-center">
+    <section className="relative py-24  overflow-hidden">
+      {/* Animated background gradient */}
+      <div className="absolute inset-0 "></div>
+
+      {/* Floating elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(20)].map((_, i) => (
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
+            key={i}
+            className="absolute h-2 w-2 bg-primary/20 rounded-full"
+            animate={{
+              x: [Math.random() * window.innerWidth, Math.random() * window.innerWidth],
+              y: [Math.random() * window.innerHeight, Math.random() * window.innerHeight],
+            }}
+            transition={{
+              duration: Math.random() * 10 + 10,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="container relative mx-auto px-4 ">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="md:w-1/2 mb-8 md:mb-0"
+            className="md:w-1/2 space-y-6"
           >
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              <span className=" font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient">
-                Showcase Your Skills,
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary">
+              <Sparkles className="w-4 h-4 mr-2" />
+              <span>AI-Powered Innovation</span>
+            </div>
+
+            <h1 className="text-6xl font-bold leading-tight">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 animate-gradient-x">
+                The Future of AI
               </span>
               <br />
-              <span className=" font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient">
-                Build Your Future
-              </span>
+              <span>Is Here </span>
+              <span className='text-5xl text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 animate-gradient-x'>StudentShowcase</span>
             </h1>
-            <p className="text-xl text-muted-foreground mb-8">
-              StudentShowcase is the ultimate platform for students to display their projects,
-              connect with peers, and catch the eye of potential employers.
-            </p>
-            <div className="flex space-x-4">
-              <Button size="lg" className="text-lg px-8">
-                <span className=" font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient">
 
-                  Get Started
-                </span>
+            <p className="text-xl text-muted-foreground">
+              Experience the next generation of AI technology that adapts to your needs,
+              learns from your interactions, and helps you achieve more.
+            </p>
+
+            <div className="flex gap-4">
+              <Button size="lg" className="bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90">
+                Get Started
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8">
-                <span className=" font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient">
-
-                  Learn More
-                </span>
+              <Button size="lg" variant="outline" className="border-2">
+                Watch Demo
               </Button>
             </div>
+
+            <div className="flex items-center gap-4 pt-4">
+              {features.map((feature, i) => (
+                <motion.div
+                  key={i}
+                  className="flex items-center"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.2 }}
+                >
+                  <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                    {feature.icon}
+                  </div>
+                  <span className="ml-2 text-sm">{feature.text}</span>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
+
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
-            className="md:w-1/2"
+            className="md:w-1/2 relative"
           >
-            <Image
-              src="/studentshowcase.jpg"
-              alt="StudentShowcase Platform"
-              width={600}
-              height={400}
-              className="rounded-lg shadow-2xl"
-            />
+            <div className="relative w-full aspect-square max-w-lg mx-auto">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-full blur-3xl animate-pulse" />
+              <Image
+                src="/studentshowcase.jpg"
+                alt="AI Visualization"
+                fill
+                className="object-cover rounded-3xl"
+              />
+            </div>
+
+            {/* Floating badges */}
+            <motion.div
+              animate={{
+                y: [0, -10, 0],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+              }}
+              className="absolute -top-4 -right-4 bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-lg"
+            >
+              <Brain className="w-6 h-6 text-purple-600" />
+            </motion.div>
+
+            <motion.div
+              animate={{
+                y: [0, 10, 0],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                delay: 0.5,
+              }}
+              className="absolute -bottom-4 -left-4 bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-lg"
+            >
+              <Bot className="w-6 h-6 text-pink-600" />
+            </motion.div>
           </motion.div>
         </div>
       </div>
     </section>
   )
 }
+
+
 
 function FeaturesSection() {
   const features = [
@@ -109,32 +183,118 @@ function FeaturesSection() {
   ]
 
   return (
-    <section className="py-20 bg-secondary/30">
+    <section className="py-24 bg-secondary/30">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">
-          <span className=" font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl font-bold mb-6">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
+              Powerful Features
+            </span>
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Experience the next generation of AI technology
+          </p>
+        </motion.div>
 
-            Why Choose StudentShowcase?
-          </span>
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-card text-card-foreground p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow"
             >
-              <feature.icon className="h-12 w-12 text-primary mb-4" />
-              <h3 className="text-xl font-semibold mb-2">
-                <span className=" font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient">
+              <Card className="group hover:shadow-xl transition-all duration-300">
+                <CardContent className="p-6">
+                  <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  >
+                    <feature.icon className="h-12 w-12 mb-4 text-primary group-hover:text-purple-600 transition-colors duration-300" />
+                  </motion.div>
+                  <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-muted-foreground">{feature.description}</p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
 
-                  {feature.title}
-                </span>
-              </h3>
+function AICapabilitiesSection() {
+  const capabilities = [
+    {
+      icon: Brain,
+      title: "Advanced Learning",
+      description: "Adaptive AI that learns from your interactions and improves over time"
+    },
+    {
+      icon: Network,
+      title: "Neural Networks",
+      description: "State-of-the-art neural networks for complex problem solving"
+    },
+    {
+      icon: Cpu,
+      title: "Processing Power",
+      description: "High-performance computing for rapid AI operations"
+    },
+    {
+      icon: Sparkles,
+      title: "Smart Automation",
+      description: "Intelligent automation of repetitive tasks and workflows"
+    }
+  ]
 
-              <p className="text-muted-foreground">{feature.description}</p>
+  return (
+    <section className="py-24 relative overflow-hidden">
+      {/* Animated background */}
+      <div className="absolute inset-0 "></div>
+
+      <div className="container mx-auto px-4 relative">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl font-bold mb-6">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
+              AI Capabilities
+            </span>
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Powered by cutting-edge artificial intelligence to deliver exceptional results
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {capabilities.map((capability, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <Card className="relative overflow-hidden group hover:shadow-xl transition-all duration-300">
+                <CardContent className="p-6">
+                  {/* Animated gradient border */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+
+                  <div className="relative z-10">
+                    <capability.icon className="h-12 w-12 mb-4 text-primary" />
+                    <h3 className="text-xl font-semibold mb-2">{capability.title}</h3>
+                    <p className="text-muted-foreground">{capability.description}</p>
+                  </div>
+                </CardContent>
+              </Card>
             </motion.div>
           ))}
         </div>
@@ -145,52 +305,67 @@ function FeaturesSection() {
 
 function AITaskManagerSection() {
   return (
-    <section className="py-20">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row items-center justify-between">
+    <section className="py-24 relative overflow-hidden">
+      {/* Animated background */}
+      <div className="absolute inset-0 "></div>
+
+      <div className="container mx-auto px-4 relative">
+        <div className="flex flex-col lg:flex-row items-center gap-12">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
+            whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="md:w-1/2 mb-8 md:mb-0"
+            className="lg:w-1/2 space-y-6"
           >
-            <h2 className="text-3xl font-bold mb-4">
-              <span className=" font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-purple-500/10">
+              <Cpu className="w-5 h-5 mr-2 text-purple-600" />
+              <span className="text-purple-600 font-medium">AI-Powered Management</span>
+            </div>
 
-                AI-Powered Task Manager
+            <h2 className="text-4xl font-bold">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
+                Intelligent Task Management
               </span>
             </h2>
-            <p className="text-lg text-muted-foreground mb-6">
-              Boost your productivity with our cutting-edge AI task manager.
-              Let AI help you organize, prioritize, and complete your projects efficiently.
+
+            <p className="text-xl text-muted-foreground">
+              Experience the power of AI-driven task management. Our system learns from your workflow
+              and optimizes tasks automatically for maximum efficiency.
             </p>
-            <ul className="space-y-2">
+
+            <ul className="space-y-3">
               {[
-                "Intelligent task prioritization",
-                "Automated project planning",
-                "Smart reminders and notifications",
-                "AI-generated project insights"
+                "Real-time task analysis and optimization",
+                "Intelligent workload distribution",
+                "Automated priority management",
+                "Smart deadline predictions"
               ].map((feature, index) => (
-                <li key={index} className="flex items-center">
-                  <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
+                <motion.li
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="flex items-center space-x-2"
+                >
+                  <div className="h-2 w-2 rounded-full bg-purple-600" />
                   <span>{feature}</span>
-                </li>
+                </motion.li>
               ))}
             </ul>
-            <Button className="mt-6">
-              <span className=" font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient">
-
-                Try AI Task Manager
-              </span>
-            </Button>
           </motion.div>
+
           <motion.div
             initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
+            whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="md:w-1/2"
+            className="lg:w-1/2"
           >
-            <AITaskManager />
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-xl blur-xl" />
+              <div className="relative">
+                <AITaskManager />
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
@@ -204,6 +379,8 @@ function ShowcaseSection({
   activeTab: string,
   setActiveTab: (tab: string) => void
 }) {
+
+
 
   interface Project {
     id: string;
@@ -249,7 +426,7 @@ function ShowcaseSection({
                 id: doc.id,
                 ...data,
                 likes: data.likes || 0,
-                imageUrl: data.imageUrl || '/placeholder.svg'
+                imageUrl: data.imageUrl || '/studentshowcase.jpg'
               } as Project)
             })
             setProjects(fetchedProjects)
@@ -306,16 +483,29 @@ function ShowcaseSection({
   );
 
   return (
-    <section className="py-20 bg-secondary/30">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">
-          <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient">
-            Discover Amazing Work
-          </span>
-        </h2>
+    <section className="py-24 relative overflow-hidden">
+      {/* Animated gradient background */}
+      <div className="absolute inset-0 "></div>
+
+      <div className="container mx-auto px-4 relative">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl font-bold mb-6">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 animate-gradient-x">
+              Discover Amazing Work
+            </span>
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Explore innovative projects and connect with talented students
+          </p>
+        </motion.div>
 
         {error && (
-          <Alert variant="destructive" className="mb-4">
+          <Alert variant="destructive" className="mb-8 bg-red-50 border-red-200">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Error</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
@@ -323,91 +513,99 @@ function ShowcaseSection({
         )}
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-8">
-            <TabsTrigger value="projects">
-              <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient">
-                Featured Projects
-              </span>
+          <TabsList className="grid w-full grid-cols-2 mb-12 bg-secondary/50 p-1 rounded-lg">
+            <TabsTrigger
+              value="projects"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white transition-all duration-300"
+            >
+              <span className="font-semibold text-lg">Featured Projects</span>
             </TabsTrigger>
-            <TabsTrigger value="profiles">
-              <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient">
-                Student Profiles
-              </span>
+            <TabsTrigger
+              value="profiles"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white transition-all duration-300"
+            >
+              <span className="font-semibold text-lg">Student Profiles</span>
             </TabsTrigger>
           </TabsList>
 
           {loading ? (
-            <div className="flex justify-center items-center h-screen text-xl font-semibold">
-              Loading...
+            <div className="flex flex-col items-center justify-center py-20">
+              <Loader2 className="h-12 w-12 animate-spin text-purple-600 mb-4" />
+              <p className="text-lg text-muted-foreground">Loading amazing content...</p>
             </div>
           ) : (
             <>
               {activeTab === 'projects' && (
-                <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                   {projects.length === 0 ? (
-                    <Alert className="col-span-full">
+                    <Alert className="col-span-full bg-secondary/50 border-none">
                       <AlertCircle className="h-4 w-4" />
-                      <AlertTitle>No Projects</AlertTitle>
+                      <AlertTitle>No Projects Yet</AlertTitle>
                       <AlertDescription>
-                        There are no approved projects to display at the moment.
+                        Be the first to showcase your amazing project!
                       </AlertDescription>
                     </Alert>
                   ) : (
                     projects.map((project) => (
-                      <Card
+                      <motion.div
                         key={project.id}
-                        className="flex flex-col shadow-lg hover:shadow-2xl transition-shadow duration-300"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3 }}
                       >
-                        <CardHeader>
-                          <CardTitle className="text-xl font-bold text-gray-800">
-                            {project.projectName}
-                          </CardTitle>
-                          <CardDescription className="text-sm text-gray-500">
-                            By {project.name}
-                          </CardDescription>
-                        </CardHeader>
-                        <CardContent className="flex-grow flex flex-col">
-                          <div className="relative w-full h-48 mb-4">
-                            <Image
-                              src={project.imageUrl}
-                              alt={project.projectName}
-                              fill
-                              style={{ objectFit: 'cover' }}
-                              className="rounded-md"
-                            />
-                          </div>
-                          <p className="mb-2">
-                            <strong>Tech Stack:</strong> {project.techStack}
-                          </p>
-                          <p className="mb-2">
-                            <strong>Repository:</strong>{' '}
-                            <a
-                              href={project.repoUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-500 hover:underline"
-                            >
-                              {new URL(project.repoUrl).host}
-                            </a>
-                          </p>
-                          <div className="mt-auto pt-4 flex items-center justify-between">
-                            <LikeButton
-                              projectId={project.id}
-                              initialLikes={project.likes}
-                            />
-                            <span className="text-sm text-gray-500">
-                              {project.likes} likes
-                            </span>
-                          </div>
-                        </CardContent>
-                      </Card>
+                        <Card className="group h-full hover:shadow-2xl transition-all duration-500 bg-white/50 backdrop-blur-sm border-purple-100">
+                          <CardHeader>
+                            <CardTitle className="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                              {project.projectName}
+                            </CardTitle>
+                            <CardDescription className="text-sm">
+                              By {project.name}
+                            </CardDescription>
+                          </CardHeader>
+                          <CardContent className="space-y-4">
+                            <div className="relative w-full h-48 rounded-lg overflow-hidden group-hover:scale-105 transition-transform duration-500">
+                              <Image
+                                src={project.imageUrl || '/studentshowcase.jpg'}
+                                alt={project.projectName}
+                                fill
+                                className="object-cover"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            </div>
+                            <div className="space-y-2">
+                              <p className="font-medium">
+                                <span className="text-purple-600">Tech Stack:</span> {project.techStack}
+                              </p>
+                              <p>
+                                <a
+                                  href={project.repoUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-blue-500 hover:text-blue-700 transition-colors duration-300"
+                                >
+                                  View Repository →
+                                </a>
+                              </p>
+                              <div className="flex items-center justify-between pt-4 border-t border-purple-100">
+                                <LikeButton
+                                  projectId={project.id}
+                                  initialLikes={project.likes}
+                                />
+                                <span className="text-sm text-muted-foreground">
+                                  {project.likes} likes
+                                </span>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </motion.div>
                     ))
                   )}
                 </div>
               )}
 
               {activeTab === 'profiles' && (
-                <div className="">
+                <div className="space-y-8">
                   {loading ? (
                     <div className="flex justify-center items-center h-64">
                       <Loader2 className="h-8 w-8 animate-spin" />
@@ -415,17 +613,20 @@ function ShowcaseSection({
                   ) : error ? (
                     <div className="text-center text-red-500">
                       <p>Error: {error}</p>
-                      <p>Please check the console for more details.</p>
                     </div>
                   ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {filteredUsers.map(user => (
-                        <UserCard key={user.id} user={user} />
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      {filteredUsers.slice(0, 4).map(user => (
+                        <motion.div
+                          key={user.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <UserCard user={user} />
+                        </motion.div>
                       ))}
                     </div>
-                  )}
-                  {!loading && filteredUsers.length === 0 && (
-                    <p className="text-center text-muted-foreground">No users found.</p>
                   )}
                 </div>
               )}
@@ -433,13 +634,21 @@ function ShowcaseSection({
           )}
         </Tabs>
 
-        <div className="text-center mt-12">
-          <Button size="lg">
-            <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mt-16"
+        >
+          <Link href={activeTab === 'projects' ? '/projects' : '/users'}>
+            <Button
+              size="lg"
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+            >
               Explore All {activeTab === 'projects' ? 'Projects' : 'Profiles'}
-            </span>
-          </Button>
-        </div>
+            </Button>
+          </Link>
+        </motion.div>
       </div>
     </section>
   )
@@ -448,20 +657,24 @@ function ShowcaseSection({
 
 function TestimonialsSection() {
   const testimonials = [
-    { name: "Sarah M.", role: "Computer Science Student", quote: "StudentShowcase helped me land my dream internship!" },
-    { name: "David L.", role: "Recent Graduate", quote: "The AI task manager revolutionized my project workflow." },
-    { name: "Jessica K.", role: "Hiring Manager", quote: "We've found amazing talent through StudentShowcase." },
+    { name: "Divyansh S.", role: "Computer Science Student", quote: "StudentShowcase helped me land my dream internship!", image: "/divyansh.jpg" },
+    { name: "Rohan S.", role: "Recent Graduate", quote: "The AI task manager revolutionized my project workflow.", image: "/rohan.jpg" },
+    { name: "Jatin M.", role: "Hiring Manager", quote: "We've found amazing talent through StudentShowcase.", image: "/jatin.png" },
   ]
 
   return (
-    <section className="py-20">
+    <section className="py-20  from-background to-secondary/30">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">
-          <span className=" font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient">
-
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-4xl font-bold text-center mb-12"
+        >
+          <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
             What Our Users Say
           </span>
-        </h2>
+        </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
             <motion.div
@@ -469,11 +682,13 @@ function TestimonialsSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-card text-card-foreground p-6 rounded-lg shadow-lg"
+              className="bg-card text-card-foreground p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
             >
-              <p className="text-lg mb-4">{testimonial.quote}</p>
+              <p className="text-lg mb-4 italic">{testimonial.quote}</p>
               <div className="flex items-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-full mr-4"></div>
+                <HeaderImageModal src={testimonial.image}
+                  alt={testimonial.name}
+                />
                 <div>
                   <p className="font-semibold">{testimonial.name}</p>
                   <p className="text-sm text-muted-foreground">{testimonial.role}</p>
@@ -489,19 +704,39 @@ function TestimonialsSection() {
 
 function CallToActionSection() {
   return (
-    <section className="py-20">
-      <div className="container mx-auto px-4">
-        <div className="bg-primary text-primary-foreground rounded-lg p-12 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Showcase Your Skills?</h2>
-          <p className="text-xl mb-8">Join StudentShowcase today and take the first step towards a brighter future.</p>
-          <Button size="lg" variant="secondary" className="text-lg px-8">
-            <span className=" font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient">
+    <section className="py-24 relative overflow-hidden">
+      {/* Animated background */}
+      <div className="absolute inset-0 "></div>
 
-              Sign Up Now
-            </span>
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
-        </div>
+      <div className="container mx-auto px-4 relative">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-4xl mx-auto text-center"
+        >
+          <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-px rounded-3xl">
+            <div className="bg-background rounded-3xl p-12">
+              <h2 className="text-4xl font-bold mb-6">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
+                  Ready to Experience the Future?
+                </span>
+              </h2>
+              <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+                Join us in shaping your future with AI technology. Start your journey today.
+              </p>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button size="lg" className="bg-gradient-to-r from-purple-600 to-pink-600 text-white">
+                  Get Started
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   )

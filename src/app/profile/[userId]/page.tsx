@@ -29,9 +29,7 @@ async function getUserProjects(userId: string): Promise<Project[]> {
 }
 
 
-
 export default async function UserProfilePage({ params }: { params: { userId: string } }) {
-
 
     interface Project {
         id: string;
@@ -47,15 +45,15 @@ export default async function UserProfilePage({ params }: { params: { userId: st
     }
 
     const projects = await getUserProjects(params.userId)
-
+    // <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient">
     return (
         <div className="container mx-auto px-4 py-8">
             <Card className="mb-8 overflow-hidden">
-                <div className="relative h-48 bg-gradient-to-r from-blue-500 to-purple-600">
+                <div className="relative h-48 bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient">
                     <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/60 to-transparent">
                         <div className="flex items-end space-x-4">
                             <ImageModal
-                                src={profile.avatarUrl || '/placeholder.svg'}
+                                src={profile.avatarUrl || '/studentshowcase.jpg'}
                                 alt={profile.displayName}
                             />
                             <div>
@@ -128,7 +126,7 @@ export default async function UserProfilePage({ params }: { params: { userId: st
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                         {projects.map((project: Project) => (
                             <Card key={project.id} className="overflow-hidden">
-                                <div className="relative h-40 bg-gradient-to-br from-purple-400 to-indigo-600">
+                                <div className="relative h-40 bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient">
                                     <div className="absolute inset-0 flex items-center justify-center">
                                         <h3 className="text-2xl font-bold text-white">{project.projectName}</h3>
                                     </div>

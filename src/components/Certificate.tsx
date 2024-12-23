@@ -21,7 +21,7 @@ export interface CertificateProps {
         description: string
         features: string[]
         approved: boolean
-        completionDate: string
+        // completionDate: string
     }
     profile: UserProfile
 }
@@ -136,14 +136,17 @@ export function Certificate({ project, profile }: CertificateProps) {
         // }
 
         // Generate and add QR code
-        const qrCodeDataUrl = await QRCode.toDataURL(`https://studentshowcase.vercel.app/verify/${project.id}`, {
-            margin: 1,
-            width: 150,
-            color: {
-                dark: '#000000',
-                light: '#FFFFFF'
+        const qrCodeDataUrl = await QRCode.toDataURL(
+            `${process.env.NEXT_PUBLIC_CERTIFICATE_VERIFICATION_URL}/verify/${project.id}`,
+            {
+                margin: 1,
+                width: 150,
+                color: {
+                    dark: '#000000',
+                    light: '#FFFFFF'
+                }
             }
-        })
+        )
         pdf.addImage(qrCodeDataUrl, 'PNG', 20, 155, 25, 25)
         pdf.setFont('helvetica', 'italic')
         pdf.setFontSize(8)
@@ -234,7 +237,7 @@ export function Certificate({ project, profile }: CertificateProps) {
                                 projectName={project.projectName}
                                 recipientName={profile.displayName}
                                 techStack={project.techStack}
-                                completionDate={project.completionDate}
+                                completionDate={project.id}
                             />
                         </DialogContent>
                     </Dialog>

@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { CheckCircle } from 'lucide-react'
 
 type ProjectData = {
+    userId: string;
     projectName: string;
     user?: {
         displayName: string;
@@ -18,6 +19,11 @@ type ProjectData = {
     };
 };
 
+type UserData = {
+    displayName: string;
+    // Add other user fields if needed
+};
+
 async function getProjectData(projectId: string): Promise<ProjectData | null> {
     const projectRef = doc(db, 'projects', projectId)
     const projectSnap = await getDoc(projectRef)
@@ -26,13 +32,13 @@ async function getProjectData(projectId: string): Promise<ProjectData | null> {
         return null
     }
 
-    const projectData = projectSnap.data() as ProjectData
+    const projectData = projectSnap.data() as Omit<ProjectData, 'user'>
     const userRef = doc(db, 'profiles', projectData.userId)
     const userSnap = await getDoc(userRef)
 
     return {
         ...projectData,
-        user: userSnap.exists() ? userSnap.data() : null,
+        user: userSnap.exists() ? (userSnap.data() as UserData) : undefined
     }
 }
 
