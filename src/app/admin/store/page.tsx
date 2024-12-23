@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { collection, query, getDocs, addDoc, updateDoc, deleteDoc, doc, getDoc } from 'firebase/firestore'
+import { collection, query, getDocs, addDoc, updateDoc, deleteDoc, doc, getDoc, Timestamp } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { Product, UserProfile } from '@/types/store'
 import { Button } from "@/components/ui/button"
@@ -12,7 +12,6 @@ import { useToast } from '@/hooks/use-toast'
 import { useRouter } from 'next/navigation'
 import { auth } from '@/lib/firebase'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { AdminLayout } from '@/components/AdminLayout'
 import ProjectPanel from '../project/page'
 
@@ -22,8 +21,8 @@ interface Order {
     products: { productId: string; quantity: number }[];
     totalAmount: number;
     status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
-    createdAt: any;
-    updatedAt: any;
+    createdAt: Date | Timestamp;
+    updatedAt: Date | Timestamp;
     shippingAddress: {
         name: string;
         address: string;
