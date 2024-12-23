@@ -14,6 +14,7 @@ import { auth } from '@/lib/firebase'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { AdminLayout } from '@/components/AdminLayout'
 import ProjectPanel from '../project/page'
+import Image from 'next/image'
 
 interface Order {
     id: string;
@@ -364,7 +365,7 @@ export default function AdminStorePage() {
                                 {products.map((product) => (
                                     <Card key={product.id}>
                                         <CardContent className="p-4">
-                                            <img src={product.imageUrl} alt={product.name} className="w-full h-48 object-cover mb-4 rounded" />
+                                            <Image src={product.imageUrl} alt={product.name} className="w-full h-48 object-cover mb-4 rounded" />
                                             <h3 className="font-bold text-lg mb-2">{product.name}</h3>
                                             <p className="text-sm text-gray-600 mb-2">{product.description}</p>
                                             <p className="font-semibold mb-2">Price: ${product.price}</p>
