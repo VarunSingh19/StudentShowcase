@@ -396,9 +396,27 @@ function ShowcaseSection({
 
   interface UserProfile {
     id: string;
-    displayName?: string;
-    emailAddress?: string;
-    // Add other properties as needed
+    userId: string;
+    avatarUrl?: string;
+    displayName: string;
+    bio: string;
+    location: string;
+    skills: string[];
+    socialLinks: {
+      github: string;
+      linkedin: string;
+      twitter: string;
+      portfolio: string;
+    };
+    hobbiesAndInterests: string[];
+    languages: string[];
+    emailAddress: string;
+    phoneNumber: string;
+    points: number;
+    orderHistory: any[];
+    likedProducts: string[];
+    createdAt: Date | Timestamp;
+    updatedAt: Date | Timestamp;
   }
   const [projects, setProjects] = useState<Project[]>([]);
   const [profiles, setProfiles] = useState<UserProfile[]>([]); // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -406,6 +424,38 @@ function ShowcaseSection({
   const [error, setError] = useState('')
   const [searchTerm, setSearchTerm] = useState('') // eslint-disable-line @typescript-eslint/no-unused-vars
   const [users, setUsers] = useState<UserProfile[]>([]);
+
+  async function fetchUserProfiles(): Promise<UserProfile[]> {
+    const profilesCollection = collection(db, 'profiles');
+    const profilesSnapshot = await getDocs(profilesCollection);
+    return profilesSnapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        userId: data.userId,
+        displayName: data.displayName,
+        bio: data.bio,
+        location: data.location,
+        skills: data.skills || [],
+        socialLinks: {
+          github: data.socialLinks?.github || '',
+          linkedin: data.socialLinks?.linkedin || '',
+          twitter: data.socialLinks?.twitter || '',
+          portfolio: data.socialLinks?.portfolio || '',
+        },
+        hobbiesAndInterests: data.hobbiesAndInterests || [],
+        languages: data.languages || [],
+        emailAddress: data.emailAddress || '',
+        phoneNumber: data.phoneNumber || '',
+        points: data.points || 0,
+        orderHistory: data.orderHistory || [],
+        likedProducts: data.likedProducts || [],
+        createdAt: data.createdAt || new Date(),
+        updatedAt: data.updatedAt || new Date(),
+      } as UserProfile;
+    });
+  }
+
 
   useEffect(() => {
     async function loadData() {

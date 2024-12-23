@@ -87,9 +87,11 @@ import { db } from '@/lib/firebase'
 import { UserCard } from '@/components/UserCard'
 import { Input } from "@/components/ui/input"
 import { Loader2 } from 'lucide-react'
+import { UserProfile } from '@/types/profile'
 
 export default function AllUsersPage() {
-    const [users, setUsers] = useState<{ id: string; displayName?: string; emailAddress?: string }[]>([]);
+    const [users, setUsers] = useState<UserProfile[]>([]);
+
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [error, setError] = useState<string | null>(null);
@@ -102,19 +104,25 @@ export default function AllUsersPage() {
                 const userSnapshot = await getDocs(usersCollection);
                 console.log("User snapshot:", userSnapshot);
 
-                const userList = userSnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
+                const userList = userSnapshot.docs.map(doc => {
+                    const data = doc.data();
+                    return {
+                        id: doc.id,
+                        displayName: data.displayName || "Unknown User",
+                        emailAddress: data.emailAddress || "",
+                        bio: data.bio || "",
+                        location: data.location || "",
+                        skills: data.skills || [],
+                        avatarUrl: data.avatarUrl || "",
+                        phoneNumber: data.phoneNumber || ""
+                    };
+                }) as UserProfile[];
+
                 console.log("User list:", userList);
                 setUsers(userList);
             } catch (error) {
                 console.error("Error fetching users:", error);
-                if (error instanceof Error) {
-                    setError(error.message);
-                } else {
-                    setError("An unknown error occurred");
-                }
+                setError(error instanceof Error ? error.message : "An unknown error occurred");
             } finally {
                 setLoading(false);
             }
@@ -122,6 +130,7 @@ export default function AllUsersPage() {
 
         fetchUsers();
     }, []);
+
 
     const filteredUsers = users.filter(user =>
         user.displayName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
