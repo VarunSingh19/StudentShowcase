@@ -844,6 +844,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { Github, Linkedin, Twitter, Globe } from 'lucide-react'
 import { ImageModal } from './ImageModal';
+import { DialogTitle } from '@radix-ui/react-dialog';
 
 interface Project {
     id: string;
@@ -1130,6 +1131,7 @@ export function ResumePreview({
                                                         </Button>
                                                     </DialogTrigger>
                                                     <DialogContent className="max-w-3xl">
+                                                        <DialogTitle>{profile.displayName} Certificate Preview</DialogTitle>
                                                         <CertificatePreview
                                                             projectName={project.projectName}
                                                             recipientName={profile.displayName}

@@ -1265,6 +1265,8 @@ import { LoadingBar } from '@/components/LoadingBar';
 import { doc, getDoc } from 'firebase/firestore';
 import { HeaderImageModal } from '@/components/HeaderImageModal';
 import Link from 'next/link';
+import { NotificationsDropdown } from '@/components/NotificationsDropdown';
+import AnimatedRegistrationButton from '@/components/AnimatedRegistrationButton';
 
 interface MenuItem {
   href?: string;
@@ -1362,6 +1364,7 @@ export default function RootLayout({
             { href: '/resume-builder', label: 'Resume Builder' },
             { href: '/leaderboard', label: 'Leaderboard' },
             { href: '/jobportal', label: 'Job Portal' },
+            { href: '/skill-assessment', label: 'Skill Assessment' },
           ],
         },
         {
@@ -1476,6 +1479,7 @@ export default function RootLayout({
                       </Link>
                     </button>
                   )}
+                  <NotificationsDropdown />
                   <motion.div whileTap={{ scale: 0.95 }}>
                     <Button
                       onClick={() => auth.signOut()}
@@ -1489,9 +1493,9 @@ export default function RootLayout({
 
               {!user && (
                 <>
-                  <button onClick={() => handleNavigation('/authform')} className="text-white hover:text-purple-300 transition-colors duration-300">
-                    Registration
-                  </button>
+                  <AnimatedRegistrationButton
+                    onClick={() => handleNavigation('/authform')}
+                  />
                 </>
               )}
             </div>
@@ -1512,6 +1516,7 @@ export default function RootLayout({
                   </Link>
                 </div>
               )}
+              <NotificationsDropdown />
 
               {/* Menu Toggle Button */}
               <motion.button
@@ -1588,16 +1593,10 @@ export default function RootLayout({
                     ))
                   ) : (
                     <div className="mb-4">
-                      <motion.div
-                        whileHover={{ x: 10 }}
+
+                      <AnimatedRegistrationButton
                         onClick={() => handleNavigation('/authform')}
-                      >
-                        <button
-                          className="block text-white text-base py-2 hover:text-purple-300 transition-colors w-full text-left"
-                        >
-                          Registration
-                        </button>
-                      </motion.div>
+                      />
                     </div>
                   )}
 

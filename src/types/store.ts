@@ -15,6 +15,7 @@ export interface Order {
   id: string;
   userId: string;
   products: { productId: string; quantity: number }[];
+  price: number;
   totalAmount: number;
   status: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
   createdAt: any;
@@ -28,6 +29,15 @@ export interface Order {
     country: string;
   };
   userProfile?: UserProfile;
+}
+
+export interface ShippingAddress {
+  name: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
 }
 
 export interface CartItem {

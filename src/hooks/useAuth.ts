@@ -6,28 +6,43 @@ import {
   setPersistence,
   browserLocalPersistence,
 } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  collection,
+  query,
+  where,
+  onSnapshot,
+} from "firebase/firestore";
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const [authChecked, setAuthChecked] = useState(false);
+  const [teamNotifications, setTeamNotifications] = useState<{
+    [teamId: string]: number;
+  }>({});
 
   useEffect(() => {
-    // Set persistence to local
+    let unsubscribeTeams: (() => void) | null = null;
+
     setPersistence(auth, browserLocalPersistence).catch(console.error);
 
-    // Set up auth state listener
-    const unsubscribe = onAuthStateChanged(
+    const unsubscribeAuth = onAuthStateChanged(
       auth,
       async (user) => {
         setUser(user);
         if (user) {
           const adminDoc = await getDoc(doc(db, "adminUsers", user.uid));
           setIsAdmin(adminDoc.exists() && adminDoc.data()?.isAdmin);
+          unsubscribeTeams = subscribeToTeamNotifications(user.uid);
         } else {
           setIsAdmin(false);
+          setTeamNotifications({});
+          if (unsubscribeTeams) {
+            unsubscribeTeams();
+          }
         }
         setLoading(false);
         setAuthChecked(true);
@@ -36,15 +51,32 @@ export function useAuth() {
         console.error("Auth state change error:", error);
         setLoading(false);
         setAuthChecked(true);
-      },
-      () => {
-        setLoading(false);
-        setAuthChecked(true);
       }
     );
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribeAuth();
+      if (unsubscribeTeams) {
+        unsubscribeTeams();
+      }
+    };
   }, []);
 
-  return { user, isAdmin, loading, authChecked };
+  const subscribeToTeamNotifications = (userId: string) => {
+    const teamsQuery = query(
+      collection(db, "teams"),
+      where("currentMembers", "array-contains", userId)
+    );
+
+    return onSnapshot(teamsQuery, (snapshot) => {
+      const notifications: { [teamId: string]: number } = {};
+      snapshot.docs.forEach((doc) => {
+        const teamData = doc.data();
+        notifications[doc.id] = teamData.unreadMessages?.[userId] || 0;
+      });
+      setTeamNotifications(notifications);
+    });
+  };
+
+  return { user, isAdmin, loading, authChecked, teamNotifications };
 }

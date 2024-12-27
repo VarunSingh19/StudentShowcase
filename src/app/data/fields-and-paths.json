@@ -1,0 +1,1108 @@
+{
+  "fields": [
+    {
+      "id": "software-development",
+      "name": "Software Development",
+      "icon": "Code",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "backend",
+          "name": "Backend Development",
+          "icon": "Server"
+        },
+        {
+          "id": "frontend",
+          "name": "Frontend Development",
+          "icon": "Layout"
+        },
+        {
+          "id": "mobile",
+          "name": "Mobile App Development",
+          "icon": "Smartphone"
+        },
+        {
+          "id": "devops",
+          "name": "DevOps",
+          "icon": "GitBranch"
+        },
+        {
+          "id": "game-dev",
+          "name": "Game Development",
+          "icon": "Gamepad2"
+        },
+        {
+          "id": "embedded",
+          "name": "Embedded Systems",
+          "icon": "Chip"
+        },
+        {
+          "id": "desktop",
+          "name": "Desktop Development",
+          "icon": "Monitor"
+        },
+        {
+          "id": "testing",
+          "name": "Software Testing",
+          "icon": "TestTube"
+        },
+        {
+          "id": "api-development",
+          "name": "API Development",
+          "icon": "Network"
+        },
+        {
+          "id": "microservices",
+          "name": "Microservices",
+          "icon": "Boxes"
+        },
+        {
+          "id": "low-code",
+          "name": "Low-Code Development",
+          "icon": "Blocks"
+        },
+        {
+          "id": "web3",
+          "name": "Web3 Development",
+          "icon": "Hexagon"
+        }
+      ]
+    },
+    {
+      "id": "data-science",
+      "name": "Data Science",
+      "icon": "Database",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "ml",
+          "name": "Machine Learning",
+          "icon": "Brain"
+        },
+        {
+          "id": "data-analysis",
+          "name": "Data Analysis",
+          "icon": "BarChart"
+        },
+        {
+          "id": "big-data",
+          "name": "Big Data",
+          "icon": "Database"
+        },
+        {
+          "id": "data-engineering",
+          "name": "Data Engineering",
+          "icon": "Cog"
+        },
+        {
+          "id": "data-visualization",
+          "name": "Data Visualization",
+          "icon": "PieChart"
+        },
+        {
+          "id": "statistics",
+          "name": "Statistical Analysis",
+          "icon": "Activity"
+        },
+        {
+          "id": "predictive-analytics",
+          "name": "Predictive Analytics",
+          "icon": "TrendingUp"
+        },
+        {
+          "id": "data-mining",
+          "name": "Data Mining",
+          "icon": "Pick"
+        },
+        {
+          "id": "business-intelligence",
+          "name": "Business Intelligence",
+          "icon": "LineChart"
+        },
+        {
+          "id": "quantum-computing",
+          "name": "Quantum Computing",
+          "icon": "Atom"
+        }
+      ]
+    },
+    {
+      "id": "design",
+      "name": "Design",
+      "icon": "Palette",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "ui-ux",
+          "name": "UI/UX Design",
+          "icon": "Figma"
+        },
+        {
+          "id": "graphic-design",
+          "name": "Graphic Design",
+          "icon": "Image"
+        },
+        {
+          "id": "motion-design",
+          "name": "Motion Design",
+          "icon": "Video"
+        },
+        {
+          "id": "product-design",
+          "name": "Product Design",
+          "icon": "Box"
+        },
+        {
+          "id": "web-design",
+          "name": "Web Design",
+          "icon": "Globe"
+        },
+        {
+          "id": "interaction-design",
+          "name": "Interaction Design",
+          "icon": "Mouse"
+        },
+        {
+          "id": "3d-design",
+          "name": "3D Design",
+          "icon": "Cube"
+        },
+        {
+          "id": "design-systems",
+          "name": "Design Systems",
+          "icon": "Grid"
+        },
+        {
+          "id": "brand-design",
+          "name": "Brand Design",
+          "icon": "Brush"
+        },
+        {
+          "id": "game-design",
+          "name": "Game Design",
+          "icon": "Dices"
+        }
+      ]
+    },
+    {
+      "id": "cybersecurity",
+      "name": "Cybersecurity",
+      "icon": "Shield",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "network-security",
+          "name": "Network Security",
+          "icon": "Network"
+        },
+        {
+          "id": "ethical-hacking",
+          "name": "Ethical Hacking",
+          "icon": "Bug"
+        },
+        {
+          "id": "security-analysis",
+          "name": "Security Analysis",
+          "icon": "Search"
+        },
+        {
+          "id": "incident-response",
+          "name": "Incident Response",
+          "icon": "AlertTriangle"
+        },
+        {
+          "id": "forensics",
+          "name": "Digital Forensics",
+          "icon": "Microscope"
+        },
+        {
+          "id": "malware-analysis",
+          "name": "Malware Analysis",
+          "icon": "Virus"
+        },
+        {
+          "id": "cloud-security",
+          "name": "Cloud Security",
+          "icon": "CloudOff"
+        },
+        {
+          "id": "application-security",
+          "name": "Application Security",
+          "icon": "ShieldCheck"
+        },
+        {
+          "id": "cryptography",
+          "name": "Cryptography",
+          "icon": "Key"
+        },
+        {
+          "id": "devsecops",
+          "name": "DevSecOps",
+          "icon": "Lock"
+        }
+      ]
+    },
+    {
+      "id": "cloud-computing",
+      "name": "Cloud Computing",
+      "icon": "Cloud",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "aws",
+          "name": "Amazon Web Services",
+          "icon": "Cloud"
+        },
+        {
+          "id": "azure",
+          "name": "Microsoft Azure",
+          "icon": "Cloud"
+        },
+        {
+          "id": "gcp",
+          "name": "Google Cloud Platform",
+          "icon": "Cloud"
+        },
+        {
+          "id": "cloud-architecture",
+          "name": "Cloud Architecture",
+          "icon": "Buildings"
+        },
+        {
+          "id": "serverless",
+          "name": "Serverless Computing",
+          "icon": "Zap"
+        },
+        {
+          "id": "containerization",
+          "name": "Containerization",
+          "icon": "Package"
+        },
+        {
+          "id": "cloud-storage",
+          "name": "Cloud Storage",
+          "icon": "HardDrive"
+        },
+        {
+          "id": "edge-computing",
+          "name": "Edge Computing",
+          "icon": "Network"
+        },
+        {
+          "id": "cloud-native",
+          "name": "Cloud Native Development",
+          "icon": "CloudCog"
+        },
+        {
+          "id": "multi-cloud",
+          "name": "Multi-Cloud Management",
+          "icon": "Clouds"
+        }
+      ]
+    },
+    {
+      "id": "ai",
+      "name": "Artificial Intelligence",
+      "icon": "Cpu",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "nlp",
+          "name": "Natural Language Processing",
+          "icon": "MessageSquare"
+        },
+        {
+          "id": "computer-vision",
+          "name": "Computer Vision",
+          "icon": "Eye"
+        },
+        {
+          "id": "robotics",
+          "name": "Robotics",
+          "icon": "Bot"
+        },
+        {
+          "id": "deep-learning",
+          "name": "Deep Learning",
+          "icon": "Network"
+        },
+        {
+          "id": "reinforcement-learning",
+          "name": "Reinforcement Learning",
+          "icon": "Trophy"
+        },
+        {
+          "id": "ai-ethics",
+          "name": "AI Ethics",
+          "icon": "Scale"
+        },
+        {
+          "id": "generative-ai",
+          "name": "Generative AI",
+          "icon": "Wand"
+        },
+        {
+          "id": "expert-systems",
+          "name": "Expert Systems",
+          "icon": "Brain"
+        },
+        {
+          "id": "autonomous-systems",
+          "name": "Autonomous Systems",
+          "icon": "Car"
+        },
+        {
+          "id": "cognitive-computing",
+          "name": "Cognitive Computing",
+          "icon": "Sparkles"
+        }
+      ]
+    },
+    {
+      "id": "blockchain",
+      "name": "Blockchain",
+      "icon": "Link",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "smart-contracts",
+          "name": "Smart Contracts",
+          "icon": "FileContract"
+        },
+        {
+          "id": "crypto",
+          "name": "Cryptocurrency",
+          "icon": "Bitcoin"
+        },
+        {
+          "id": "dapps",
+          "name": "Decentralized Apps",
+          "icon": "AppWindow"
+        },
+        {
+          "id": "defi",
+          "name": "Decentralized Finance",
+          "icon": "Wallet"
+        },
+        {
+          "id": "nft",
+          "name": "NFT Development",
+          "icon": "Image"
+        },
+        {
+          "id": "consensus",
+          "name": "Consensus Mechanisms",
+          "icon": "Users"
+        },
+        {
+          "id": "tokenomics",
+          "name": "Tokenomics",
+          "icon": "Coins"
+        },
+        {
+          "id": "blockchain-security",
+          "name": "Blockchain Security",
+          "icon": "Shield"
+        },
+        {
+          "id": "dao",
+          "name": "DAOs",
+          "icon": "Network"
+        }
+      ]
+    },
+    {
+      "id": "iot",
+      "name": "Internet of Things",
+      "icon": "Radio",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "sensors",
+          "name": "Sensor Networks",
+          "icon": "Signal"
+        },
+        {
+          "id": "iot-protocols",
+          "name": "IoT Protocols",
+          "icon": "Network"
+        },
+        {
+          "id": "embedded-systems",
+          "name": "Embedded Systems",
+          "icon": "Microchip"
+        },
+        {
+          "id": "industrial-iot",
+          "name": "Industrial IoT",
+          "icon": "Factory"
+        },
+        {
+          "id": "smart-home",
+          "name": "Smart Home Technology",
+          "icon": "Home"
+        },
+        {
+          "id": "wearables",
+          "name": "Wearable Technology",
+          "icon": "Watch"
+        },
+        {
+          "id": "iot-security",
+          "name": "IoT Security",
+          "icon": "Shield"
+        },
+        {
+          "id": "iot-analytics",
+          "name": "IoT Analytics",
+          "icon": "BarChart"
+        }
+      ]
+    },
+    {
+      "id": "ar-vr",
+      "name": "AR/VR Development",
+      "icon": "Glasses",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "ar-development",
+          "name": "Augmented Reality",
+          "icon": "Eye"
+        },
+        {
+          "id": "vr-development",
+          "name": "Virtual Reality",
+          "icon": "Boxes"
+        },
+        {
+          "id": "mixed-reality",
+          "name": "Mixed Reality",
+          "icon": "Combine"
+        },
+        {
+          "id": "spatial-computing",
+          "name": "Spatial Computing",
+          "icon": "Box"
+        },
+        {
+          "id": "3d-modeling",
+          "name": "3D Modeling",
+          "icon": "Cube"
+        },
+        {
+          "id": "motion-tracking",
+          "name": "Motion Tracking",
+          "icon": "Activity"
+        },
+        {
+          "id": "immersive-audio",
+          "name": "Immersive Audio",
+          "icon": "Headphones"
+        },
+        {
+          "id": "xr-interfaces",
+          "name": "XR Interfaces",
+          "icon": "Mouse"
+        }
+      ]
+    },
+    {
+      "id": "quality-assurance",
+      "name": "Quality Assurance",
+      "icon": "CheckCircle",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "automation-testing",
+          "name": "Test Automation",
+          "icon": "Play"
+        },
+        {
+          "id": "performance-testing",
+          "name": "Performance Testing",
+          "icon": "Activity"
+        },
+        {
+          "id": "security-testing",
+          "name": "Security Testing",
+          "icon": "Shield"
+        },
+        {
+          "id": "manual-testing",
+          "name": "Manual Testing",
+          "icon": "ClipboardCheck"
+        },
+        {
+          "id": "mobile-testing",
+          "name": "Mobile Testing",
+          "icon": "Smartphone"
+        },
+        {
+          "id": "api-testing",
+          "name": "API Testing",
+          "icon": "Server"
+        },
+        {
+          "id": "accessibility-testing",
+          "name": "Accessibility Testing",
+          "icon": "Accessibility"
+        },
+        {
+          "id": "continuous-testing",
+          "name": "Continuous Testing",
+          "icon": "RefreshCw"
+        }
+      ]
+    },
+    {
+      "id": "finance",
+      "name": "Finance",
+      "icon": "DollarSign",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "investment-banking",
+          "name": "Investment Banking",
+          "icon": "TrendingUp"
+        },
+        {
+          "id": "corporate-finance",
+          "name": "Corporate Finance",
+          "icon": "Building"
+        },
+        {
+          "id": "financial-analysis",
+          "name": "Financial Analysis",
+          "icon": "LineChart"
+        },
+        {
+          "id": "risk-management",
+          "name": "Risk Management",
+          "icon": "Shield"
+        },
+        {
+          "id": "wealth-management",
+          "name": "Wealth Management",
+          "icon": "Wallet"
+        },
+        {
+          "id": "fintech",
+          "name": "Financial Technology",
+          "icon": "Smartphone"
+        },
+        {
+          "id": "insurance",
+          "name": "Insurance",
+          "icon": "Umbrella"
+        },
+        {
+          "id": "tax",
+          "name": "Tax Planning",
+          "icon": "FileText"
+        },
+        {
+          "id": "audit",
+          "name": "Audit",
+          "icon": "CheckSquare"
+        },
+        {
+          "id": "treasury",
+          "name": "Treasury",
+          "icon": "Vault"
+        }
+      ]
+    },
+    {
+      "id": "marketing",
+      "name": "Marketing",
+      "icon": "Target",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "digital-marketing",
+          "name": "Digital Marketing",
+          "icon": "Globe"
+        },
+        {
+          "id": "content-marketing",
+          "name": "Content Marketing",
+          "icon": "FileText"
+        },
+        {
+          "id": "social-media",
+          "name": "Social Media Marketing",
+          "icon": "Share2"
+        },
+        {
+          "id": "seo",
+          "name": "Search Engine Optimization",
+          "icon": "Search"
+        },
+        {
+          "id": "email-marketing",
+          "name": "Email Marketing",
+          "icon": "Mail"
+        },
+        {
+          "id": "brand-management",
+          "name": "Brand Management",
+          "icon": "Award"
+        },
+        {
+          "id": "market-research",
+          "name": "Market Research",
+          "icon": "Search"
+        },
+        {
+          "id": "advertising",
+          "name": "Advertising",
+          "icon": "Radio"
+        },
+        {
+          "id": "pr",
+          "name": "Public Relations",
+          "icon": "Users"
+        },
+        {
+          "id": "analytics",
+          "name": "Marketing Analytics",
+          "icon": "BarChart"
+        }
+      ]
+    },
+    {
+      "id": "hr",
+      "name": "Human Resources",
+      "icon": "Users",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "recruitment",
+          "name": "Recruitment",
+          "icon": "UserPlus"
+        },
+        {
+          "id": "talent-management",
+          "name": "Talent Management",
+          "icon": "Star"
+        },
+        {
+          "id": "compensation",
+          "name": "Compensation & Benefits",
+          "icon": "DollarSign"
+        },
+        {
+          "id": "training",
+          "name": "Training & Development",
+          "icon": "GraduationCap"
+        },
+        {
+          "id": "employee-relations",
+          "name": "Employee Relations",
+          "icon": "Heart"
+        },
+        {
+          "id": "hr-analytics",
+          "name": "HR Analytics",
+          "icon": "BarChart"
+        },
+        {
+          "id": "workplace-safety",
+          "name": "Workplace Safety",
+          "icon": "Shield"
+        },
+        {
+          "id": "hr-compliance",
+          "name": "HR Compliance",
+          "icon": "CheckSquare"
+        },
+        {
+          "id": "diversity",
+          "name": "Diversity & Inclusion",
+          "icon": "Users"
+        },
+        {
+          "id": "hr-operations",
+          "name": "HR Operations",
+          "icon": "Settings"
+        }
+      ]
+    },
+    {
+      "id": "operations",
+      "name": "Operations",
+      "icon": "Settings",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "supply-chain",
+          "name": "Supply Chain Management",
+          "icon": "Truck"
+        },
+        {
+          "id": "logistics",
+          "name": "Logistics",
+          "icon": "Package"
+        },
+        {
+          "id": "quality-management",
+          "name": "Quality Management",
+          "icon": "CheckCircle"
+        },
+        {
+          "id": "process-improvement",
+          "name": "Process Improvement",
+          "icon": "TrendingUp"
+        },
+        {
+          "id": "facility-management",
+          "name": "Facility Management",
+          "icon": "Home"
+        },
+        {
+          "id": "inventory",
+          "name": "Inventory Management",
+          "icon": "Package"
+        },
+        {
+          "id": "procurement",
+          "name": "Procurement",
+          "icon": "ShoppingCart"
+        },
+        {
+          "id": "project-management",
+          "name": "Project Management",
+          "icon": "Clipboard"
+        },
+        {
+          "id": "risk-operations",
+          "name": "Risk & Compliance",
+          "icon": "Shield"
+        }
+      ]
+    },
+    {
+      "id": "legal",
+      "name": "Legal",
+      "icon": "Scale",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "corporate-law",
+          "name": "Corporate Law",
+          "icon": "Building"
+        },
+        {
+          "id": "intellectual-property",
+          "name": "Intellectual Property",
+          "icon": "Award"
+        },
+        {
+          "id": "contracts",
+          "name": "Contract Law",
+          "icon": "FileText"
+        },
+        {
+          "id": "compliance",
+          "name": "Legal Compliance",
+          "icon": "CheckSquare"
+        },
+        {
+          "id": "litigation",
+          "name": "Litigation",
+          "icon": "Gavel"
+        },
+        {
+          "id": "employment-law",
+          "name": "Employment Law",
+          "icon": "Users"
+        },
+        {
+          "id": "privacy-law",
+          "name": "Privacy Law",
+          "icon": "Lock"
+        },
+        {
+          "id": "regulatory",
+          "name": "Regulatory Affairs",
+          "icon": "Shield"
+        }
+      ]
+    },
+    {
+      "id": "sales",
+      "name": "Sales",
+      "icon": "TrendingUp",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "business-development",
+          "name": "Business Development",
+          "icon": "Briefcase"
+        },
+        {
+          "id": "account-management",
+          "name": "Account Management",
+          "icon": "Users"
+        },
+        {
+          "id": "inside-sales",
+          "name": "Inside Sales",
+          "icon": "Phone"
+        },
+        {
+          "id": "field-sales",
+          "name": "Field Sales",
+          "icon": "Map"
+        },
+        {
+          "id": "sales-operations",
+          "name": "Sales Operations",
+          "icon": "Settings"
+        },
+        {
+          "id": "sales-enablement",
+          "name": "Sales Enablement",
+          "icon": "Tool"
+        },
+        {
+          "id": "channel-sales",
+          "name": "Channel Sales",
+          "icon": "Git"
+        },
+        {
+          "id": "enterprise-sales",
+          "name": "Enterprise Sales",
+          "icon": "Building"
+        }
+      ]
+    },
+    {
+      "id": "customer-service",
+      "name": "Customer Service",
+      "icon": "Headphones",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "customer-support",
+          "name": "Customer Support",
+          "icon": "MessageCircle"
+        },
+        {
+          "id": "technical-support",
+          "name": "Technical Support",
+          "icon": "Tool"
+        },
+        {
+          "id": "customer-success",
+          "name": "Customer Success",
+          "icon": "Star"
+        },
+        {
+          "id": "client-relations",
+          "name": "Client Relations",
+          "icon": "Users"
+        },
+        {
+          "id": "help-desk",
+          "name": "Help Desk",
+          "icon": "LifeBuoy"
+        },
+        {
+          "id": "quality-assurance",
+          "name": "Quality Assurance",
+          "icon": "CheckCircle"
+        },
+        {
+          "id": "customer-experience",
+          "name": "Customer Experience",
+          "icon": "Heart"
+        }
+      ]
+    },
+    {
+      "id": "research-development",
+      "name": "Research & Development",
+      "icon": "Microscope",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "product-research",
+          "name": "Product Research",
+          "icon": "Search"
+        },
+        {
+          "id": "innovation",
+          "name": "Innovation Management",
+          "icon": "Lightbulb"
+        },
+        {
+          "id": "rd-engineering",
+          "name": "R&D Engineering",
+          "icon": "Tool"
+        },
+        {
+          "id": "prototype",
+          "name": "Prototyping",
+          "icon": "Box"
+        },
+        {
+          "id": "testing-validation",
+          "name": "Testing & Validation",
+          "icon": "CheckCircle"
+        },
+        {
+          "id": "research-analytics",
+          "name": "Research Analytics",
+          "icon": "Activity"
+        }
+      ]
+    },
+    {
+      "id": "administration",
+      "name": "Administration",
+      "icon": "Briefcase",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "office-management",
+          "name": "Office Management",
+          "icon": "Home"
+        },
+        {
+          "id": "executive-support",
+          "name": "Executive Support",
+          "icon": "UserCheck"
+        },
+        {
+          "id": "documentation",
+          "name": "Documentation",
+          "icon": "FileText"
+        },
+        {
+          "id": "records-management",
+          "name": "Records Management",
+          "icon": "Archive"
+        },
+        {
+          "id": "facilities",
+          "name": "Facilities Management",
+          "icon": "Building"
+        },
+        {
+          "id": "travel-admin",
+          "name": "Travel Administration",
+          "icon": "Plane"
+        }
+      ]
+    },
+    {
+      "id": "healthcare",
+      "name": "Healthcare",
+      "icon": "Heart",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "clinical-care",
+          "name": "Clinical Care",
+          "icon": "Stethoscope"
+        },
+        {
+          "id": "healthcare-admin",
+          "name": "Healthcare Administration",
+          "icon": "Clipboard"
+        },
+        {
+          "id": "medical-records",
+          "name": "Medical Records",
+          "icon": "FileText"
+        },
+        {
+          "id": "patient-care",
+          "name": "Patient Care",
+          "icon": "Users"
+        },
+        {
+          "id": "healthcare-tech",
+          "name": "Healthcare Technology",
+          "icon": "Laptop"
+        },
+        {
+          "id": "public-health",
+          "name": "Public Health",
+          "icon": "Globe"
+        },
+        {
+          "id": "medical-research",
+          "name": "Medical Research",
+          "icon": "Microscope"
+        }
+      ]
+    },
+    {
+      "id": "education",
+      "name": "Education",
+      "icon": "GraduationCap",
+      "color": "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300",
+      "textColor": "text-white",
+      "paths": [
+        {
+          "id": "teaching",
+          "name": "Teaching",
+          "icon": "Book"
+        },
+        {
+          "id": "curriculum-dev",
+          "name": "Curriculum Development",
+          "icon": "Edit"
+        },
+        {
+          "id": "educational-tech",
+          "name": "Educational Technology",
+          "icon": "Monitor"
+        },
+        {
+          "id": "student-affairs",
+          "name": "Student Affairs",
+          "icon": "Users"
+        },
+        {
+          "id": "academic-research",
+          "name": "Academic Research",
+          "icon": "Search"
+        },
+        {
+          "id": "administration-edu",
+          "name": "Educational Administration",
+          "icon": "Building"
+        },
+        {
+          "id": "special-education",
+          "name": "Special Education",
+          "icon": "Heart"
+        }
+      ]
+    }
+  ]
+}

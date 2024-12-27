@@ -2,12 +2,28 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: [
-      "res.cloudinary.com",
-      "images.bewakoof.com",
-      "th.bing.com",
-      "images-na.ssl-images-amazon.com",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
+      {
+        protocol: "https",
+        hostname: "images.bewakoof.com",
+      },
+      {
+        protocol: "https",
+        hostname: "th.bing.com",
+      },
+      {
+        protocol: "https",
+        hostname: "images-na.ssl-images-amazon.com",
+      },
     ],
+  },
+  typescript: {
+    // Set this to false if you want production builds to abort if there are type errors
+    ignoreBuildErrors: false,
   },
 };
 

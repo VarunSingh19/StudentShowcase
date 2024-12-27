@@ -472,7 +472,7 @@ export function Certificate({ project, profile }: CertificateProps) {
                             </Button>
                         </DialogTrigger>
                         <DialogContent className="max-w-3xl">
-                            <DialogTitle>Certificate Preview</DialogTitle>
+                            <DialogTitle>{profile.displayName} Certificate Preview</DialogTitle>
                             <CertificatePreview
                                 projectName={project.projectName}
                                 recipientName={profile.displayName}
