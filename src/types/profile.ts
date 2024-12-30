@@ -1,28 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 
 export interface UserProfile {
-  // id: string;
-  // userId: string;
-  // avatarUrl?: string;
-  // displayName: string;
-  // bio: string;
-  // location: string;
-  // skills: string[];
-  // socialLinks: {
-  //   github?: string;
-  //   linkedin?: string;
-  //   twitter?: string;
-  //   portfolio?: string;
-  // };
-  // createdAt: Date | Timestamp;
-  // updatedAt: Date | Timestamp;
-  // hobbiesAndInterests: string[];
-  // languages: string[];
-  // emailAddress?: string;
-  // phoneNumber: string;
-  // points: number;
-  // orderHistory: string[]; // Array of order IDs
-  // likedProducts: string[]; // Array of product IDs
   id: string;
   userId: string;
   avatarUrl?: string;

@@ -133,7 +133,7 @@ export function ProfileContent({ initialProfile, userId }: ProfileContentProps) 
                     </div>
                 </div>
 
-                <div>
+                {/* <div>
                     <Label htmlFor="hobbiesAndInterests">Hobbies and Interests</Label>
                     <Input
                         id="hobbiesAndInterests"
@@ -141,13 +141,13 @@ export function ProfileContent({ initialProfile, userId }: ProfileContentProps) 
                         onChange={(e) => setProfile({ ...profile, hobbiesAndInterests: e.target.value.split(',').map(item => item.trim()) })}
                         placeholder="Enter hobbies and interests, separated by commas"
                     />
-                </div>
+                </div> */}
 
                 <div>
                     <Label htmlFor="languages">Languages</Label>
                     <Input
                         id="languages"
-                        value={profile.languages.join(', ')}
+                        value={(profile.languages || []).join(', ')}
                         onChange={(e) => setProfile({ ...profile, languages: e.target.value.split(',').map(item => item.trim()) })}
                         placeholder="Enter languages, separated by commas"
                     />

@@ -1,14 +1,19 @@
+'use client'
+
 import React, { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useToast } from '@/hooks/use-toast';
+import toast from 'react-hot-toast';
 import { loadRazorpay } from '@/lib/razorpay';
 import { useAuth } from '@/hooks/useAuth';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { ShoppingCart, Minus, Plus, Trash2, Box, CreditCard } from 'lucide-react';
+import { Card } from "@/components/ui/card";
+import Image from 'next/image';
 
 interface AddressForm {
     name: string;
@@ -18,12 +23,35 @@ interface AddressForm {
     zipCode: string;
     country: string;
 }
+interface RazorpayResponse {
+    razorpay_payment_id: string;
+    razorpay_order_id: string;
+    razorpay_signature?: string;
+}
 
-export function Cart() {
+// Updated RazorpayOptions interface to match Razorpay's expected types
+interface RazorpayOptions {
+    key: string;
+    amount: number;
+    currency: string;
+    name: string;
+    description: string;
+    order_id: string;
+    handler: (response: RazorpayResponse) => void;
+    prefill: {
+        name?: string | undefined;
+        email?: string | undefined;
+    };
+    theme: {
+        color: string;
+    };
+}
+
+export default function Cart() {
     const { cart, removeFromCart, updateQuantity, clearCart, total } = useCart();
     const [isCheckingOut, setIsCheckingOut] = useState(false);
     const [showAddressForm, setShowAddressForm] = useState(false);
-    const [addressForm, setAddressForm] = useState<AddressForm>({
+    const [addressForm, setAddressForm] = useState({
         name: '',
         address: '',
         city: '',
@@ -31,7 +59,6 @@ export function Cart() {
         zipCode: '',
         country: '',
     });
-    const { toast } = useToast();
     const { user } = useAuth();
 
     const handleQuantityChange = (productId: string, newQuantity: number) => {
@@ -46,115 +73,9 @@ export function Cart() {
         setAddressForm({ ...addressForm, [e.target.name]: e.target.value });
     };
 
-    // const handleCheckout = async () => {
-    //     if (!user) {
-    //         toast({
-    //             title: "Error",
-    //             description: "You must be logged in to checkout.",
-    //             variant: "destructive",
-    //         });
-    //         return;
-    //     }
-
-    //     if (!showAddressForm) {
-    //         setShowAddressForm(true);
-    //         return;
-    //     }
-
-    //     // Validate address form
-    //     if (Object.values(addressForm).some(value => !value)) {
-    //         toast({
-    //             title: "Error",
-    //             description: "Please fill in all address fields.",
-    //             variant: "destructive",
-    //         });
-    //         return;
-    //     }
-
-    //     setIsCheckingOut(true);
-    //     try {
-    //         const razorpay = await loadRazorpay();
-
-    //         if (!razorpay) {
-    //             throw new Error('Razorpay SDK failed to load');
-    //         }
-
-    //         const response = await fetch('/api/create-order', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({ amount: total * 100 }), // Razorpay expects amount in paise
-    //         });
-
-    //         if (!response.ok) {
-    //             throw new Error('Failed to create order');
-    //         }
-
-    //         const order = await response.json();
-
-    //         const options = {
-    //             key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-    //             amount: order.amount,
-    //             currency: "INR",
-    //             name: "BuyOurMerch",
-    //             description: "Purchase from BuyOurMerch",
-    //             order_id: order.id,
-    //             handler: async function (response: any) {
-    //                 const orderData = {
-    //                     userId: user.uid,
-    //                     products: cart.map(item => ({
-    //                         productId: item.product.id,
-    //                         quantity: item.quantity,
-    //                         price: item.product.price
-    //                     })),
-    //                     totalAmount: total,
-    //                     paymentId: response.razorpay_payment_id,
-    //                     orderId: response.razorpay_order_id,
-    //                     status: 'paid',
-    //                     createdAt: new Date(),
-    //                     shippingAddress: addressForm,
-    //                 };
-
-    //                 await setDoc(doc(db, 'orders', response.razorpay_order_id), orderData);
-
-    //                 clearCart();
-    //                 toast({
-    //                     title: "Success",
-    //                     description: "Your order has been placed successfully!",
-    //                 });
-    //             },
-    //             prefill: {
-    //                 name: user.displayName,
-    //                 email: user.email,
-    //             },
-    //             theme: {
-    //                 color: "#3399cc",
-    //             },
-    //         };
-
-    //         const paymentObject = new razorpay(options);
-    //         paymentObject.open();
-    //     } catch (error) {
-    //         console.error('Error during checkout:', error);
-    //         toast({
-    //             title: "Error",
-    //             description: "There was an error processing your payment. Please try again.",
-    //             variant: "destructive",
-    //         });
-    //     } finally {
-    //         setIsCheckingOut(false);
-    //     }
-    // };
-
-
     const handleCheckout = async () => {
         if (!user) {
-            toast({
-                title: "Error",
-                description: "You must be logged in to checkout.",
-                variant: "destructive",
-            });
+            toast.error("You must be logged in to checkout.");
             return;
         }
 
@@ -164,54 +85,45 @@ export function Cart() {
         }
 
         if (Object.values(addressForm).some(value => !value)) {
-            toast({
-                title: "Error",
-                description: "Please fill in all address fields.",
-                variant: "destructive",
-            });
+            toast.error("Please fill in all address fields.");
+            return;
+        }
+
+        const razorpayKeyId = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
+        if (!razorpayKeyId) {
+            toast.error("Payment configuration error");
             return;
         }
 
         setIsCheckingOut(true);
         try {
             const razorpay = await loadRazorpay();
-
-            if (!razorpay) {
-                throw new Error('Razorpay SDK failed to load');
-            }
+            if (!razorpay) throw new Error('Razorpay SDK failed to load');
 
             const response = await fetch('/api/create-order', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ amount: total * 100 }),
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to create order');
-            }
+            if (!response.ok) throw new Error('Failed to create order');
 
             const order = await response.json();
 
-            const razorpayKey = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID as string; // Type assertion
-            if (!razorpayKey) {
-                throw new Error('Razorpay key is missing in environment variables');
-            }
-
-            const options = {
-                key: razorpayKey,
+            const options: RazorpayOptions = {
+                key: razorpayKeyId,
                 amount: order.amount,
                 currency: "INR",
-                name: "BuyOurMerch",
-                description: "Purchase from BuyOurMerch",
+                name: "StudentShowcase",
+                description: "Purchase from StudentShowcase",
                 order_id: order.id,
-                handler: async function (response: any) {
+                handler: async function (response: RazorpayResponse) {
                     const orderData = {
                         userId: user.uid,
                         products: cart.map(item => ({
                             productId: item.product.id,
                             quantity: item.quantity,
+                            imageURL: item.product.imageUrl,
                             price: item.product.price
                         })),
                         totalAmount: total,
@@ -223,19 +135,15 @@ export function Cart() {
                     };
 
                     await setDoc(doc(db, 'orders', response.razorpay_order_id), orderData);
-
                     clearCart();
-                    toast({
-                        title: "Success",
-                        description: "Your order has been placed successfully!",
-                    });
+                    toast.success("Your order has been placed successfully!");
                 },
                 prefill: {
-                    name: user.displayName,
-                    email: user.email,
+                    name: user.displayName || undefined,
+                    email: user.email || undefined,
                 },
                 theme: {
-                    color: "#3399cc",
+                    color: "#a855f7",
                 },
             };
 
@@ -243,11 +151,7 @@ export function Cart() {
             paymentObject.open();
         } catch (error) {
             console.error('Error during checkout:', error);
-            toast({
-                title: "Error",
-                description: "There was an error processing your payment. Please try again.",
-                variant: "destructive",
-            });
+            toast.error("There was an error processing your payment. Please try again.");
         } finally {
             setIsCheckingOut(false);
         }

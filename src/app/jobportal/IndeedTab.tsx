@@ -1,10 +1,9 @@
 'use client'
-
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Loader2, MapPin, ExternalLink } from 'lucide-react'
+import { Loader2, MapPin, ExternalLink, RefreshCw } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
@@ -25,14 +24,20 @@ export default function IndeedTab() {
     const [jobs, setJobs] = useState<Job[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
+    const [retryCount, setRetryCount] = useState(0)
+    const [isRetrying, setIsRetrying] = useState(false)
 
-    useEffect(() => {
-        fetchJobs()
-    }, [])
+    const MAX_RETRIES = 3
+    const RETRY_DELAY = 2000 // 2 seconds
 
-    const fetchJobs = async () => {
-        setLoading(true)
+    const fetchJobs = async (retry = false) => {
+        if (retry) {
+            setIsRetrying(true)
+        } else {
+            setLoading(true)
+        }
         setError(null)
+
         try {
             const response = await fetch('/api/indeed-api')
             if (!response.ok) {
@@ -40,12 +45,32 @@ export default function IndeedTab() {
             }
             const jobsData = await response.json()
             setJobs(jobsData)
+            setRetryCount(0)
+            setIsRetrying(false)
         } catch (err) {
             console.error('Error fetching Indeed jobs:', err)
-            setError('Failed to fetch Indeed jobs. Please try again later.')
+            if (retryCount < MAX_RETRIES) {
+                setRetryCount(prev => prev + 1)
+                setTimeout(() => fetchJobs(true), RETRY_DELAY)
+                setError(`Attempt ${retryCount + 1}/${MAX_RETRIES}: Retrying to fetch Indeed jobs...`)
+            } else {
+                setError('Failed to fetch Indeed jobs after multiple attempts. Please try again later.')
+                setIsRetrying(false)
+            }
         } finally {
-            setLoading(false)
+            if (!isRetrying) {
+                setLoading(false)
+            }
         }
+    }
+
+    useEffect(() => {
+        fetchJobs()
+    }, [])
+
+    const handleManualRetry = () => {
+        setRetryCount(0)
+        fetchJobs()
     }
 
     return (
@@ -59,14 +84,34 @@ export default function IndeedTab() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    {loading ? (
-                        <div className="flex justify-center items-center h-64">
-                            <Loader2 className="h-8 w-8 animate-spin" />
+                    {(loading || isRetrying) ? (
+                        <div className="flex flex-col justify-center items-center h-64 space-y-4">
+                            <div className="flex items-center space-x-2">
+                                <Loader2 className="h-8 w-8 animate-spin" />
+                                {isRetrying && <RefreshCw className="h-6 w-6 animate-spin" />}
+                            </div>
+                            {isRetrying && (
+                                <p className="text-sm text-muted-foreground">
+                                    Attempting to reconnect... (Try {retryCount}/{MAX_RETRIES})
+                                </p>
+                            )}
                         </div>
                     ) : error ? (
                         <Alert variant="destructive">
                             <AlertTitle>Error</AlertTitle>
-                            <AlertDescription>{error}</AlertDescription>
+                            <AlertDescription className="flex flex-col space-y-2">
+                                <p>{error}</p>
+                                {!isRetrying && (
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={handleManualRetry}
+                                        className="w-fit"
+                                    >
+                                        Try Again
+                                    </Button>
+                                )}
+                            </AlertDescription>
                         </Alert>
                     ) : (
                         <div className="space-y-4">
@@ -136,4 +181,3 @@ export default function IndeedTab() {
         </div>
     )
 }
-

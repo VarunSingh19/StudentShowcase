@@ -2,7 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 
-const AnimatedRegistrationButton = ({ onClick }) => {
+interface AnimatedRegistrationButtonProps {
+    onClick: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+const AnimatedRegistrationButton: React.FC<AnimatedRegistrationButtonProps> = ({ onClick }) => {
     return (
         <div className="relative group">
             {/* Animated background gradient */}

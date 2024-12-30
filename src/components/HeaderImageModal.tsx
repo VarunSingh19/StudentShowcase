@@ -24,7 +24,7 @@ export function HeaderImageModal({ src, alt }: ImageModalProps) {
             <DialogTrigger asChild>
                 <Avatar className="h-12 w-12 border-4 border-white cursor-pointer hover:opacity-90 transition-opacity">
                     <AvatarImage src={src} alt={alt} onError={handleImageError} />
-                    <AvatarFallback>{alt.charAt(0)}</AvatarFallback>
+                    <AvatarFallback>{alt.charAt(0) || 'User'}</AvatarFallback>
                 </Avatar>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">

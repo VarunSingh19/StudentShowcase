@@ -31,6 +31,7 @@ export const Footer = () => {
 
     const quickLinks = [
         { label: "Home", href: "/" },
+        { label: "Profile", href: "/profile" },
         { label: "Upload Project", href: "/upload-project" },
         { label: "Projects", href: "/projects" },
         { label: "Teams", href: "/teams" },

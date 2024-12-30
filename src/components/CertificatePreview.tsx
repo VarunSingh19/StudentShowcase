@@ -22,7 +22,7 @@ export function CertificatePreview({ projectName, recipientName, techStack, comp
                     <p className="text-gray-600 text-lg">This certifies that</p>
 
                     <p className="text-2xl md:text-3xl font-bold text-blue-600">
-                        {recipientName}
+                        {recipientName || "Yourname"}
                     </p>
 
                     <p className="text-gray-600 text-lg">

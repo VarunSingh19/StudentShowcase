@@ -260,6 +260,7 @@ import jsPDF from "jspdf"
 import QRCode from "qrcode"
 import { CertificatePreview } from "./CertificatePreview"
 import { toast } from "@/hooks/use-toast"
+import { Timestamp } from "firebase/firestore"
 
 export interface CertificateProps {
     project: {
@@ -269,13 +270,14 @@ export interface CertificateProps {
         description: string
         features: string[]
         approved: boolean
+        // createdAt: Date | Timestamp
     }
     profile: UserProfile
 }
 
 export function Certificate({ project, profile }: CertificateProps) {
     const [isGenerating, setIsGenerating] = useState(false)
-
+    const verificationUrl = process.env.NEXT_PUBLIC_CERTIFICATE_VERIFICATION_URL
     const generateCertificate = async () => {
         try {
             setIsGenerating(true)
@@ -314,7 +316,7 @@ export function Certificate({ project, profile }: CertificateProps) {
             pdf.setFont('helvetica', 'bold')
             pdf.setFontSize(28)
             pdf.setTextColor(31, 41, 55)
-            pdf.text(profile.displayName || 'Student', 148.5, 85, { align: 'center' })
+            pdf.text(profile.displayName || 'StudentName', 148.5, 85, { align: 'center' })
 
             pdf.setFont('helvetica', 'normal')
             pdf.setFontSize(16)
@@ -461,6 +463,7 @@ export function Certificate({ project, profile }: CertificateProps) {
                         )}
                     </Button>
 
+
                     <Dialog>
                         <DialogTrigger asChild>
                             <Button
@@ -470,6 +473,8 @@ export function Certificate({ project, profile }: CertificateProps) {
                                 <Eye className="mr-2 h-4 w-4" />
                                 Preview
                             </Button>
+
+
                         </DialogTrigger>
                         <DialogContent className="max-w-3xl">
                             <DialogTitle>{profile.displayName} Certificate Preview</DialogTitle>
@@ -481,6 +486,18 @@ export function Certificate({ project, profile }: CertificateProps) {
                             />
                         </DialogContent>
                     </Dialog>
+                </div>
+                <div className="container flex items-center justify-center mt-5">
+                    <a href={`${verificationUrl}/verify/` + project.id}>
+                        <Button
+                            size="sm"
+                            variant="outline"
+                            className="flex-1 border-green-200 text-green-600 hover:bg-green-50"
+                        >
+                            <Eye className="mr-2 h-4 w-4" />
+                            View Authenticity Of the Certificate
+                        </Button>
+                    </a>
                 </div>
             </CardContent>
         </Card>

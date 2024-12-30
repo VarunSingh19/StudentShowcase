@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { DialogTitle } from '@radix-ui/react-dialog'
 
 interface ImageModalProps {
-    src: string
+    src: string | 'studentshowcase.jpg'
     alt: string
 }
 
@@ -34,6 +34,7 @@ export function ImageModal({ src, alt }: ImageModalProps) {
                         <Image
                             src={src}
                             alt={alt}
+
                             fill
                             style={{ objectFit: 'contain' }}
                             onError={handleImageError}

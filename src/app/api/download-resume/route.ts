@@ -16,7 +16,6 @@ import {
   PDFPage,
 } from "pdf-lib";
 
-// Helper function to create sections for DOCX
 function createDocxSections(resumeContent: string) {
   const sections = resumeContent.split("\n\n");
   const documentChildren: Paragraph[] = [];

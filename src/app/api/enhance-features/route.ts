@@ -20,7 +20,7 @@ export async function POST(request: Request) {
   }
 
   const prompt = `
-    As an AI assistant, enhance the following project features for a resume. The resume is being tailored for an application to ${companyName}. Use the following project information:
+    As an AI assistant, enhance the folnlowing project features for a resume. The resume is being tailored for an application to ${companyName}. Use the following project information:
     - Project Name: ${project.projectName}
     - Tech Stack: ${project.techStack}
     - Description: ${project.description}

@@ -10,11 +10,9 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                                 <span className="text-2xl font-bold text-gray-900">Admin Dashboard</span>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </nav>
-
             <div className="py-10">
                 <main>
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
