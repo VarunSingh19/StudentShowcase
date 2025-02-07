@@ -133,15 +133,22 @@ export function ProfileContent({ initialProfile, userId }: ProfileContentProps) 
                     </div>
                 </div>
 
-                {/* <div>
+                <div>
                     <Label htmlFor="hobbiesAndInterests">Hobbies and Interests</Label>
                     <Input
                         id="hobbiesAndInterests"
-                        value={profile.hobbiesAndInterests.join(', ')}
-                        onChange={(e) => setProfile({ ...profile, hobbiesAndInterests: e.target.value.split(',').map(item => item.trim()) })}
+                        value={(profile.hobbiesAndInterests || []).join(', ')}
+                        onChange={(e) =>
+                            setProfile({
+                                ...profile,
+                                hobbiesAndInterests: e.target.value
+                                    .split(',')
+                                    .map((item) => item.trim()),
+                            })
+                        }
                         placeholder="Enter hobbies and interests, separated by commas"
                     />
-                </div> */}
+                </div>
 
                 <div>
                     <Label htmlFor="languages">Languages</Label>

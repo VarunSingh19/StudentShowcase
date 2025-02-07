@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { collection, query, getDocs, addDoc, updateDoc, deleteDoc, doc, getDoc } from 'firebase/firestore';
+import { collection, query, getDocs, doc, getDoc } from 'firebase/firestore';
 import { db, auth } from '@/lib/firebase';
 import { Product, Order } from '@/types/store';
 import { useToast } from '@/hooks/use-toast';

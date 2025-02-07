@@ -11,6 +11,7 @@ interface UserCardProps {
     user: UserProfile;
 }
 export function UserCard({ user }: UserCardProps) {
+
     return (
         <Card className="h-full flex flex-col">
             <CardHeader>

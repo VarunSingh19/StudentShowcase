@@ -1,20 +1,46 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useTasks, Task } from '@/hooks/useTasks';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { PlusIcon, PencilIcon, TrashIcon, XMarkIcon, CheckIcon } from '@heroicons/react/24/outline';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { generateProjectPlan } from '@/lib/gemini-ai';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useTasks, Task } from "@/hooks/useTasks";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+    Card,
+    CardContent,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import {
+    PlusIcon,
+    PencilIcon,
+    TrashIcon,
+    XMarkIcon,
+    CheckIcon,
+} from "@heroicons/react/24/outline";
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion";
+import { generateProjectPlan } from "@/lib/gemini-ai";
 
 export default function TaskListPage() {
-    const { tasks, loading, error, hasMore, addTask, updateTask, deleteTask, loadMore } = useTasks();
-    const [newTask, setNewTask] = useState({ title: '', description: '' });
+    const {
+        tasks,
+        loading,
+        error,
+        hasMore,
+        addTask,
+        updateTask,
+        deleteTask,
+        loadMore,
+    } = useTasks();
+    const [newTask, setNewTask] = useState({ title: "", description: "" });
     const [editingTask, setEditingTask] = useState<Task | null>(null);
     const [editingProjectPlan, setEditingProjectPlan] = useState<{
         taskId: string | null;
@@ -25,7 +51,7 @@ export default function TaskListPage() {
         githubRepositories: string[];
         resourceLinks: string[];
     } | null>(null);
-    const [searchTerm, setSearchTerm] = useState('');
+    const [searchTerm, setSearchTerm] = useState("");
     const [isAddingTask, setIsAddingTask] = useState(false);
     const [generatingPlan, setGeneratingPlan] = useState<string | null>(null);
 
@@ -33,10 +59,10 @@ export default function TaskListPage() {
         e.preventDefault();
         try {
             await addTask(newTask.title, newTask.description);
-            setNewTask({ title: '', description: '' });
+            setNewTask({ title: "", description: "" });
             setIsAddingTask(false);
         } catch (err) {
-            console.error('Failed to add task:', err);
+            console.error("Failed to add task:", err);
         }
     };
 
@@ -44,10 +70,15 @@ export default function TaskListPage() {
         e.preventDefault();
         if (editingTask) {
             try {
-                await updateTask(editingTask.id, editingTask.title, editingTask.description, editingTask.projectPlan);
+                await updateTask(
+                    editingTask.id,
+                    editingTask.title,
+                    editingTask.description,
+                    editingTask.projectPlan
+                );
                 setEditingTask(null);
             } catch (err) {
-                console.error('Failed to update task:', err);
+                console.error("Failed to update task:", err);
             }
         }
     };
@@ -56,7 +87,7 @@ export default function TaskListPage() {
         try {
             await deleteTask(id);
         } catch (err) {
-            console.error('Failed to delete task:', err);
+            console.error("Failed to delete task:", err);
         }
     };
 
@@ -67,14 +98,14 @@ export default function TaskListPage() {
             await updateTask(task.id, task.title, task.description, plan);
             setGeneratingPlan(null);
         } catch (error) {
-            console.error('Failed to generate project plan:', error);
+            console.error("Failed to generate project plan:", error);
             setGeneratingPlan(null);
         }
     };
 
     const handleSaveProjectPlan = async () => {
         if (editingProjectPlan && editingProjectPlan.taskId) {
-            const task = tasks.find(t => t.id === editingProjectPlan.taskId);
+            const task = tasks.find((t) => t.id === editingProjectPlan.taskId);
             if (task) {
                 try {
                     await updateTask(task.id, task.title, task.description, {
@@ -83,11 +114,11 @@ export default function TaskListPage() {
                         featuresList: editingProjectPlan.featuresList,
                         deploymentSteps: editingProjectPlan.deploymentSteps,
                         githubRepositories: editingProjectPlan.githubRepositories,
-                        resourceLinks: editingProjectPlan.resourceLinks
+                        resourceLinks: editingProjectPlan.resourceLinks,
                     });
                     setEditingProjectPlan(null);
                 } catch (err) {
-                    console.error('Failed to update project plan:', err);
+                    console.error("Failed to update project plan:", err);
                 }
             }
         }
@@ -101,7 +132,7 @@ export default function TaskListPage() {
 
     useEffect(() => {
         if (isAddingTask) {
-            document.getElementById('newTaskTitle')?.focus();
+            document.getElementById("newTaskTitle")?.focus();
         }
     }, [isAddingTask]);
 
@@ -110,10 +141,22 @@ export default function TaskListPage() {
         if (editingProjectPlan && editingProjectPlan.taskId === task.id) {
             return (
                 <div className="space-y-6">
-                    {(['technicalRequirements', 'developmentPhases', 'featuresList', 'deploymentSteps', 'githubRepositories', 'resourceLinks'] as const).map((section) => (
+                    {(
+                        [
+                            "technicalRequirements",
+                            "developmentPhases",
+                            "featuresList",
+                            "deploymentSteps",
+                            "githubRepositories",
+                            "resourceLinks",
+                        ] as const
+                    ).map((section) => (
                         <div key={section}>
                             <h4 className="font-semibold mb-2 capitalize">
-                                {section.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}:
+                                {section
+                                    .replace(/([A-Z])/g, " $1")
+                                    .replace(/^./, (str) => str.toUpperCase())}
+                                :
                             </h4>
                             <div className="space-y-2">
                                 {editingProjectPlan[section].map((item, index) => (
@@ -123,10 +166,14 @@ export default function TaskListPage() {
                                             onChange={(e) => {
                                                 const updatedSection = [...editingProjectPlan[section]];
                                                 updatedSection[index] = e.target.value;
-                                                setEditingProjectPlan(prev => prev ? {
-                                                    ...prev,
-                                                    [section]: updatedSection
-                                                } : null);
+                                                setEditingProjectPlan((prev) =>
+                                                    prev
+                                                        ? {
+                                                            ...prev,
+                                                            [section]: updatedSection,
+                                                        }
+                                                        : null
+                                                );
                                             }}
                                             className="flex-grow"
                                         />
@@ -134,11 +181,17 @@ export default function TaskListPage() {
                                             size="sm"
                                             variant="destructive"
                                             onClick={() => {
-                                                const updatedSection = editingProjectPlan[section].filter((_, i) => i !== index);
-                                                setEditingProjectPlan(prev => prev ? {
-                                                    ...prev,
-                                                    [section]: updatedSection
-                                                } : null);
+                                                const updatedSection = editingProjectPlan[
+                                                    section
+                                                ].filter((_, i) => i !== index);
+                                                setEditingProjectPlan((prev) =>
+                                                    prev
+                                                        ? {
+                                                            ...prev,
+                                                            [section]: updatedSection,
+                                                        }
+                                                        : null
+                                                );
                                             }}
                                         >
                                             <TrashIcon className="h-4 w-4" />
@@ -149,13 +202,20 @@ export default function TaskListPage() {
                                     size="sm"
                                     variant="outline"
                                     onClick={() => {
-                                        setEditingProjectPlan(prev => prev ? {
-                                            ...prev,
-                                            [section]: [...prev[section], '']
-                                        } : null);
+                                        setEditingProjectPlan((prev) =>
+                                            prev
+                                                ? {
+                                                    ...prev,
+                                                    [section]: [...prev[section], ""],
+                                                }
+                                                : null
+                                        );
                                     }}
                                 >
-                                    <PlusIcon className="h-4 w-4 mr-2" /> Add {section.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+                                    <PlusIcon className="h-4 w-4 mr-2 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 animate-gradient-x" /> Add{" "}
+                                    {section
+                                        .replace(/([A-Z])/g, " $1")
+                                        .replace(/^./, (str) => str.toUpperCase())}
                                 </Button>
                             </div>
                         </div>
@@ -217,7 +277,12 @@ export default function TaskListPage() {
                     <ul className="list-disc pl-5">
                         {task.projectPlan.githubRepositories.map((repo, index) => (
                             <li key={index}>
-                                <a href={repo} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                                <a
+                                    href={repo}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-500 hover:underline"
+                                >
                                     {repo}
                                 </a>
                             </li>
@@ -229,7 +294,12 @@ export default function TaskListPage() {
                     <ul className="list-disc pl-5">
                         {task.projectPlan.resourceLinks.map((link, index) => (
                             <li key={index}>
-                                <a href={link} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                                <a
+                                    href={link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-500 hover:underline"
+                                >
                                     {link}
                                 </a>
                             </li>
@@ -245,12 +315,13 @@ export default function TaskListPage() {
                                 if (task.projectPlan) {
                                     setEditingProjectPlan({
                                         taskId: task.id,
-                                        technicalRequirements: task.projectPlan.technicalRequirements,
+                                        technicalRequirements:
+                                            task.projectPlan.technicalRequirements,
                                         developmentPhases: task.projectPlan.developmentPhases,
                                         featuresList: task.projectPlan.featuresList,
                                         deploymentSteps: task.projectPlan.deploymentSteps,
                                         githubRepositories: task.projectPlan.githubRepositories,
-                                        resourceLinks: task.projectPlan.resourceLinks
+                                        resourceLinks: task.projectPlan.resourceLinks,
                                     });
                                 }
                             }}
@@ -262,8 +333,6 @@ export default function TaskListPage() {
             </div>
         );
     };
-
-
 
     return (
         <div className="max-w-4xl mx-auto p-4 space-y-8">
@@ -281,8 +350,11 @@ export default function TaskListPage() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="flex-grow"
                 />
-                <Button onClick={() => setIsAddingTask(true)} className="w-full sm:w-auto">
-                    <PlusIcon className="h-5 w-5 mr-2" />
+                <Button
+                    onClick={() => setIsAddingTask(true)}
+                    className="w-full sm:w-auto bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 animate-gradient-x"
+                >
+                    <PlusIcon className="h-5 w-5 mr-2 " />
                     Add New Task
                 </Button>
             </div>
@@ -291,7 +363,7 @@ export default function TaskListPage() {
                 {isAddingTask && (
                     <motion.div
                         initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
+                        animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.3 }}
                     >
@@ -301,18 +373,29 @@ export default function TaskListPage() {
                                     id="newTaskTitle"
                                     type="text"
                                     value={newTask.title}
-                                    onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+                                    onChange={(e) =>
+                                        setNewTask({ ...newTask, title: e.target.value })
+                                    }
                                     placeholder="Task title"
                                     required
                                 />
                                 <Textarea
                                     value={newTask.description}
-                                    onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
+                                    onChange={(e) =>
+                                        setNewTask({ ...newTask, description: e.target.value })
+                                    }
                                     placeholder="Task description"
                                 />
-                                <div className="flex justify-end space-x-2">
-                                    <Button type="submit">Add Task</Button>
-                                    <Button type="button" variant="outline" onClick={() => setIsAddingTask(false)}>
+                                <div className="flex justify-end space-x-2 ">
+                                    <Button
+                                        className=" bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 animate-gradient-x"
+                                        type="submit">Add Task</Button>
+                                    <Button
+                                        className=" bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 animate-gradient-x"
+                                        type="button"
+                                        variant="outline"
+                                        onClick={() => setIsAddingTask(false)}
+                                    >
                                         Cancel
                                     </Button>
                                 </div>
@@ -340,11 +423,13 @@ export default function TaskListPage() {
                                 <CardContent className="flex-grow">
                                     <p className="text-sm text-gray-600">{task.description}</p>
                                     <Button
-                                        className="mt-4"
+                                        className="mt-4  bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 animate-gradient-x"
                                         onClick={() => handleGenerateProjectPlan(task)}
                                         disabled={generatingPlan === task.id}
                                     >
-                                        {generatingPlan === task.id ? 'Generating...' : 'StudentShowcaseAI'}
+                                        {generatingPlan === task.id
+                                            ? "Generating..."
+                                            : "Use StudentShowcaseAI"}
                                     </Button>
                                     {task.projectPlan && (
                                         <Accordion type="single" collapsible className="mt-4">
@@ -358,10 +443,18 @@ export default function TaskListPage() {
                                     )}
                                 </CardContent>
                                 <CardFooter className="justify-end space-x-2">
-                                    <Button size="sm" variant="outline" onClick={() => setEditingTask(task)}>
+                                    <Button
+                                        size="sm"
+                                        variant="outline"
+                                        onClick={() => setEditingTask(task)}
+                                    >
                                         <PencilIcon className="h-4 w-4" />
                                     </Button>
-                                    <Button size="sm" variant="destructive" onClick={() => handleDeleteTask(task.id)}>
+                                    <Button
+                                        size="sm"
+                                        variant="destructive"
+                                        onClick={() => handleDeleteTask(task.id)}
+                                    >
                                         <TrashIcon className="h-4 w-4" />
                                     </Button>
                                 </CardFooter>
@@ -384,25 +477,40 @@ export default function TaskListPage() {
                             <form onSubmit={handleUpdateTask} className="space-y-4 p-4">
                                 <div className="flex justify-between items-center">
                                     <h3 className="text-lg font-semibold">Edit Task</h3>
-                                    <Button size="sm" variant="ghost" onClick={() => setEditingTask(null)}>
+                                    <Button
+                                        size="sm"
+                                        variant="ghost"
+                                        onClick={() => setEditingTask(null)}
+                                    >
                                         <XMarkIcon className="h-5 w-5" />
                                     </Button>
                                 </div>
                                 <Input
                                     type="text"
                                     value={editingTask.title}
-                                    onChange={(e) => setEditingTask({ ...editingTask, title: e.target.value })}
+                                    onChange={(e) =>
+                                        setEditingTask({ ...editingTask, title: e.target.value })
+                                    }
                                     placeholder="Task title"
                                     required
                                 />
                                 <Textarea
                                     value={editingTask.description}
-                                    onChange={(e) => setEditingTask({ ...editingTask, description: e.target.value })}
+                                    onChange={(e) =>
+                                        setEditingTask({
+                                            ...editingTask,
+                                            description: e.target.value,
+                                        })
+                                    }
                                     placeholder="Task description"
                                 />
                                 <div className="flex justify-end space-x-2">
                                     <Button type="submit">Update Task</Button>
-                                    <Button type="button" variant="outline" onClick={() => setEditingTask(null)}>
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        onClick={() => setEditingTask(null)}
+                                    >
                                         Cancel
                                     </Button>
                                 </div>
@@ -415,7 +523,7 @@ export default function TaskListPage() {
             {hasMore && (
                 <div className="text-center mt-8">
                     <Button onClick={loadMore} disabled={loading} size="lg">
-                        {loading ? 'Loading...' : 'Load More Tasks'}
+                        {loading ? "Loading..." : "Load More Tasks"}
                     </Button>
                 </div>
             )}

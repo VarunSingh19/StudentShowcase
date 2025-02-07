@@ -23,6 +23,7 @@ export function useAuth() {
   const [teamNotifications, setTeamNotifications] = useState<{
     [teamId: string]: number;
   }>({});
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     let unsubscribeTeams: (() => void) | null = null;
@@ -33,6 +34,7 @@ export function useAuth() {
       auth,
       async (user) => {
         setUser(user);
+        setIsAuthenticated(!!user);
         if (user) {
           const adminDoc = await getDoc(doc(db, "adminUsers", user.uid));
           setIsAdmin(adminDoc.exists() && adminDoc.data()?.isAdmin);
@@ -78,5 +80,12 @@ export function useAuth() {
     });
   };
 
-  return { user, isAdmin, loading, authChecked, teamNotifications };
+  return {
+    user,
+    isAdmin,
+    loading,
+    authChecked,
+    teamNotifications,
+    isAuthenticated,
+  };
 }

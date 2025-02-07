@@ -1,4 +1,5 @@
 'use client'
+
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from "@/components/ui/button"
@@ -39,9 +40,10 @@ function HeroSection() {
     { icon: <CheckCircle className="w-4 h-4 text-primary" />, text: "AI-Powered Learning" },
     { icon: <CheckCircle className="w-4 h-4 text-primary" />, text: "Personalized Feedback" },
     { icon: <CheckCircle className="w-4 h-4 text-primary" />, text: "Project Showcase" },
-  ]
+  ];
+
   return (
-    <section className="relative py-24  overflow-hidden">
+    <section className="relative py-12 sm:py-16 md:py-24 overflow-hidden">
       {/* Animated background gradient */}
       <div className="absolute inset-0 "></div>
 
@@ -64,44 +66,46 @@ function HeroSection() {
         ))}
       </div>
 
-      <div className="container relative mx-auto px-4 ">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+      <div className="container relative mx-auto px-4">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="md:w-1/2 space-y-6"
+            className="w-full md:w-1/2 space-y-4 sm:space-y-6"
           >
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary">
-              <Sparkles className="w-4 h-4 mr-2" />
-              <span>AI-Powered Innovation</span>
+            <div className="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 text-primary">
+              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+              <span className="text-sm sm:text-base">AI-Powered Innovation</span>
             </div>
 
-            <h1 className="text-6xl font-bold leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 animate-gradient-x">
                 The Future of AI
               </span>
               <br />
               <span>Is Here </span>
-              <span className='text-5xl text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 animate-gradient-x'>StudentShowcase</span>
+              <span className="text-3xl sm:text-4xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 animate-gradient-x">
+                StudentShowcase
+              </span>
             </h1>
 
-            <p className="text-xl text-muted-foreground">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground">
               Experience the next generation of AI technology that adapts to your needs,
               learns from your interactions, and helps you achieve more.
             </p>
 
-            <div className="flex gap-4">
-              <Button size="lg" className="bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90">
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button size="lg" className="bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 w-full sm:w-auto">
                 Get Started
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
-              <Button size="lg" variant="outline" className="border-2">
+              <Button size="lg" variant="outline" className="border-2 w-full sm:w-auto">
                 Watch Demo
               </Button>
             </div>
 
-            <div className="flex items-center gap-4 pt-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-4">
               {features.map((feature, i) => (
                 <motion.div
                   key={i}
@@ -110,23 +114,67 @@ function HeroSection() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.2 }}
                 >
-                  <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-primary/20 flex items-center justify-center">
                     {feature.icon}
                   </div>
-                  <span className="ml-2 text-sm">{feature.text}</span>
+                  <span className="ml-2 text-xs sm:text-sm">{feature.text}</span>
                 </motion.div>
               ))}
             </div>
           </motion.div>
+          {/* Animated background gradient */}
+          <div className="absolute inset-0 "></div>
+
+          {/* Floating elements */}
+          <div className="absolute inset-0 overflow-hidden">
+            {[...Array(20)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute h-2 w-2 bg-primary/20 rounded-full"
+                animate={{
+                  x: [Math.random() * window.innerWidth, Math.random() * window.innerWidth],
+                  y: [Math.random() * window.innerHeight, Math.random() * window.innerHeight],
+                }}
+                transition={{
+                  duration: Math.random() * 10 + 10,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }}
+              />
+            ))}
+          </div>
+
 
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
-            className="md:w-1/2 relative"
+            className="w-full md:w-1/2 relative"
           >
-            <div className="relative w-full aspect-square max-w-lg mx-auto">
+            <div className="relative w-full aspect-square max-w-sm sm:max-w-md md:max-w-lg mx-auto">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-full blur-3xl animate-pulse" />
+              {/* Animated background gradient */}
+              <div className="absolute inset-0 "></div>
+
+              {/* Floating elements */}
+              <div className="absolute inset-0 overflow-hidden">
+                {[...Array(20)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute h-2 w-2 bg-primary/20 rounded-full"
+                    animate={{
+                      x: [Math.random() * window.innerWidth, Math.random() * window.innerWidth],
+                      y: [Math.random() * window.innerHeight, Math.random() * window.innerHeight],
+                    }}
+                    transition={{
+                      duration: Math.random() * 10 + 10,
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                    }}
+                  />
+                ))}
+              </div>
+
               <Image
                 src="/studentshowcase.jpg"
                 alt="AI Visualization"
@@ -134,6 +182,28 @@ function HeroSection() {
                 className="object-cover rounded-3xl"
               />
             </div>
+            {/* Animated background gradient */}
+            <div className="absolute inset-0 "></div>
+
+            {/* Floating elements */}
+            <div className="absolute inset-0 overflow-hidden">
+              {[...Array(20)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute h-2 w-2 bg-primary/20 rounded-full"
+                  animate={{
+                    x: [Math.random() * window.innerWidth, Math.random() * window.innerWidth],
+                    y: [Math.random() * window.innerHeight, Math.random() * window.innerHeight],
+                  }}
+                  transition={{
+                    duration: Math.random() * 10 + 10,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                  }}
+                />
+              ))}
+            </div>
+
 
             {/* Floating badges */}
             <motion.div
@@ -144,9 +214,9 @@ function HeroSection() {
                 duration: 2,
                 repeat: Infinity,
               }}
-              className="absolute -top-4 -right-4 bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-lg"
+              className="absolute -top-4 -right-4 bg-white/90 backdrop-blur-sm p-2 sm:p-3 rounded-xl shadow-lg"
             >
-              <Brain className="w-6 h-6 text-purple-600" />
+              <Brain className="w-4 h-4 sm:w-6 sm:h-6 text-purple-600" />
             </motion.div>
 
             <motion.div
@@ -158,15 +228,15 @@ function HeroSection() {
                 repeat: Infinity,
                 delay: 0.5,
               }}
-              className="absolute -bottom-4 -left-4 bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-lg"
+              className="absolute -bottom-4 -left-4 bg-white/90 backdrop-blur-sm p-2 sm:p-3 rounded-xl shadow-lg"
             >
-              <Bot className="w-6 h-6 text-pink-600" />
+              <Bot className="w-4 h-4 sm:w-6 sm:h-6 text-pink-600" />
             </motion.div>
           </motion.div>
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 

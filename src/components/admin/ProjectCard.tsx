@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Code2, Github, Loader2, User } from 'lucide-react';
+import { Code2, Github, Link, Loader2, User } from 'lucide-react';
 import { Project } from '@/types/project';
 
 interface ProjectCardProps {
@@ -30,7 +30,12 @@ export function ProjectCard({ project, onApprove, onReject, actionLoading }: Pro
                         </CardTitle>
                         <CardDescription className="flex items-center">
                             <User className="h-4 w-4 mr-1" />
-                            {project.name}
+                            <a href={`/profile/${project.userId}`}>
+                                <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
+                                    {project.name}
+                                </span>
+
+                            </a>
                         </CardDescription>
                     </div>
                     <span className={`px-3 py-1 rounded-full text-sm font-medium border ${project.approved ? statusColors.approved : statusColors.pending

@@ -85,10 +85,14 @@ export function TaskList() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="flex-grow"
                 />
-                <Button onClick={() => setIsAddingTask(true)} className="w-full sm:w-auto">
-                    <PlusIcon className="h-5 w-5 mr-2" />
-                    Add New Task
-                </Button>
+                <button
+                    onClick={() => setIsAddingTask(true)}
+                    className="w-full sm:w-auto bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white px-6 py-3 rounded-md flex items-center justify-center space-x-2"
+                >
+                    <PlusIcon className="h-5 w-5" />
+                    <span>Add New Task</span>
+                </button>
+
             </div>
 
             <AnimatePresence>

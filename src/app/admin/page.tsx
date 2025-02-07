@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { collection, query, getDocs, addDoc, updateDoc, deleteDoc, doc, getDoc } from 'firebase/firestore';
+import { collection, query, getDocs, doc, getDoc } from 'firebase/firestore';
 import { db, auth } from '@/lib/firebase';
 import { Product, Order } from '@/types/store';
 import { useToast } from '@/hooks/use-toast';
@@ -10,9 +10,10 @@ import { ProductForm } from '@/components/admin/ProductForm';
 import { ProductList } from '@/components/admin/ProductList';
 import { OrderList } from '@/components/admin/OrderList';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Package2, ShoppingCart, LayoutDashboard } from 'lucide-react';
+import { Package2, ShoppingCart, LayoutDashboard, MapIcon } from 'lucide-react';
 import { AdminDashboard } from '@/components/admin/adminDashboard';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
+import ProjectPanel from './project/page';
 
 export default function AdminStorePage() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -90,12 +91,12 @@ export default function AdminStorePage() {
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
             <div className="container mx-auto px-4 py-8">
-                <h1 className="text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
+                {/* <h1 className="text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
                     Store Administration
-                </h1>
+                </h1> */}
 
                 <Tabs defaultValue="dashboard" className="space-y-8">
-                    <TabsList className="grid w-full grid-cols-3 h-14 rounded-xl">
+                    <TabsList className="grid w-full grid-cols-4 h-14 rounded-xl">
                         <TabsTrigger value="dashboard" className="space-x-2">
                             <LayoutDashboard className="h-5 w-5" />
                             <span>Dashboard</span>
@@ -107,6 +108,10 @@ export default function AdminStorePage() {
                         <TabsTrigger value="orders" className="space-x-2">
                             <ShoppingCart className="h-5 w-5" />
                             <span>Orders</span>
+                        </TabsTrigger>
+                        <TabsTrigger value="projects" className="space-x-2">
+                            <MapIcon className="h-5 w-5" />
+                            <span>Project</span>
                         </TabsTrigger>
                     </TabsList>
 
@@ -128,6 +133,10 @@ export default function AdminStorePage() {
                             orders={orders}
                             onOrderUpdated={fetchOrders}
                         />
+                    </TabsContent>
+                    <TabsContent value='projects'>
+                        <ProjectPanel />
+
                     </TabsContent>
                 </Tabs>
             </div>

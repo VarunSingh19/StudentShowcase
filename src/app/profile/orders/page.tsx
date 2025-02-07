@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-    Package, Calendar, DollarSign, Box,
+    Package, Calendar, Box,
     Clock, Truck, CheckCircle, ChevronDown, MapPin,
     Receipt
 } from 'lucide-react';
@@ -208,7 +208,7 @@ export default function YourOrdersPage() {
                                                 <div className="flex flex-col">
                                                     <span className="text-sm text-gray-500">Total Amount</span>
                                                     <div className="flex items-center gap-2">
-                                                        <DollarSign className="w-4 h-4 text-gray-400" />
+
                                                         <span className="font-bold text-gray-900">₹{order.totalAmount.toFixed(2)}</span>
                                                     </div>
                                                 </div>

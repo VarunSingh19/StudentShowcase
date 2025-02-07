@@ -1,17 +1,26 @@
 'use client'
+
 import { useState, useEffect, ChangeEvent } from 'react'
+// import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+// import { Search, X } from 'lucide-react'
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+// import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { AlertCircle, Github } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+
+// import { motion, AnimatePresence } from 'framer-motion'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { db } from '@/lib/firebase'
 import { collection, addDoc, doc, getDoc, updateDoc } from 'firebase/firestore'
 import { useAuth } from '@/hooks/useAuth'
 import { useToast } from '@/hooks/use-toast'
+
+// import { ScrollArea } from '@/components/ui/scroll-area'
+// import { Zoom } from '@/components/ui/zoom'
 import GithubPushSteps from '@/components/github-push-steps'
 
 interface FormData {

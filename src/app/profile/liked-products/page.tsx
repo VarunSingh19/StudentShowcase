@@ -108,7 +108,7 @@ export default function LikedProductsPage() {
                                     className="w-full h-48 object-cover rounded-lg mb-4"
                                 />
                                 <p className="text-sm text-gray-600 mb-2">{product.description}</p>
-                                <p className="font-bold mb-4">${product.price.toFixed(2)}</p>
+                                <p className="font-bold mb-4">₹{product.price.toFixed(2)}</p>
                                 <Link href={`/store#${product.id}`}>
                                     <Button>View in Store</Button>
                                 </Link>

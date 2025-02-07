@@ -35,3 +35,16 @@ export interface TeamApplication {
   status: "pending" | "accepted" | "rejected";
   createdAt: Date;
 }
+
+export interface Job {
+  id: string;
+  title: string;
+  company: string;
+  location: string;
+  salary?: string;
+  description?: string;
+  requirements?: string[];
+  applicationLink?: string;
+  source: string;
+  saved?: boolean;
+}

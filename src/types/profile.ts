@@ -23,6 +23,10 @@ export interface UserProfile {
   likedProducts: string[];
   createdAt: Date | Timestamp;
   updatedAt: Date | Timestamp;
+  friends?: string[];
+  friendRequests?: string[];
+  status?: "online" | "offline";
+  lastSeen?: Date;
 }
 
 export interface Project {
@@ -68,6 +72,11 @@ export interface LikedProject {
   projectName: string;
   techStack: string;
   likes: number;
+  name?: string;
+  repoUrl?: string;
+  approved?: boolean;
+  description?: string;
+  imageUrl?: string;
 }
 
 export interface CertificateProps {

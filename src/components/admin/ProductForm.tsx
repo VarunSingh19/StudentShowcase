@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from '@/hooks/use-toast';
-import { Plus, Image, DollarSign, Package, Tags, Archive } from 'lucide-react';
+import { Plus, Image, Package, Tags, Archive } from 'lucide-react';
 
 interface ProductFormProps {
     onProductAdded: () => void;
@@ -98,7 +98,7 @@ export function ProductForm({ onProductAdded }: ProductFormProps) {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="flex items-center space-x-2">
-                            <DollarSign className="h-4 w-4 text-muted-foreground" />
+                            <span className="h-4 w-4 text-muted-foreground" >₹</span>
                             <Input
                                 type="number"
                                 placeholder="Price"

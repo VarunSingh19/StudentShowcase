@@ -12,7 +12,6 @@ import {
     Minus,
     Trash2,
     Package,
-    DollarSign,
     Archive,
     AlertCircle
 } from 'lucide-react';
@@ -27,6 +26,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import Image from 'next/image';
 
 interface ProductListProps {
     products: Product[];
@@ -86,9 +86,11 @@ export function ProductList({ products, onProductUpdated, onProductDeleted }: Pr
                     {products.map((product) => (
                         <Card key={product.id} className="overflow-hidden group hover:shadow-lg transition-shadow duration-200">
                             <div className="aspect-video relative">
-                                <img
+                                <Image
                                     src={product.imageUrl || 'https://via.placeholder.com/400x300'}
                                     alt={product.name}
+                                    width={400}
+                                    height={300}
                                     className="w-full h-full object-cover"
                                 />
                             </div>
@@ -99,7 +101,7 @@ export function ProductList({ products, onProductUpdated, onProductDeleted }: Pr
                                 </p>
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="flex items-center">
-                                        <DollarSign className="h-4 w-4 text-muted-foreground" />
+                                        <span className="h-4 w-4 text-muted-foreground" >₹</span>
                                         <span className="font-semibold">{product.price}</span>
                                     </div>
                                     <div className="flex items-center">

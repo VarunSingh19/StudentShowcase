@@ -41,6 +41,7 @@ export default function ProfilePage() {
             const profileDoc = await getDoc(doc(db, 'profiles', user.uid))
             if (profileDoc.exists()) {
                 setProfile(profileDoc.data() as UserProfile)
+                console.log(user.uid)
             } else {
                 const defaultProfile: UserProfile = {
                     id: '',

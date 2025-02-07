@@ -6,12 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
     Package2,
     ShoppingCart,
-    DollarSign,
     TrendingUp,
-    Package,
-    Clock,
-    Truck,
-    CheckCircle
 } from 'lucide-react';
 import {
     BarChart,
@@ -62,10 +57,9 @@ export function AdminDashboard({ products, orders }: AdminDashboardProps) {
                         <CardTitle className="text-sm font-medium">
                             Total Revenue
                         </CardTitle>
-                        <DollarSign className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">${totalRevenue.toFixed(2)}</div>
+                        <div className="text-2xl font-bold">₹{totalRevenue.toFixed(2)}</div>
                         <p className="text-xs text-muted-foreground">
                             +20.1% from last month
                         </p>

@@ -1,22 +1,23 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { Inter } from 'next/font/google';
-import { Menu, X, Layers, LogOut, ChevronDown } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import './globals.css';
-import { Footer } from '@/components/Footer';
-import { useAuth } from '@/hooks/useAuth';
-import { Button } from '@/components/ui/button';
-import { auth, db } from '../lib/firebase';
-import { MegaMenu } from '@/components/MegaMenu';
-import { LoadingBar } from '@/components/LoadingBar';
-import { doc, getDoc } from 'firebase/firestore';
-import { HeaderImageModal } from '@/components/HeaderImageModal';
-import Link from 'next/link';
-import { NotificationsDropdown } from '@/components/NotificationsDropdown';
-import AnimatedRegistrationButton from '@/components/AnimatedRegistrationButton';
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Inter } from "next/font/google";
+import { Menu, X, Layers, LogOut, ChevronDown } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import "./globals.css";
+import { Footer } from "@/components/Footer";
+import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/ui/button";
+import { auth, db } from "../lib/firebase";
+import { MegaMenu } from "@/components/MegaMenu";
+import { LoadingBar } from "@/components/LoadingBar";
+import { doc, getDoc } from "firebase/firestore";
+import { HeaderImageModal } from "@/components/HeaderImageModal";
+import Link from "next/link";
+import { NotificationsDropdown } from "@/components/NotificationsDropdown";
+import AnimatedRegistrationButton from "@/components/AnimatedRegistrationButton";
+
 
 interface MenuItem {
   href?: string;
@@ -24,10 +25,12 @@ interface MenuItem {
   subItems?: MenuItem[];
 }
 
+
 interface MenuCategory {
   name: string;
   items: MenuItem[];
 }
+
 
 interface UserProfile {
   userId: string;
@@ -43,7 +46,8 @@ interface UserProfile {
   };
 }
 
-const inter = Inter({ subsets: ['latin'] });
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
@@ -60,12 +64,12 @@ export default function RootLayout({
     const fetchUserProfile = async () => {
       if (user && !isAdmin) {
         try {
-          const userDoc = await getDoc(doc(db, 'profiles', user.uid));
+          const userDoc = await getDoc(doc(db, "profiles", user.uid));
           if (userDoc.exists()) {
             setProfile(userDoc.data() as Partial<UserProfile>);
           }
         } catch (error) {
-          console.error('Error fetching user profile:', error);
+          console.error("Error fetching user profile:", error);
         }
       }
     };
@@ -77,52 +81,49 @@ export default function RootLayout({
     if (isAdmin) {
       return [
         {
-          name: 'Admin',
-          items: [
-            { href: '/admin/store', label: 'Admin Dashboard' },
-
-          ],
+          name: "Admin",
+          items: [{ href: "/admin", label: "Admin Dashboard" }],
         },
       ];
     } else {
       return [
         {
-          name: 'Main',
+          name: "Main",
           items: [
-            { href: '/upload-project', label: 'Upload Project' },
-            { href: '/projects', label: 'Projects' },
-            { href: '/users', label: 'All Users' },
+            { href: "/upload-project", label: "Upload Project" },
+            { href: "/projects", label: "Projects" },
+            { href: "/users", label: "All Users" },
           ],
         },
         {
-          name: 'User',
+          name: "User",
           items: [
             {
-              label: 'Teams',
+              label: "Teams",
               subItems: [
-                { href: '/teams', label: 'View Teams' },
-                { href: '/teams/create', label: 'Create Team' },
+                { href: "/teams", label: "View Teams" },
+                { href: "/teams/create", label: "Create Team" },
               ],
             },
-            { href: '/certificates', label: 'Certificates' },
-            { href: '/tasklist', label: 'Tasks' },
+            { href: "/certificates", label: "Certificates" },
+            { href: "/tasklist", label: "Tasks" },
           ],
         },
         {
-          name: 'Career',
+          name: "Career",
           items: [
-            { href: '/resume-builder', label: 'Resume Builder' },
-            { href: '/leaderboard', label: 'Leaderboard' },
-            { href: '/jobportal', label: 'Job Portal' },
-            { href: '/skill-assessment', label: 'Skill Assessment' },
+            { href: "/resume-builder", label: "Resume Builder" },
+            { href: "/leaderboard", label: "Leaderboard" },
+            { href: "/jobportal", label: "Job Portal" },
+            { href: "/skill-assessment", label: "Skill Assessment" },
           ],
         },
         {
-          name: 'Store',
+          name: "Store",
           items: [
-            { href: '/store', label: 'Store' },
-            { href: '/profile/orders', label: 'Your Orders' },
-            { href: '/profile/liked-products', label: 'Liked Products' },
+            { href: "/store", label: "Store" },
+            { href: "/profile/orders", label: "Your Orders" },
+            { href: "/profile/liked-products", label: "Liked Products" },
           ],
         },
       ];
@@ -149,18 +150,20 @@ export default function RootLayout({
   }
 
 
-
   return (
     <html lang="en">
       <head>
-        <title>{isAdmin ? 'Admin Dashboard' : 'Student Showcase'}</title>
+        <title>{isAdmin ? "Admin Dashboard" : "Student Showcase"}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className={`${inter.className} min-h-screen bg-gray-100`}>
         <nav className="fixed top-0 left-0 right-0 z-40 bg-gradient-to-br from-gray-900 via-gray-800 to-black bg-opacity-90 backdrop-blur-md">
           <div className="container mx-auto px-4 py-4 flex justify-between items-center">
             {/* Logo */}
-            <div onClick={() => handleNavigation('/')} className="cursor-pointer">
+            <div
+              onClick={() => handleNavigation("/")}
+              className="cursor-pointer"
+            >
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -177,7 +180,7 @@ export default function RootLayout({
                   ></motion.div>
                 </div>
                 <span className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient">
-                  {isAdmin ? 'Admin Dashboard' : 'Student Showcase'}
+                  {isAdmin ? "Admin Dashboard" : "Student Showcase"}
                 </span>
               </motion.div>
             </div>
@@ -207,17 +210,14 @@ export default function RootLayout({
               )}
               {user && (
                 <>
-
                   {!isAdmin && profile && (
                     <button className="flex items-center space-x-2 text-white hover:text-purple-300 transition-colors duration-300">
-
                       <HeaderImageModal
                         src={profile.avatarUrl || "/studentshowcase.jpg"}
                         alt={profile.displayName || "User"}
-
                       />
-                      <Link href={'/profile'}>
-                        <span>{profile.displayName || 'Username'}</span>
+                      <Link href={"/profile"}>
+                        <span>{profile.displayName || "Username"}</span>
                       </Link>
                     </button>
                   )}
@@ -236,7 +236,7 @@ export default function RootLayout({
               {!user && (
                 <>
                   <AnimatedRegistrationButton
-                    onClick={() => handleNavigation('/authform')}
+                    onClick={() => handleNavigation("/authform")}
                   />
                 </>
               )}
@@ -246,19 +246,21 @@ export default function RootLayout({
             <div className="md:hidden flex items-center space-x-4">
               {/* User Profile - Added to the left of toggle */}
               {user && !isAdmin && profile && (
-                <div className="flex items-center space-x-2 max-w-[200px]">
-                  <HeaderImageModal
-                    src={profile.avatarUrl || "/placeholder.svg"}
-                    alt={profile.displayName || "User"}
-                  />
-                  <Link href='/profile'>
-                    <span className="text-white truncate text-sm">
-                      {profile.displayName}
-                    </span>
-                  </Link>
-                </div>
+                <>
+                  <div className="flex items-center space-x-2 max-w-[200px]">
+                    <HeaderImageModal
+                      src={profile.avatarUrl || "/studentshowcase.jpg"}
+                      alt={profile.displayName || "User"}
+                    />
+                    <Link href="/profile">
+                      <span className=" truncate text-sm  text-purple-400">
+                        {profile.displayName || "User"}
+                      </span>
+                    </Link>
+                  </div>
+                  <NotificationsDropdown />
+                </>
               )}
-              <NotificationsDropdown />
 
               {/* Menu Toggle Button */}
               <motion.button
@@ -276,7 +278,7 @@ export default function RootLayout({
             {isMenuOpen && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
+                animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 className="md:hidden absolute top-full left-0 right-0 bg-gray-900 bg-opacity-95 backdrop-blur-md overflow-hidden"
               >
@@ -286,28 +288,40 @@ export default function RootLayout({
                       <HeaderImageModal
                         src={profile.avatarUrl || "/placeholder.svg"}
                         alt={profile.displayName || "User"}
-
                       />
-                      <span className="text-white">{profile.displayName}</span>
+                      <Link href="/profile">
+                        <span className=" truncate text-sm  text-purple-400">
+                          {profile.displayName || "User"}
+                        </span>
+                      </Link>
                     </div>
                   )}
                   {user ? (
                     menuCategories.map((category, index) => (
                       <div key={index} className="mb-4">
-                        <h3 className="text-lg font-semibold text-purple-400 mb-2">{category.name}</h3>
+                        <h3 className="text-lg font-semibold text-purple-400 mb-2">
+                          {category.name}
+                        </h3>
                         {category.items.map((item, itemIndex) => (
                           <div key={itemIndex} className="mb-2">
                             {item.subItems ? (
                               <details className="group">
                                 <summary className="list-none flex justify-between items-center cursor-pointer">
-                                  <span className="text-white text-base py-2">{item.label}</span>
-                                  <ChevronDown className="text-white group-open:rotate-180 transition-transform" size={16} />
+                                  <span className="text-white text-base py-2">
+                                    {item.label}
+                                  </span>
+                                  <ChevronDown
+                                    className="text-white group-open:rotate-180 transition-transform"
+                                    size={16}
+                                  />
                                 </summary>
                                 <ul className="pl-4 mt-2 space-y-2">
                                   {item.subItems.map((subItem, subIndex) => (
                                     <li key={subIndex}>
                                       <button
-                                        onClick={() => handleNavigation(subItem.href!)}
+                                        onClick={() =>
+                                          handleNavigation(subItem.href!)
+                                        }
                                         className="text-white hover:text-purple-300 transition-colors w-full text-left py-1"
                                       >
                                         {subItem.label}
@@ -317,14 +331,11 @@ export default function RootLayout({
                                 </ul>
                               </details>
                             ) : (
-
                               <motion.div
                                 whileHover={{ x: 10 }}
                                 onClick={() => handleNavigation(item.href!)}
                               >
-                                <button
-                                  className="block text-white text-base py-2 hover:text-purple-300 transition-colors w-full text-left"
-                                >
+                                <button className="block text-white text-base py-2 hover:text-purple-300 transition-colors w-full text-left">
                                   {item.label}
                                 </button>
                               </motion.div>
@@ -335,9 +346,8 @@ export default function RootLayout({
                     ))
                   ) : (
                     <div className="mb-4">
-
                       <AnimatedRegistrationButton
-                        onClick={() => handleNavigation('/authform')}
+                        onClick={() => handleNavigation("/authform")}
                       />
                     </div>
                   )}
@@ -365,12 +375,9 @@ export default function RootLayout({
         </nav>
 
         {/* Main Content with Top Padding */}
-        <main className="pt-24 mx-auto">
-          {children}
-        </main>
+        <main className="pt-24 mx-auto">{children}</main>
         <Footer />
       </body>
     </html>
   );
 }
-
