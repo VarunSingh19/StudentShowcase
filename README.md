@@ -177,16 +177,144 @@ We welcome contributions! Here's how you can help:
 ```
 studentshowcase/
 ├── app/
-│   ├── api/          # API routes
-│   ├── components/   # React components
-│   ├── hooks/        # Custom hooks
-│   ├── lib/          # Libraries and configs
-│   ├── pages/        # Next.js pages
-│   ├── styles/       # Global styles
-│   ├── types/        # TypeScript types
-│   └── utils/        # Utility functions
-├── public/           # Static assets
-└── tests/            # Test suites
+│   ├── api/
+│   │   ├── auth/
+│   │   │   └── [...nextauth].ts
+│   │   ├── projects/
+│   │   │   ├── [id].ts
+│   │   │   └── index.ts
+│   │   ├── teams/
+│   │   │   ├── [id].ts
+│   │   │   └── index.ts
+│   │   ├── jobs/
+│   │   │   └── index.ts
+│   │   ├── store/
+│   │   │   ├── products.ts
+│   │   │   └── orders.ts
+│   │   ├── ai/
+│   │   │   ├── enhance-resume.ts
+│   │   │   └── optimize-tasks.ts
+│   │   ├── upload/
+│   │   │   └── route.ts
+│   │   └── messages/
+│   │       └── [teamId].ts
+│   ├── (auth)/
+│   │   ├── login/
+│   │   │   └── page.tsx
+│   │   ├── register/
+│   │   │   └── page.tsx
+│   │   └── forgot-password/
+│   │       └── page.tsx
+│   ├── dashboard/
+│   │   ├── page.tsx
+│   │   ├── projects/
+│   │   │   └── page.tsx
+│   │   ├── teams/
+│   │   │   └── page.tsx
+│   │   └── tasks/
+│   │       └── page.tsx
+│   ├── projects/
+│   │   ├── page.tsx
+│   │   ├── [id]/
+│   │   │   └── page.tsx
+│   │   └── upload/
+│   │       └── page.tsx
+│   ├── teams/
+│   │   ├── page.tsx
+│   │   ├── [id]/
+│   │   │   └── page.tsx
+│   │   └── create/
+│   │       └── page.tsx
+│   ├── jobs/
+│   │   ├── page.tsx
+│   │   └── [id]/
+│   │       └── page.tsx
+│   ├── store/
+│   │   ├── page.tsx
+│   │   ├── [productId]/
+│   │   │   └── page.tsx
+│   │   └── cart/
+│   │       └── page.tsx
+│   ├── profile/
+│   │   ├── page.tsx
+│   │   ├── [userId]/
+│   │   │   └── page.tsx
+│   │   ├── edit/
+│   │   │   └── page.tsx
+│   │   └── resume/
+│   │       └── page.tsx
+│   ├── admin/
+│   │   ├── page.tsx
+│   │   ├── projects/
+│   │   │   └── page.tsx
+│   │   └── users/
+│   │       └── page.tsx
+│   ├── components/
+│   │   ├── ui/
+│   │   │   ├── button.tsx
+│   │   │   ├── card.tsx
+│   │   │   ├── input.tsx
+│   │   │   └── ... (other UI components)
+│   │   ├── layout/
+│   │   │   ├── Header.tsx
+│   │   │   ├── Footer.tsx
+│   │   │   └── Sidebar.tsx
+│   │   ├── projects/
+│   │   │   ├── ProjectCard.tsx
+│   │   │   └── ProjectList.tsx
+│   │   ├── teams/
+│   │   │   ├── TeamCard.tsx
+│   │   │   └── TeamList.tsx
+│   │   ├── jobs/
+│   │   │   ├── JobCard.tsx
+│   │   │   └── JobList.tsx
+│   │   └── store/
+│   │       ├── ProductCard.tsx
+│   │       └── CartItem.tsx
+│   ├── hooks/
+│   │   ├── useAuth.ts
+│   │   ├── useTasks.ts
+│   │   └── useToast.ts
+│   ├── lib/
+│   │   ├── firebase.ts
+│   │   ├── mongodb.ts
+│   │   ├── stripe.ts
+│   │   ├── pusher.ts
+│   │   └── cloudinary.ts
+│   ├── styles/
+│   │   └── globals.css
+│   ├── types/
+│   │   ├── user.ts
+│   │   ├── project.ts
+│   │   ├── team.ts
+│   │   ├── job.ts
+│   │   └── product.ts
+│   ├── utils/
+│   │   ├── api.ts
+│   │   ├── formatters.ts
+│   │   └── validators.ts
+│   ├── context/
+│   │   ├── AuthContext.tsx
+│   │   └── CartContext.tsx
+│   └── layout.tsx
+├── public/
+│   ├── images/
+│   │   ├── logo.svg
+│   │   └── placeholder.svg
+│   └── fonts/
+│       └── ... (custom fonts if any)
+├── scripts/
+│   └── seed-data.js
+├── .env.local
+├── .env.example
+├── .eslintrc.json
+├── .gitignore
+├── next.config.js
+├── package.json
+├── postcss.config.js
+├── tailwind.config.js
+├── tsconfig.json
+└── README.md
 ```
 
 ## 🔜 Roadmap
