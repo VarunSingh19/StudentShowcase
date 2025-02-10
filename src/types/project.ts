@@ -7,10 +7,10 @@ export interface Project {
   projectName: string;
   techStack: string;
   description: string;
-  features: string[];
-  repoUrl: string;
+  features?: string[];
+  repoUrl?: string;
   imageUrl: string;
-  likes: number;
+  likes?: number;
   approved: boolean;
   createdAt: Date | Timestamp;
   branch: string;

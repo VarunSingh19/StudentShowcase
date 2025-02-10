@@ -76,7 +76,7 @@ export default function AboutPage() {
             >
                 <h2 className="text-3xl font-bold mb-6">Join the Innovation Revolution</h2>
                 <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-                    Whether you're a coding prodigy, a design maverick, or a visionary entrepreneur,
+                    Whether you are a coding prodigy, a design maverick, or a visionary entrepreneur,
                     StudentShowcase is your launchpad to success. Join us today and be part of the
                     next generation of innovators shaping the future.
                 </p>

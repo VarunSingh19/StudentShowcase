@@ -93,6 +93,7 @@ export default function RootLayout({
             { href: "/upload-project", label: "Upload Project" },
             { href: "/projects", label: "Projects" },
             { href: "/users", label: "All Users" },
+            { href: "/search", label: "Search Users" },
           ],
         },
         {
@@ -106,7 +107,7 @@ export default function RootLayout({
               ],
             },
             { href: "/certificates", label: "Certificates" },
-            { href: "/tasklist", label: "Tasks" },
+            { href: "/tasklist", label: "TaskAI" },
           ],
         },
         {

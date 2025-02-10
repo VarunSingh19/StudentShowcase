@@ -88,7 +88,7 @@ export default function AdminAuthPage() {
                             >
                                 <UserIcon size={40} className="text-white" />
                             </motion.div>
-                            <h2 className="text-2xl font-bold text-center mb-6">
+                            <h2 className="text-2xl font-bold text-center mb-6 text-white">
                                 {isLogin ? 'Admin Login' : 'Create Admin Account'}
                             </h2>
                             <form onSubmit={handleSubmit} className="space-y-4">
