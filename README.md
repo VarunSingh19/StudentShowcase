@@ -11,7 +11,7 @@
 
 A next-generation platform empowering students to showcase projects, collaborate, and build their careers.
 
-[View Demo](https://studentshowcase.demo) • [Report Bug](https://github.com/studentshowcase/issues) • [Request Feature](https://github.com/studentshowcase/issues)
+[View Demo](https://studentshowcase.demo) • [Report Bug](https://github.com/VarunSingh19/StudentShowcase/issues) • [Request Feature](https://github.com/VarunSingh19/StudentShowcase/issues)
 
 ![StudentShowcase Preview](/public/studentshowcase.jpg)
 
@@ -92,7 +92,7 @@ Before installation, ensure you have:
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/your-username/studentshowcase.git
+git clone https://github.com/VarunSingh19/StudentShowcase.git
 cd studentshowcase
 ```
 
@@ -204,7 +204,7 @@ Licensed under the MIT License. See [LICENSE](LICENSE) for more information.
 
 ## 💬 Support
 
-- 📧 Email: support@studentshowcase.com
+- 📧 Email: varunsinghh2409@gmail.com
 - 🐦 Twitter: [@StudentShowcase](https://twitter.com/StudentShowcase)
 - 💬 Discord: [Join our community](https://discord.gg/studentshowcase)
 
@@ -212,4 +212,4 @@ Licensed under the MIT License. See [LICENSE](LICENSE) for more information.
 
 **[⬆ back to top](#studentshowcase)**
 
-Made with ❤️ by the StudentShowcase Team
+Made with ❤️ by Varun Singh
