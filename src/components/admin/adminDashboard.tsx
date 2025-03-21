@@ -101,7 +101,7 @@ export function AdminDashboard({ products, orders }: AdminDashboardProps) {
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">
-                            ${averageOrderValue.toFixed(2)}
+                            ₹{averageOrderValue.toFixed(2)}
                         </div>
                         <p className="text-xs text-muted-foreground">
                             +4.5% from last week

@@ -46,7 +46,7 @@ Original Projects:
 ${JSON.stringify(projects, null, 2)}
 `;
 
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
     const result = await model.generateContent(prompt);
     const enhancedProjectsText = result.response.text();
 

@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   try {
     const { field, path, difficulty } = await request.json();
 
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
 
     const prompt = `Generate 5 multiple-choice questions for a ${difficulty} level assessment in the ${field} field, specifically for the ${path} path. 
     Each question should have 4 options, a correct answer, an explanation, and a specific skill within ${path} that it tests.

@@ -35,7 +35,7 @@ export async function POST(request: Request) {
       Use a ${resumeFormat} style for the formatting.
     `;
 
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
     const result = await model.generateContent(prompt);
     const resumeContent = result.response.text();
 

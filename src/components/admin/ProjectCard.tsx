@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Code2, Github, Link, Loader2, User } from 'lucide-react';
+import { Code2, Github, Loader2, User } from 'lucide-react';
 import { Project } from '@/types/project';
 
 interface ProjectCardProps {

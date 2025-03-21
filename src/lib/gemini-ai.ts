@@ -14,7 +14,7 @@ interface ProjectPlan {
 export async function generateProjectPlan(
   taskTitle: string
 ): Promise<ProjectPlan> {
-  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
 
   const prompt = `
     Generate a comprehensive project implementation plan for the following task: "${taskTitle}"

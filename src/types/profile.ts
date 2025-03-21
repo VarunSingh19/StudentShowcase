@@ -5,7 +5,11 @@ export interface UserProfile {
   userId: string;
   avatarUrl?: string;
   displayName: string;
+  // other properties
+  education?: Education[];
   bio: string;
+  website: string;
+  jobTitle: string;
   location: string;
   skills: string[];
   socialLinks: {
@@ -14,6 +18,7 @@ export interface UserProfile {
     twitter: string;
     portfolio: string;
   };
+
   hobbiesAndInterests: string[];
   languages: string[];
   emailAddress: string;
@@ -27,7 +32,34 @@ export interface UserProfile {
   friendRequests?: string[];
   status?: "online" | "offline";
   lastSeen?: Date;
+  portfolioSettings?: PortfolioSettings; // New portfolio settings
 }
+
+type EducationType = "School" | "College" | "University" | "Graduate";
+export interface Education {
+  id: string;
+  institution: string;
+  educationType: EducationType | "";
+  // For non-school education
+  degree?: string;
+  fieldOfStudy?: string;
+  // For school-specific education
+  board?: string;
+  percentage?: string;
+  startDate: string;
+  endDate: string;
+  location: string;
+  gpa?: string;
+  description?: string;
+}
+
+export type PortfolioSettings = {
+  isPublic: boolean;
+  customUsername?: string;
+  lastUpdated?: Date;
+  showContactInfo: boolean;
+  theme: string;
+};
 
 export interface Project {
   id: string;
@@ -90,4 +122,15 @@ export interface Certificate {
   issuedBy: string;
   issueDate: Date;
   verificationUrl: string;
+}
+
+// Add a new interface for contact messages
+export interface ContactMessage {
+  id: string;
+  recipientId: string;
+  name: string;
+  email: string;
+  message: string;
+  createdAt: Date;
+  read: boolean;
 }

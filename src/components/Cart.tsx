@@ -11,18 +11,15 @@ import { doc, setDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ShoppingCart, Minus, Plus, Trash2, Box, CreditCard } from 'lucide-react';
-import { Card } from "@/components/ui/card";
-import Image from 'next/image';
 
-interface AddressForm {
-    name: string;
-    address: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    country: string;
-}
+// interface AddressForm {
+//     name: string;
+//     address: string;
+//     city: string;
+//     state: string;
+//     zipCode: string;
+//     country: string;
+// }
 interface RazorpayResponse {
     razorpay_payment_id: string;
     razorpay_order_id: string;

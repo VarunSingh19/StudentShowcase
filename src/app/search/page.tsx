@@ -245,7 +245,7 @@ export default function SearchPage() {
                 <Card className="backdrop-blur-lg bg-white/90 shadow-xl">
                     <CardHeader>
                         <CardTitle className="text-2xl font-bold text-center text-gray-800">
-                            Search Users
+                            Search Students
                         </CardTitle>
                     </CardHeader>
                     <CardContent>

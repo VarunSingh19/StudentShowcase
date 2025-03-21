@@ -16,6 +16,7 @@ import { LikedProjectsContent } from './components/LikedProjectContent'
 import { CertificatesContent } from './components/CertificatesContent'
 import { TasksContent } from './components/TaskContent'
 import { ResumeContent } from './components/ResumeContent'
+import { PortfolioContent } from '@/components/ProfileContent/PortfolioContent'
 
 export default function ProfilePage() {
     const [profile, setProfile] = useState<UserProfile | null>(null)
@@ -149,13 +150,14 @@ export default function ProfilePage() {
             </motion.div>
 
             <Tabs defaultValue="profile" className="mt-8">
-                <TabsList className="grid w-full grid-cols-6 rounded-xl bg-muted p-1">
+                <TabsList className="grid w-full grid-cols-7 rounded-xl bg-muted p-1">
                     <TabsTrigger value="profile">Profile</TabsTrigger>
                     <TabsTrigger value="projects">Projects</TabsTrigger>
                     <TabsTrigger value="liked">Liked</TabsTrigger>
                     <TabsTrigger value="certificates">Certificate</TabsTrigger>
                     <TabsTrigger value="tasks">Tasks</TabsTrigger>
                     <TabsTrigger value="resume">Resume</TabsTrigger>
+                    <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="profile">
@@ -181,8 +183,13 @@ export default function ProfilePage() {
                 <TabsContent value="resume">
                     <ResumeContent profile={profile} projects={projects} />
                 </TabsContent>
+                <TabsContent value="portfolio">
+                    <PortfolioContent userId={user!.uid} profile={profile} />
+                </TabsContent>
             </Tabs>
         </div>
     )
 }
+
+
 

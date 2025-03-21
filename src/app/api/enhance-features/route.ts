@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     Enhance the existing features and add 2-3 new features that highlight the project's complexity, the candidate's skills, and the potential value to ${companyName}. Each feature should be concise and impactful.
   `;
 
-  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
   const result = await model.generateContent(prompt);
   const enhancedFeaturesText = result.response.text();
   const enhancedFeatures = enhancedFeaturesText

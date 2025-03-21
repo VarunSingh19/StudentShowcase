@@ -22,7 +22,7 @@ export async function POST(request: Request) {
       difficulty: string;
     } = await request.json();
 
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
 
     const prompt = `Based on the following assessment results for a ${difficulty} level ${path} assessment in the ${field} field, provide 5 personalized recommendations for skill improvement:
 

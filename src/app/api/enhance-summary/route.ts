@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     Create a compelling and concise professional summary that highlights the candidate's experience, skills, and achievements. The summary should be tailored to the target company and demonstrate why the candidate is an excellent fit for a role there.
   `;
 
-  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
   const result = await model.generateContent(prompt);
   const enhancedSummary = result.response.text();
 
