@@ -1681,7 +1681,6 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import PortfolioPage from "../PortfolioPage";
 
 // Define the types for portfolio messages and usernames
 interface PortfolioMessage {
@@ -3160,9 +3159,56 @@ export function PortfolioContent({
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <PortfolioPage username={customUsername || userId} />
+                                    <div className="aspect-video relative rounded-md border overflow-hidden bg-background">
+                                        <div
+                                            className="absolute top-0 left-0 right-0 h-12 bg-background border-b flex items-center px-4"
+                                            style={{
+                                                borderTopColor: accentColor,
+                                                borderTopWidth: "3px",
+                                            }}
+                                        >
+                                            <div className="flex items-center space-x-2">
+                                                <div className="w-3 h-3 rounded-full bg-red-400" />
+                                                <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                                                <div className="w-3 h-3 rounded-full bg-green-400" />
+                                            </div>
+                                            <div className="mx-auto font-medium text-sm flex items-center">
+                                                <span>{portfolioUrl}</span>
+                                            </div>
+                                        </div>
+                                        <div className="pt-12 p-4 h-full">
+                                            <div className="flex flex-col items-center justify-center h-full">
+                                                <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center">
+                                                    <User className="h-8 w-8 text-muted-foreground" />
+                                                </div>
+                                                <h3 className="mt-2 font-bold">
+                                                    {profile.displayName || customUsername || "Your Name"}
+                                                </h3>
+                                                <p className="text-sm text-muted-foreground">
+                                                    {metaDescription ||
+                                                        "Portfolio description will appear here"}
+                                                </p>
+                                                <div className="mt-4 flex items-center space-x-2">
+                                                    <Badge
+                                                        className="h-7"
+                                                        style={{
+                                                            backgroundColor: accentColor,
+                                                            color: "#fff",
+                                                        }}
+                                                    >
+                                                        Projects
+                                                    </Badge>
+                                                    <Badge variant="outline" className="h-7">
+                                                        Blog
+                                                    </Badge>
+                                                    <Badge variant="outline" className="h-7">
+                                                        Contact
+                                                    </Badge>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </CardContent>
-
                             </Card>
                         </div>
 
