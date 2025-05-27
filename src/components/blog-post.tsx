@@ -450,7 +450,12 @@ export default function BlogPostPage({ username, slug }: { username: string; slu
 
                 // Query the blog post with the matching slug and userId
                 const blogsRef = collection(db, "portfolioBlogPosts")
-                const q = query(blogsRef, where("userId", "==", userId), where("slug", "==", slug))
+                const q = query(
+                    blogsRef,
+                    where("userId", "==", userId),
+                    where("slug", "==", slug),
+                    where("status", "==", "published")      // ← add this
+                )
                 const querySnapshot = await getDocs(q)
 
                 if (querySnapshot.empty) {
