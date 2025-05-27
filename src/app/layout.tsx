@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -60,6 +59,9 @@ export default function RootLayout({
 
   // Determine if we should hide the header and footer for portfolio routes
   const hideHeaderFooter = pathname.startsWith("/portfolio/");
+
+  // Check if current route is a public portfolio route
+  const isPublicPortfolioRoute = pathname.startsWith("/portfolio/");
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -138,7 +140,8 @@ export default function RootLayout({
     setIsMegaMenuOpen(false);
   };
 
-  if (loading || !authChecked) {
+  // For portfolio routes, don't show loading screen - render immediately
+  if ((loading || !authChecked) && !isPublicPortfolioRoute) {
     return (
       <html lang="en">
         <head>
@@ -158,7 +161,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className={`${inter.className} min-h-screen bg-gray-100`}>
-        {/* Conditionally render header */}
+        {/* Conditionally render header - only show if not portfolio route */}
         {!hideHeaderFooter && (
           <nav className="fixed top-0 left-0 right-0 z-40 bg-gradient-to-br from-gray-900 via-gray-800 to-black bg-opacity-90 backdrop-blur-md">
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -380,7 +383,9 @@ export default function RootLayout({
         )}
 
         {/* Main Content */}
-        <main className="pt-24 mx-auto">{children}</main>
+        <main className={isPublicPortfolioRoute ? "pt-0" : "pt-24 mx-auto"}>
+          {children}
+        </main>
 
         {/* Conditionally render footer */}
         {!hideHeaderFooter && <Footer />}
