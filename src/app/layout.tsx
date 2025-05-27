@@ -50,18 +50,24 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { user, isAdmin, loading, authChecked } = useAuth();
+  const pathname = usePathname();
+
+  // Check if current route is a public portfolio route
+  const isPublicPortfolioRoute = pathname.startsWith("/portfolio/");
+
+  // Only use auth hook for non-portfolio routes
+  const authData = useAuth();
+  const { user, isAdmin, loading, authChecked } = isPublicPortfolioRoute
+    ? { user: null, isAdmin: false, loading: false, authChecked: true }
+    : authData;
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [profile, setProfile] = useState<Partial<UserProfile> | null>(null);
   const router = useRouter();
-  const pathname = usePathname();
 
   // Determine if we should hide the header and footer for portfolio routes
   const hideHeaderFooter = pathname.startsWith("/portfolio/");
-
-  // Check if current route is a public portfolio route
-  const isPublicPortfolioRoute = pathname.startsWith("/portfolio/");
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -140,8 +146,8 @@ export default function RootLayout({
     setIsMegaMenuOpen(false);
   };
 
-  // For portfolio routes, don't show loading screen - render immediately
-  if ((loading || !authChecked) && !isPublicPortfolioRoute) {
+  // Show loading screen only for non-portfolio routes that require auth
+  if (loading || !authChecked) {
     return (
       <html lang="en">
         <head>
@@ -383,7 +389,7 @@ export default function RootLayout({
         )}
 
         {/* Main Content */}
-        <main className={isPublicPortfolioRoute ? "pt-0" : "pt-24 mx-auto"}>
+        <main className={hideHeaderFooter ? "pt-0" : "pt-24 mx-auto"}>
           {children}
         </main>
 
