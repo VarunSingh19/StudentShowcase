@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, ChangeEvent } from 'react'
+import { useState, useEffect, ChangeEvent, Suspense } from 'react'
 // import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from "@/components/ui/button"
@@ -86,7 +86,7 @@ type FormChangeEvent =
     | { name: string; value: string };
 
 
-export default function UploadProjectPage() {
+function UploadProjectPageContent() {
     const [formData, setFormData] = useState<FormData>({
         name: '',
         projectName: '',
@@ -419,3 +419,10 @@ export default function UploadProjectPage() {
     )
 }
 
+export default function UploadProjectPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <UploadProjectPageContent />
+        </Suspense>
+    )
+}

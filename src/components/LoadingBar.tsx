@@ -1,10 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 
-export function LoadingBar() {
+function LoadingBarContent() {
     const pathname = usePathname()
     const searchParams = useSearchParams()
     const [isLoading, setIsLoading] = useState(false)
@@ -37,5 +37,13 @@ export function LoadingBar() {
                 />
             )}
         </>
+    )
+}
+
+export function LoadingBar() {
+    return (
+        <Suspense fallback={null}>
+            <LoadingBarContent />
+        </Suspense>
     )
 }

@@ -47,6 +47,8 @@ export default function ProfilePage() {
                 const defaultProfile: UserProfile = {
                     id: '',
                     points: 0,
+                    website: '',
+                    jobTitle: '',
                     orderHistory: [],
                     likedProducts: [],
                     userId: user.uid,

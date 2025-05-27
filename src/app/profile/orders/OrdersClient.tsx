@@ -39,7 +39,7 @@ interface Order {
 }
 
 
-export default function YourOrdersPage() {
+export default function OrdersClient() {
     const [orders, setOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState(true);
     const [expandedOrder, setExpandedOrder] = useState<string | null>(null);

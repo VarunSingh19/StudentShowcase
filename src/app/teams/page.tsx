@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
 import { collection, query, where, getDocs, addDoc } from 'firebase/firestore'
@@ -29,7 +29,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { TeamChat } from '@/components/TeamChat'
 import type { Team } from '@/types/profile'
 
-export default function TeamsPage() {
+function TeamsPageContent() {
     const [availableTeams, setAvailableTeams] = useState<Team[]>([])
     const [joinedTeams, setJoinedTeams] = useState<Team[]>([])
     const [loading, setLoading] = useState(true)
@@ -289,3 +289,10 @@ export default function TeamsPage() {
     )
 }
 
+export default function TeamsPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <TeamsPageContent />
+        </Suspense>
+    )
+}
